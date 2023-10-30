@@ -2,8 +2,12 @@ package com.example.investin.Login.Screens
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
+import com.example.investin.R
 import com.example.investin.databinding.ActivityMainBinding
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -12,26 +16,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root // Inflate the view
+        setContentView(binding.root)
 
-        setContentView(view)
+        val wormDotsIndicator = findViewById<WormDotsIndicator>(R.id.worm_dots_indicator)
+        val viewPager = findViewById<ViewPager2>(R.id.viewPager) // Make sure to use the correct ID
+        val adapter = pageAdapter
+        viewPager.adapter = adapter
+        wormDotsIndicator.setViewPager2(viewPager)
 
-        // Now you can access the viewPager
         binding.viewPager.adapter = pageAdapter
 
-        // Remove this line to allow swiping by touch
-        // binding.viewPager.isUserInputEnabled = false
+        // Find the button by its ID
+        val button = findViewById<Button>(R.id.btLogin)
 
-        // Optional: Set a callback for the "Next Page" button
-        pageAdapter.setOnNextButtonClickListener { position ->
-            binding.viewPager.currentItem = position + 1
-
-            if (position == 2) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                // Optionally, close the MainActivity
-                finish()
-            }
+        // Set an OnClickListener for the button
+        button.setOnClickListener {
+            // Start the HomeActivity
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
         }
     }
 }

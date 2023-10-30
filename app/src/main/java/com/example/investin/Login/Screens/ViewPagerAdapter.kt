@@ -4,12 +4,18 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.investin.R
 import com.example.investin.databinding.PagerItemBinding
 
 class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PageViewHolder>() {
-    private val pageData = arrayOf("Page 1", "Page 2", "Page 3")
+    private val pageData = arrayOf(
+        PageData("Welcome to 'InvestIn'!", "In a time when jobs are scarce and " +
+                "economic conditions are tough, 'InvestIn' opens doors for ambitious " +
+                "entrepreneurs to thrive", R.drawable.welcome),
 
-    private var onNextButtonClickListener: ((Int) -> Unit)? = null
+        PageData("Title 2", "Quote 2", R.drawable.welcome),
+        PageData("Title 3", "Quote 3", R.drawable.welcome)
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {
         val binding = PagerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -17,28 +23,19 @@ class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PageViewHolder>()
     }
 
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
-        holder.bind(pageData[position], position)
+        holder.bind(pageData[position])
     }
 
     override fun getItemCount() = pageData.size
 
-    inner class PageViewHolder(private val binding: PagerItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(pageContent: String, position: Int) {
-            binding.tvTitle.text = pageContent // Ensure this ID matches the one in your layout
-            binding.buttonNext.setOnClickListener {
-                onNextButtonClickListener?.invoke(position)
-
-                if (position == 2) {
-                    // Navigate to SecondActivity when on the third screen
-                    val intent = Intent(binding.root.context, HomeActivity::class.java)
-                    binding.root.context.startActivity(intent)
-                }
-            }
+    inner class PageViewHolder(private val binding: PagerItemBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+        fun bind(pageContent: PageData) {
+            binding.tvTitle.text = pageContent.title
+            binding.tvQuote.text = pageContent.quote
+            binding.imageView.setImageResource(pageContent.imageResId)
         }
     }
-
-    // Optional: Set a callback for the "Next Page" button click
-    fun setOnNextButtonClickListener(listener: (Int) -> Unit) {
-        onNextButtonClickListener = listener
-    }
 }
+
+data class PageData(val title: String, val quote: String, val imageResId: Int)

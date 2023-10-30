@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login.Screens.HomeActivity">
+    tools:context=".Login.Screens.`Sign_up Activity`">
 
     <TextView
         android:id="@+id/textView"
