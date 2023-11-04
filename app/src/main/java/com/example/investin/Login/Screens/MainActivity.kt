@@ -17,7 +17,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+/*
+*
+* addingcommint just for commit testing
+*
+* */
         val wormDotsIndicator = findViewById<WormDotsIndicator>(R.id.worm_dots_indicator)
         val viewPager = findViewById<ViewPager2>(R.id.viewPager) // Make sure to use the correct ID
         val adapter = pageAdapter
