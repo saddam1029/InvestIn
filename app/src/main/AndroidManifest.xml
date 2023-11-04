@@ -28,6 +28,7 @@
             android:name=".Login.Screens.MainActivity"
             android:exported="false"
             tools:ignore="Instantiatable" />
+
     </application>
 
 </manifest>

@@ -10,7 +10,7 @@ import com.example.investin.databinding.PagerItemBinding
 class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PageViewHolder>() {
     private val pageData = arrayOf(
         PageData("Welcome to 'InvestIn'!", "In a time when jobs are scarce and " +
-                "economic conditions are tough, 'InvestIn' opens doors for ambitious " +
+                "economic \n conditions are tough, 'InvestIn' opens doors \n for ambitious " +
                 "entrepreneurs to thrive", R.drawable.welcome),
 
         PageData("Title 2", "Quote 2", R.drawable.welcome),
