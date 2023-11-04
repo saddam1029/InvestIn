@@ -1,9 +1,10 @@
-    package com.example.investin.Login.Screens
+    package com.example.investin.login
 
     import android.content.Intent
     import android.os.Bundle
     import android.os.Handler
     import androidx.appcompat.app.AppCompatActivity
+    import com.example.investin.MainActivity
     import com.example.investin.R
 
     class SplashScreen : AppCompatActivity() {

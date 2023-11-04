@@ -1,6 +1,5 @@
-package com.example.investin.Login.Screens
+package com.example.investin.login.screens
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

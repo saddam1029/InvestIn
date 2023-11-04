@@ -1,4 +1,4 @@
-package com.example.investin.Login.Screens
+package com.example.investin.login.screens
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

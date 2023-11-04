@@ -1,13 +1,12 @@
-package com.example.investin.Login.Screens
+package com.example.investin
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager2.widget.ViewPager2
-import com.example.investin.R
+import com.example.investin.login.screens.SignInActivity
+import com.example.investin.login.screens.ViewPagerAdapter
 import com.example.investin.databinding.ActivityMainBinding
-import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -17,13 +16,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-/*
-*
-* addingcommint just for commit testing
-*
-* */
-        val wormDotsIndicator = findViewById<WormDotsIndicator>(R.id.worm_dots_indicator)
-        val viewPager = findViewById<ViewPager2>(R.id.viewPager) // Make sure to use the correct ID
+
+        val wormDotsIndicator =binding.wormDotsIndicator
+        val viewPager = binding.viewPager // Make sure to use the correct ID
         val adapter = pageAdapter
         viewPager.adapter = adapter
         wormDotsIndicator.setViewPager2(viewPager)
