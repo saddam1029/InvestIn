@@ -1,4 +1,4 @@
-package com.example.investin.login.screens
+package com.example.investin.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +10,7 @@ class SignInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_signin)
     }
 
+    // when back button press it move out of app
     override fun onBackPressed() {
         super.onBackPressed()
         finishAffinity() // Finish all activities in the task and exit the app

@@ -5,7 +5,28 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
 
         <item name="android:fontFamily">@font/open_sans_regular</item>
+
+        <item name="android:statusBarColor">@android:color/white</item>
     </style>
+
+    // UserName and Password
+    <style name="CustomTextInputLayoutTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <!-- Normal state color (colorControlNormal) -->
+        <item name="colorControlNormal">#d32f2f</item>
+
+        <!-- Activated state color (colorControlActivated) -->
+        <item name="colorControlActivated">#ff5722</item>
+
+        <!-- Highlight state color (colorControlHighlight) -->
+        <item name="colorControlHighlight">#f44336</item>
+    </style>
+
+    <style name="CustomTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/app_color</item> <!-- Set border color to red -->
+        <item name="boxBackgroundColor">#F2F4FA</item> <!-- Set background color to silver -->
+    </style>
+
+
 
     <style name="Theme.InvestIn" parent="Base.Theme.InvestIn" />
 </resources>

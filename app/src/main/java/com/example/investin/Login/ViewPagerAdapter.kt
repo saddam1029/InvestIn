@@ -1,4 +1,4 @@
-package com.example.investin.login.screens
+package com.example.investin.login
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,10 +10,13 @@ class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PageViewHolder>()
     private val pageData = arrayOf(
         PageData("Welcome to 'InvestIn'!", "In a time when jobs are scarce and " +
                 "economic \n conditions are tough, 'InvestIn' opens doors \n for ambitious " +
-                "entrepreneurs to thrive", R.drawable.welcome),
+                "entrepreneurs to thrive.", R.drawable.welcome),
 
-        PageData("Title 2", "Quote 2", R.drawable.welcome),
-        PageData("Title 3", "Quote 3", R.drawable.welcome)
+        PageData("Bridge the Gap with 'InvestIn'", "Seeking investment or offering support, \n 'InvestIn' " +
+                "connects those \n in need with those with means.", R.drawable.welcome),
+
+        PageData("Unlock Your Future", "Join 'InvestIn' today, and be a" +
+                " part of a \n community where dreams turn into reality.", R.drawable.welcome)
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {

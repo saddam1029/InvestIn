@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.investin.login.screens.SignInActivity
-import com.example.investin.login.screens.ViewPagerAdapter
+import com.example.investin.login.SignInActivity
+import com.example.investin.login.ViewPagerAdapter
 import com.example.investin.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
