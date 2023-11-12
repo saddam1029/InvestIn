@@ -23,7 +23,7 @@
     <RelativeLayout
         android:id="@+id/tlSignInWithGoogle"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
@@ -35,16 +35,16 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="35dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
+            android:layout_marginStart="0dp"
             android:src="@mipmap/google" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="10dp"
             android:text="Continue With Google"
             android:textColor="@color/white" />
 
@@ -54,7 +54,7 @@
         android:id="@+id/orLines"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -99,8 +99,9 @@
         <EditText
             android:id="@+id/etFirstName"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="trgue"
+            android:layout_height="45dp"
+            android:padding="10dp"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:ems="10"
             android:hint="First Name"
@@ -124,7 +125,8 @@
         <EditText
             android:id="@+id/etLastName"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
+            android:padding="10dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:ems="10"
@@ -149,7 +151,8 @@
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
+            android:padding="10dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:ems="10"
@@ -172,7 +175,8 @@
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
+            android:padding="10dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:ems="10"
@@ -196,12 +200,13 @@
         <EditText
             android:id="@+id/etConformPassword"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
+            android:padding="10dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:ems="10"
             android:textSize="13sp"
-            android:hint="Password"
+            android:hint="Conform Password"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -210,14 +215,14 @@
         android:id="@+id/btCreateAccount"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="40dp"
         android:backgroundTint="@color/app_color"
         android:text="create my account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Conform_password_text_input_layout" />
+
 
     <TextView
         android:id="@+id/textView"
@@ -229,7 +234,7 @@
         android:textColor="@color/app_color"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.416"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btCreateAccount" />
 
@@ -247,6 +252,7 @@
         app:layout_constraintHorizontal_bias="0.038"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/btCreateAccount" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

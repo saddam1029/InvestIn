@@ -32,7 +32,7 @@
             android:text="In a time when jobs are scarce and economic\n conditions are tough InvestIn opens doors \n for ambitious entrepreneurs to thrive"
             android:textAlignment="center"
             android:textColor="#020202"
-            android:textSize="15sp"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"

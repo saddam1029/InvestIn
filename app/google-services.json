@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "78483003901",
+    "project_id": "investin-9fd75",
+    "storage_bucket": "investin-9fd75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78483003901:android:078eae75ef0f041f34a194",
+        "android_client_info": {
+          "package_name": "com.example.investin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJy4Jf-UIJzFUnVaQdFp-96-LyYrDF0Zo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
