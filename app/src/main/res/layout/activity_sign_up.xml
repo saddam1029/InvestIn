@@ -37,8 +37,7 @@
             android:id="@+id/imageView4"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:src="@mipmap/google" />
+            android:src="@mipmap/google_circle" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -228,7 +227,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="55dp"
         android:fontFamily="@font/open_sans_regular"
         android:text="Already have an account?"
         android:textColor="@color/app_color"
@@ -242,7 +241,7 @@
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="55dp"
         android:fontFamily="@font/open_sans_regular"
         android:text="Log in"
         android:textColor="@color/app_color"

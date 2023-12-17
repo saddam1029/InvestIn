@@ -3,11 +3,8 @@ package com.example.investin.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
-import com.example.investin.R
 import com.example.investin.databinding.ActivitySignUpBinding
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 class SignUp : AppCompatActivity() {
@@ -30,33 +27,37 @@ class SignUp : AppCompatActivity() {
             val password = binding.etPassword.text.toString()
             val cPassword = binding.etConformPassword.text.toString()
 
-            if(fName.isNotEmpty()&& lName.isNotEmpty()&& email.isNotEmpty()&& password.isNotEmpty()&& cPassword.isNotEmpty()){
-                if(password == cPassword){
+            if (fName.isNotEmpty() && lName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && cPassword.isNotEmpty()) {
+                if (password == cPassword) {
 
-                    firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{
-                        if(it.isSuccessful){
-                            val intent = Intent(this, SignInActivity::class.java)
-                            startActivity(intent)
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                val intent = Intent(this, SignIn::class.java)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(this, it.exception.toString(), Toast.LENGTH_LONG)
+                                    .show()
+
+                            }
                         }
-                        else{
-                            Toast.makeText(this,it.exception.toString(), Toast.LENGTH_LONG).show()
 
-                        }
-                    }
-
+                } else {
+                    Toast.makeText(this, "Password is Not Matching", Toast.LENGTH_LONG).show()
                 }
-                else{
-                    Toast.makeText(this,"Password is Not Matching", Toast.LENGTH_LONG).show()
-                }
-            }
-            else{
-                Toast.makeText(this,"Empty Field are not Allow!!!", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Empty Field are not Allow!!!", Toast.LENGTH_LONG).show()
 
             }
         }
 
+        binding.tlSignInWithGoogle.setOnClickListener {
+            val intent = Intent(this, SignIn::class.java)
+            startActivity(intent)
+        }
+
         binding.tvLogin.setOnClickListener {
-            val intent = Intent(this, SignInActivity::class.java)
+            val intent = Intent(this, SignIn::class.java)
             startActivity(intent)
         }
     }

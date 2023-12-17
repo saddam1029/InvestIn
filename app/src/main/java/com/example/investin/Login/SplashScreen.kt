@@ -6,6 +6,7 @@
     import androidx.appcompat.app.AppCompatActivity
     import com.example.investin.MainActivity
     import com.example.investin.R
+    import com.example.investin.UserInformation
     import com.google.firebase.auth.FirebaseAuth
 
     class SplashScreen : AppCompatActivity() {

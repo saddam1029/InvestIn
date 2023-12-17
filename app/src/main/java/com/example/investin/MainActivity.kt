@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.investin.login.SignInActivity
+import com.example.investin.login.SignIn
 import com.example.investin.login.ViewPagerAdapter
 import com.example.investin.databinding.ActivityMainBinding
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         // Set an OnClickListener for the button
         button.setOnClickListener {
             // Start the HomeActivity
-            val intent = Intent(this, SignInActivity::class.java)
+            val intent = Intent(this, SignIn::class.java)
             startActivity(intent)
         }
     }

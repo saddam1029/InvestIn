@@ -13,13 +13,13 @@
         android:theme="@style/Theme.InvestIn"
         tools:targetApi="31">
         <activity
-            android:name=".login.UserInformation"
+            android:name=".UserInformation"
             android:exported="false" />
         <activity
             android:name=".login.SignUp"
             android:exported="false" />
         <activity
-            android:name=".login.SignInActivity"
+            android:name=".login.SignIn"
             android:exported="false" />
         <activity
             android:name=".login.SplashScreen"

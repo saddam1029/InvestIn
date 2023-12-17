@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "78483003901",
+    "project_id": "investin-9fd75",
+    "storage_bucket": "investin-9fd75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78483003901:android:078eae75ef0f041f34a194",
+        "android_client_info": {
+          "package_name": "com.example.investin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "78483003901-u3qas8guapq4ot2c9j4lo4kk7c5v697v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.investin",
+            "certificate_hash": "40af97476f85e5635ed19a7b5903ef14bfca755d"
+          }
+        },
+        {
+          "client_id": "78483003901-jt8f9b2f7ksppflkmo2tl18mnm22pvpc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJy4Jf-UIJzFUnVaQdFp-96-LyYrDF0Zo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "78483003901-jt8f9b2f7ksppflkmo2tl18mnm22pvpc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,8 +15,7 @@ android {
         viewBinding = true
     }
 
-
-    viewBinding {
+        viewBinding {
         enable = true
     }
 
@@ -47,6 +46,8 @@ android {
         jvmTarget = "1.8"
     }
 
+
+
 }
 
 dependencies {
@@ -62,7 +63,14 @@ dependencies {
 //    implementation("com.autonomous:dots-indicator:5.0")
     implementation ("org.ow2.asm:asm:9.3")
 
+    // Also add the dependency for the Google Play services library and specify its version
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    implementation("com.google.firebase:firebase-auth:22.3.0")
+
+    implementation("com.github.DamanSingh4321:ProProgressViews:v1.1")
+    implementation("androidx.core:core-ktx:1.9.0")
 
     implementation("com.tbuonomo:dotsindicator:5.0")
-}
 
+}
