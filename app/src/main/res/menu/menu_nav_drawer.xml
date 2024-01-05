@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/account"
+            android:icon="@drawable/account"
+            android:title="Account"/>
+
+        <item
+            android:id="@+id/favorite"
+            android:icon="@drawable/favorite"
+            android:title="Favorite"/>
+
+        <item
+            android:id="@+id/setting"
+            android:icon="@drawable/settings"
+            android:title="Setting"/>
+
+    </group>
+
+    <item
+        android:title="">
+        <menu>
+            <item
+                android:id="@+id/contact"
+                android:icon="@drawable/contact"
+                android:title="Contact"/>
+
+            <item
+                android:id="@+id/share"
+                android:icon="@drawable/share"
+                android:title="Share"/>
+
+            <item
+                android:id="@+id/about_us"
+                android:icon="@drawable/about_us"
+                android:title="About Us"/>
+
+            <item
+                android:id="@+id/help"
+                android:icon="@drawable/help"
+                android:title="Help"/>
+
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/logOut"
+            android:icon="@drawable/logout"
+            android:title="Log out"/>
+
+    </group>
+
+</menu>

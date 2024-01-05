@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.investin.UserInformation
 import com.example.investin.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -33,7 +34,7 @@ class SignUp : AppCompatActivity() {
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                val intent = Intent(this, SignIn::class.java)
+                                val intent = Intent(this, UserInformation::class.java)
                                 startActivity(intent)
                             } else {
                                 Toast.makeText(this, it.exception.toString(), Toast.LENGTH_LONG)

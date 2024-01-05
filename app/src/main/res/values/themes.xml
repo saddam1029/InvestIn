@@ -27,7 +27,16 @@
         <item name="boxBackgroundColor">#F2F4FA</item> <!-- Set background color to silver -->
     </style>
 
+    <style name="ToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:backgroundTint">@color/app_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
+    <style name="BottomNavigationTextStyle" parent="Widget.Design.BottomNavigationView">>
+        <item name="android:textSize">12sp</item> <!-- Decrease text size to 12sp -->
+        <item name="android:textStyle">bold</item> <!-- Make the text bold -->
+    </style>
 
     <style name="Theme.InvestIn" parent="Base.Theme.InvestIn" />
 </resources>
