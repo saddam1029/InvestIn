@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".UserInformation">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -85,13 +84,16 @@
                 android:id="@+id/dateOfBirth_text_input_layout"
                 style="@style/CustomTextInputLayoutStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:theme="@style/CustomTextInputLayoutTheme"
                 app:endIconContentDescription="Calendar Icon"
                 app:endIconDrawable="@drawable/calendar_month_24"
                 app:endIconMode="custom"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="showDatePicker"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp">
@@ -99,7 +101,7 @@
                 <EditText
                     android:id="@+id/etDateOfBirth"
                     android:layout_width="match_parent"
-                    android:layout_height="43dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:clickable="true"
@@ -183,6 +185,45 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Phone Number"
+                android:textColor="#012B61"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneNumber_text_input_layout"
+                style="@style/CustomTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:theme="@style/CustomTextInputLayoutTheme"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp">
+
+                <EditText
+                    android:id="@+id/etPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:ems="10"
+                    android:hint="+92"
+                    android:paddingVertical="8dp"
+                    android:textSize="13dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -205,6 +246,9 @@
                 app:endIconContentDescription="City Icon"
                 app:endIconDrawable="@drawable/location_city_24"
                 app:endIconMode="custom"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="showCitySelection"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp">
@@ -298,7 +342,7 @@
                     android:clickable="true"
                     android:ems="10"
                     android:focusable="false"
-                    android:hint="Your Education"
+                    android:hint="Select Your Education Level"
                     android:paddingVertical="8dp"
                     android:textSize="13dp" />
 

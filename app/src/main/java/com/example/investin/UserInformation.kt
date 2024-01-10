@@ -16,8 +16,8 @@ import com.example.investin.login.SignIn
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.CollectionReference
 import java.util.Locale
 
 class UserInformation : AppCompatActivity() {
@@ -27,21 +27,35 @@ class UserInformation : AppCompatActivity() {
     private lateinit var educationTextInputLayout: TextInputLayout
     private lateinit var etDateOfBirth: EditText
     private val calendar = Calendar.getInstance()
-    private val cities = arrayOf("Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad") // Add more cities as needed
-    private val education = arrayOf("Primary School","Middle School", "High School", "Intermediate", "Bachelor's Degree", "Master's Degree", "Doctorate (Ph.D.)") // Add more cities as needed
+    private val cities = arrayOf(
+        "Karachi",
+        "Lahore",
+        "Islamabad",
+        "Rawalpindi",
+        "Faisalabad"
+    ) // Add more cities as needed
+    private val education = arrayOf(
+        "Primary School",
+        "Middle School",
+        "High School",
+        "Intermediate",
+        "Bachelor's Degree",
+        "Master's Degree",
+        "Doctorate (Ph.D.)"
+    ) // Add more cities as needed
 
-//    private val db = FirebaseFirestore.getInstance()
-    // Assuming "users" is the collection name where you want to store user information
-//    private val usersCollection = FirebaseFirestore.getInstance().collection("users")
+//    tIRCduYOqCK3hwqJNdcd  id
 
-    private lateinit var firebaseDatabase: FirebaseDatabase
-    private lateinit var usersReference: DatabaseReference
-
+    private lateinit var firebaseFirestore: FirebaseFirestore
+    private lateinit var usersReference: CollectionReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityUserInformationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val city = findViewById<EditText>(R.id.etCity)
+        val education = findViewById<EditText>(R.id.etEducation)
 
         // Initialize views
         dateOfBirthTextInputLayout = findViewById(R.id.dateOfBirth_text_input_layout)
@@ -50,12 +64,17 @@ class UserInformation : AppCompatActivity() {
         etDateOfBirth = findViewById(R.id.etDateOfBirth)
 
 
-        // Initialize Firebase Realtime Database
-        firebaseDatabase = FirebaseDatabase.getInstance()
-        usersReference = firebaseDatabase.getReference("InvestIn")
+        // Initialize Firebase Firestore
+        firebaseFirestore = FirebaseFirestore.getInstance()
+        usersReference = firebaseFirestore.collection("InvestIn")
+
 
         // Attach OnClickListener to the DOB icon
         dateOfBirthTextInputLayout.setEndIconOnClickListener {
+            showDatePicker()
+        }
+
+        etDateOfBirth.setOnClickListener {
             showDatePicker()
         }
 
@@ -64,8 +83,16 @@ class UserInformation : AppCompatActivity() {
             showCitySelection()
         }
 
+        city.setOnClickListener {
+            showCitySelection()
+        }
+
         // Attach OnClickListener to the Education Level icon
         educationTextInputLayout.setEndIconOnClickListener {
+            showEducationSelection()
+        }
+
+        education.setOnClickListener {
             showEducationSelection()
         }
 
@@ -76,50 +103,62 @@ class UserInformation : AppCompatActivity() {
     }
 
     private fun saveUserInformation() {
+        val firebaseFirestore = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userId = currentUser?.uid ?: ""
 
         if (userId.isNotEmpty()) {
+            val dateOfBirthTextInputLayout =
+                findViewById<TextInputLayout>(R.id.dateOfBirth_text_input_layout)
+            val nameTextInputLayout = findViewById<TextInputLayout>(R.id.username_text_input_layout)
+            val cnicTextInputLayout = findViewById<TextInputLayout>(R.id.cnic_text_input_layout)
+            val numberTextInputLayout =
+                findViewById<TextInputLayout>(R.id.phoneNumber_text_input_layout)
+            val cityTextInputLayout = findViewById<TextInputLayout>(R.id.city_text_input_layout)
+            val permanentAddressTextInputLayout =
+                findViewById<TextInputLayout>(R.id.address_text_input_layout)
+            val educationTextInputLayout =
+                findViewById<TextInputLayout>(R.id.education_text_input_layout)
+            val genderRadioGroup = findViewById<RadioGroup>(R.id.genderRadioGroup)
+
             val dateOfBirth = findViewById<EditText>(R.id.etDateOfBirth).text.toString().trim()
             val name = findViewById<EditText>(R.id.etName).text.toString().trim()
             val cnic = findViewById<EditText>(R.id.etCNIC).text.toString().trim()
+            val number = findViewById<EditText>(R.id.etPhoneNumber).text.toString().trim()
             val city = findViewById<EditText>(R.id.etCity).text.toString().trim()
             val permanentAddress = findViewById<EditText>(R.id.etAddress).text.toString().trim()
             val education = findViewById<EditText>(R.id.etEducation).text.toString().trim()
-            val genderRadioGroup = findViewById<RadioGroup>(R.id.genderRadioGroup)
 
-            if (isValidCNIC(cnic)) {
-                // CNIC format is valid
-            } else {
-                // Invalid CNIC format
-                Toast.makeText(this, "Invalid CNIC format!", Toast.LENGTH_SHORT).show()
-            }
+            // Check for valid CNIC, name, and phone number format
+            if (isValidCNIC(cnic) && isValidPhoneNumber(number) &&
+                dateOfBirth.isNotEmpty() && name.isNotEmpty() && city.isNotEmpty() &&
+                permanentAddress.isNotEmpty() && education.isNotEmpty()
+            ) {
+                val selectedGenderId = genderRadioGroup.checkedRadioButtonId
+                val gender = when (selectedGenderId) {
+                    R.id.maleRadioButton -> "Male"
+                    R.id.femaleRadioButton -> "Female"
+                    else -> "" // Handle default case or no selection
+                }
 
-            val selectedGenderId = genderRadioGroup.checkedRadioButtonId
-            val gender = when (selectedGenderId) {
-                R.id.maleRadioButton -> "Male"
-                R.id.femaleRadioButton -> "Female"
-                else -> "" // Handle default case or no selection
-            }
-
-            // Check if any field is empty
-            if (dateOfBirth.isNotEmpty() && name.isNotEmpty() && cnic.isNotEmpty() && city.isNotEmpty() && permanentAddress.isNotEmpty() && education.isNotEmpty()) {
                 val userInformation = hashMapOf(
                     "dateOfBirth" to dateOfBirth,
                     "name" to name,
                     "gender" to gender,
                     "cnic" to cnic,
+                    "number" to number,
                     "city" to city,
                     "permanentAddress" to permanentAddress,
                     "education" to education
                     // Add other user information fields similarly
                 )
 
-                // Create a new child node 'UserInformation' under the user's UID
-                val userInfoReference = usersReference.child(userId).child("UserInformation")
+                val userDocRef = firebaseFirestore.collection("InvestIn")
+                    .document(userId)
+                    .collection("UserInformation")
+                    .document()
 
-                // Save user information in the 'UserInformation' node
-                userInfoReference.setValue(userInformation)
+                userDocRef.set(userInformation)
                     .addOnSuccessListener {
                         // Data saved successfully
                         val intent = Intent(this, Home::class.java)
@@ -131,8 +170,48 @@ class UserInformation : AppCompatActivity() {
                         Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             } else {
-                // Show a toast indicating fields are empty
-                Toast.makeText(this, "Please fill in all the fields!", Toast.LENGTH_SHORT).show()
+                // Set errors for invalid format or empty fields
+                if (!isValidPhoneNumber(number)) {
+                    numberTextInputLayout.error = "Invalid phone number format!"
+                } else {
+                    numberTextInputLayout.error = null
+                }
+
+                if (!isValidCNIC(cnic)) {
+                    cnicTextInputLayout.error = "Invalid CNIC format!"
+                } else {
+                    cnicTextInputLayout.error = null
+                }
+
+                if (dateOfBirth.isEmpty()) {
+                    dateOfBirthTextInputLayout.error = "Please enter date of birth!"
+                } else {
+                    dateOfBirthTextInputLayout.error = null
+                }
+
+                if (name.isEmpty()) {
+                    nameTextInputLayout.error = "Please enter name!"
+                } else {
+                    nameTextInputLayout.error = null
+                }
+
+                if (city.isEmpty()) {
+                    cityTextInputLayout.error = "Please enter city!"
+                } else {
+                    cityTextInputLayout.error = null
+                }
+
+                if (permanentAddress.isEmpty()) {
+                    permanentAddressTextInputLayout.error = "Please enter permanent address!"
+                } else {
+                    permanentAddressTextInputLayout.error = null
+                }
+
+                if (education.isEmpty()) {
+                    educationTextInputLayout.error = "Please enter education!"
+                } else {
+                    educationTextInputLayout.error = null
+                }
             }
         } else {
             // Handle case when userId is empty or null
@@ -146,6 +225,10 @@ class UserInformation : AppCompatActivity() {
         return cnicPattern.matches(cnic)
     }
 
+    private fun isValidPhoneNumber(number: String): Boolean {
+        // Check if the number starts with "+92" and has a total length of 12
+        return number.startsWith("+92") && number.length == 12
+    }
 
     private fun showCitySelection() {
         val popupMenu = PopupMenu(this, findViewById(R.id.etCity))
@@ -210,4 +293,6 @@ class UserInformation : AppCompatActivity() {
         val simpleDateFormat = java.text.SimpleDateFormat(dateFormat, Locale.getDefault())
         etDateOfBirth.setText(simpleDateFormat.format(calendar.time))
     }
+
+    fun showDatePicker(view: View) {}
 }

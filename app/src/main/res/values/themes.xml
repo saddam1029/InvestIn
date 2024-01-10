@@ -36,6 +36,7 @@
     <style name="BottomNavigationTextStyle" parent="Widget.Design.BottomNavigationView">>
         <item name="android:textSize">12sp</item> <!-- Decrease text size to 12sp -->
         <item name="android:textStyle">bold</item> <!-- Make the text bold -->
+        <item name="android:textColor">@color/app_color</item>
     </style>
 
     <style name="Theme.InvestIn" parent="Base.Theme.InvestIn" />
