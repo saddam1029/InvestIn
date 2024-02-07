@@ -1,15 +1,18 @@
 package com.example.investin
 
-import MyAdapter
+import MyHomeAdapter
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.investin.chat.Chat
 import com.example.investin.databinding.ActivityHomeBinding
 import com.example.investin.login.SignIn
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -17,6 +20,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.singh.daman.proprogressviews.DoubleArcProgress
 
 class Home : AppCompatActivity() {
@@ -24,11 +31,24 @@ class Home : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var progressBar: DoubleArcProgress
     private lateinit var recyclerView: RecyclerView
-    private lateinit var myAdapter: MyAdapter
+    private lateinit var myHomeAdapter: MyHomeAdapter
+
+    private lateinit var firebaseFirestore: FirebaseFirestore
+    private lateinit var currentUser: FirebaseUser
+
+    private lateinit var textViewName: TextView
+    private lateinit var textViewEmail: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize Firebase Firestore
+        firebaseFirestore = FirebaseFirestore.getInstance()
+
+        // Get current user
+        currentUser = FirebaseAuth.getInstance().currentUser!!
 
         // Initialize the progress bar
         progressBar = binding.progressBar
@@ -43,6 +63,19 @@ class Home : AppCompatActivity() {
             return
         }
 
+        // Initialize the TextViews
+        textViewName = binding.navigationView.getHeaderView(0).findViewById(R.id.textViewName)
+        textViewEmail = binding.navigationView.getHeaderView(0).findViewById(R.id.textViewEmail)
+
+        // Retrieve user information from Firestore
+        retrieveUserInformation()
+        retrieveDisplayNameFromFirestore(currentUser?.uid ?: "")
+
+        binding.ivPost.setOnClickListener {
+            val intent = Intent(this, Post::class.java)
+            startActivity(intent)
+        }
+
         // Setup navigation item selection handling
         setupNavigationItemSelection()
 
@@ -54,7 +87,62 @@ class Home : AppCompatActivity() {
 
         // RecyclerView calling function
         postRecyclerView()
+    }
 
+
+    private fun retrieveUserInformation() {
+        // Check if the current user is not null
+        currentUser?.let { user ->
+            // Retrieve and set email from Firebase Authentication
+            val email = getCurrentUserEmail()
+            textViewEmail.text = email
+
+            // Retrieve display name from Firebase Authentication
+            val displayName = user.displayName
+
+            // Display the name in the TextView
+            if (displayName != null && displayName.isNotEmpty()) {
+                // Set username to TextView
+                textViewName.text = displayName
+            } else {
+                // If display name is not available, retrieve it from Firestore
+                retrieveDisplayNameFromFirestore(user.uid)
+            }
+        }
+    }
+
+    private fun retrieveDisplayNameFromFirestore(userId: String) {
+        val userDocRef = firebaseFirestore.collection("InvestIn")
+            .document(userId)
+            .collection("UserInformation")
+            .document("QAt0nuVdUyx0GimNepbO")
+
+        userDocRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                // Check if the document exists
+                if (documentSnapshot.exists()) {
+                    // Retrieve full name (assuming "name" field contains the full name)
+                    val fullName = documentSnapshot.getString("name")
+
+                    // Log retrieved values
+                    Log.d("HomeActivity", "Full Name: $fullName")
+
+                    // Set full name to TextView
+                    textViewName.text = fullName?.trim()
+                } else {
+                    // Handle the case when the document does not exist
+                    Log.d("HomeActivity", "User document does not exist.")
+                }
+            }
+            .addOnFailureListener { e ->
+                // Handle failures
+                Log.e("HomeActivity", "Error retrieving user information: ${e.message}", e)
+            }
+    }
+
+    private fun getCurrentUserEmail(): String {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        return currentUser?.email ?: ""
     }
 
     private fun logout() {
@@ -86,16 +174,16 @@ class Home : AppCompatActivity() {
         }
     }
 
-    private fun postRecyclerView(){
-        recyclerView = findViewById(R.id.recyclerView)
+    private fun postRecyclerView() {
+        recyclerView = findViewById(R.id.rvHome)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
 
         // Example data for the RecyclerView
         val dataList = listOf("Pakistan", "UAE", "Iran", "Palestine", "England", "India")
 
-        myAdapter = MyAdapter(dataList)
-        recyclerView.adapter = myAdapter
+        myHomeAdapter = MyHomeAdapter(dataList)
+        recyclerView.adapter = myHomeAdapter
 
     }
 
@@ -175,7 +263,8 @@ class Home : AppCompatActivity() {
                 }
 
                 R.id.about_us -> {
-                    // Handle Setting item click
+                    val intent = Intent(this, AboutUs::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.help -> {

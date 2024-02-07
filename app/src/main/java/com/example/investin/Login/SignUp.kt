@@ -22,13 +22,13 @@ class SignUp : AppCompatActivity() {
 
         binding.btCreateAccount.setOnClickListener {
 
-            val fName = binding.etFirstName.text.toString()
-            val lName = binding.etLastName.text.toString()
+//            val fName = binding.etFirstName.text.toString()
+//            val lName = binding.etLastName.text.toString()
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
             val cPassword = binding.etConformPassword.text.toString()
 
-            if (fName.isNotEmpty() && lName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && cPassword.isNotEmpty()) {
+            if (email.isNotEmpty() && password.isNotEmpty() && cPassword.isNotEmpty()) {
                 if (password == cPassword) {
 
                     firebaseAuth.createUserWithEmailAndPassword(email, password)

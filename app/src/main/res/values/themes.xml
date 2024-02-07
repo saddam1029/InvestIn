@@ -7,7 +7,7 @@
         <item name="android:fontFamily">@font/open_sans_regular</item>
         <item name="android:windowLightStatusBar">true</item>
 
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/white</item>
     </style>
 
     // UserName and Password

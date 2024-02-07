@@ -27,13 +27,14 @@ class UserInformation : AppCompatActivity() {
     private lateinit var educationTextInputLayout: TextInputLayout
     private lateinit var etDateOfBirth: EditText
     private val calendar = Calendar.getInstance()
+
     private val cities = arrayOf(
         "Karachi",
         "Lahore",
         "Islamabad",
         "Rawalpindi",
         "Faisalabad"
-    ) // Add more cities as needed
+    )
     private val education = arrayOf(
         "Primary School",
         "Middle School",
@@ -42,7 +43,7 @@ class UserInformation : AppCompatActivity() {
         "Bachelor's Degree",
         "Master's Degree",
         "Doctorate (Ph.D.)"
-    ) // Add more cities as needed
+    )
 
 //    tIRCduYOqCK3hwqJNdcd  id
 
@@ -227,7 +228,7 @@ class UserInformation : AppCompatActivity() {
 
     private fun isValidPhoneNumber(number: String): Boolean {
         // Check if the number starts with "+92" and has a total length of 12
-        return number.startsWith("+92") && number.length == 12
+        return number.startsWith("+92") && number.length == 13
     }
 
     private fun showCitySelection() {

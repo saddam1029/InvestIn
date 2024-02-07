@@ -1,17 +1,75 @@
 package com.example.investin
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.example.investin.chat.Chat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Search : AppCompatActivity() {
+
+    private lateinit var searchView: SearchView
+    private lateinit var listView: ListView
+    private val daysOfWeek = arrayOf(
+        "Investor Industry Preferences", "Investment Range",
+        "Geographical Location of Investors", "Investor Rating or Experience", "Investor's Previous Investments"
+    )
+
+    private lateinit var adapter: ArrayAdapter<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        // Initialize the back ImageView
+        val ivBack: ImageView = findViewById(R.id.ivBack)
+
+        // Set click listener to navigate back to Home activity
+        ivBack.setOnClickListener {
+            navigateToHome()
+        }
+
+        // Initialize views
+        searchView = findViewById(R.id.searchView)
+        listView = findViewById(R.id.listView)
+
+        // Initialize adapter
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, daysOfWeek)
+        listView.adapter = adapter
+
+        // Set item click listener for ListView
+        listView.setOnItemClickListener { _, _, position, _ ->
+            // Handle item click (you can open a new activity or perform other actions)
+            val selectedItem = daysOfWeek[position]
+            Toast.makeText(this, "Selected item: $selectedItem", Toast.LENGTH_SHORT).show()
+        }
+
+        // Set search query listener
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Handle search query submission if needed
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Filter the ListView based on the search query
+                adapter.filter.filter(newText)
+                return true
+            }
+        })
+
         bottomNavigation()
     }
+
+    private fun navigateToHome() {
+        val intent = Intent(this, Home::class.java)
+        startActivity(intent)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish() // Finish the current activity to prevent going back to it
+    }
+
 
     private fun bottomNavigation() {
         // Initialize and assign variable
@@ -49,4 +107,9 @@ class Search : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Override the back button to navigate to Home activity
+        navigateToHome()
+    }
 }

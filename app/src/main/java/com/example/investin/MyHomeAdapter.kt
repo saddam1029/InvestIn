@@ -1,10 +1,7 @@
 import android.content.Intent
 import android.text.Layout
-import android.text.SpannableString
-import android.text.Spanned
 import android.text.StaticLayout
 import android.text.TextUtils
-import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.investin.PostDetail
 import com.example.investin.R
 
-class MyAdapter(private val itemList: List<String>) :
-    RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyHomeAdapter(private val itemList: List<String>) :
+    RecyclerView.Adapter<MyHomeAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
