@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.CollectionReference
 import java.util.Locale
+import java.util.Objects
 
 class UserInformation : AppCompatActivity() {
 
@@ -65,11 +66,6 @@ class UserInformation : AppCompatActivity() {
         etDateOfBirth = findViewById(R.id.etDateOfBirth)
 
 
-        // Initialize Firebase Firestore
-        firebaseFirestore = FirebaseFirestore.getInstance()
-        usersReference = firebaseFirestore.collection("InvestIn")
-
-
         // Attach OnClickListener to the DOB icon
         dateOfBirthTextInputLayout.setEndIconOnClickListener {
             showDatePicker()
@@ -103,8 +99,8 @@ class UserInformation : AppCompatActivity() {
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun saveUserInformation() {
-        val firebaseFirestore = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userId = currentUser?.uid ?: ""
 
@@ -153,13 +149,15 @@ class UserInformation : AppCompatActivity() {
                     "education" to education
                     // Add other user information fields similarly
                 )
+//                var hashMap=HashMap<String,Objects>()
+
 
                 val userDocRef = firebaseFirestore.collection("InvestIn")
+                    .document("profile")
+                    .collection(userId)
                     .document(userId)
-                    .collection("UserInformation")
-                    .document()
 
-                userDocRef.set(userInformation)
+                    userDocRef.set(userInformation)
                     .addOnSuccessListener {
                         // Data saved successfully
                         val intent = Intent(this, Home::class.java)

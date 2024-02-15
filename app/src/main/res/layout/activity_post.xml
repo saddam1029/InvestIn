@@ -314,6 +314,7 @@
                     android:textSize="18sp" />
 
                 <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvSkills"
@@ -530,6 +531,24 @@
                     </RelativeLayout>
 
                 </RadioGroup>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlFive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rlFour">
+
+                <Button
+                    android:id="@+id/btPost"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="50dp"
+                    android:backgroundTint="@color/app_color"
+                    android:text="Posted"/>
 
 
             </RelativeLayout>

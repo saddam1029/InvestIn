@@ -2,12 +2,15 @@ package com.example.investin
 
 import MyHomeAdapter
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +42,7 @@ class Home : AppCompatActivity() {
     private lateinit var textViewName: TextView
     private lateinit var textViewEmail: TextView
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -75,6 +79,9 @@ class Home : AppCompatActivity() {
             val intent = Intent(this, Post::class.java)
             startActivity(intent)
         }
+
+        // Set status bar color only in the Home screen
+        setStatusBarColor(R.color.app_color)
 
         // Setup navigation item selection handling
         setupNavigationItemSelection()
@@ -113,9 +120,9 @@ class Home : AppCompatActivity() {
 
     private fun retrieveDisplayNameFromFirestore(userId: String) {
         val userDocRef = firebaseFirestore.collection("InvestIn")
-            .document(userId)
-            .collection("UserInformation")
-            .document("QAt0nuVdUyx0GimNepbO")
+            .document("profile")
+            .collection(userId)
+            .document(userId) // Use the user's UID as the document ID
 
         userDocRef.get()
             .addOnSuccessListener { documentSnapshot ->
@@ -139,6 +146,8 @@ class Home : AppCompatActivity() {
                 Log.e("HomeActivity", "Error retrieving user information: ${e.message}", e)
             }
     }
+
+
 
     private fun getCurrentUserEmail(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -281,6 +290,17 @@ class Home : AppCompatActivity() {
             true
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun setStatusBarColor(colorResId: Int) {
+        // Set the system UI visibility to 0 to make the icons light
+        window.decorView.systemUiVisibility = 0
+
+        // Set the status bar color to a dark color, such as app_color
+        window.statusBarColor = getColor(colorResId)
+    }
+
+
 
     // Function to show the progress bar
     private fun showProgressBar() {

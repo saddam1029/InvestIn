@@ -84,6 +84,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="Start IceCream Business"
+                    android:textColor="#1B1B1B"
+                    android:textSize="16sp" />
+
 
                 <TextView
                     android:id="@+id/tvTime"
@@ -91,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvTitle"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="13dp"
                     android:fontFamily="@font/open_sans"
                     android:text="Posted 2 hour ago"
                     android:textColor="#707070"
@@ -104,7 +115,7 @@
                     android:layout_height="16dp"
                     android:layout_below="@+id/tvTime"
                     android:layout_marginStart="13dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="11dp"
                     android:src="@drawable/location" />
 
                 <TextView
@@ -113,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvTime"
                     android:layout_marginStart="0dp"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="10dp"
                     android:layout_toEndOf="@+id/imageView3"
                     android:fontFamily="@font/open_sans"
                     android:text="Pakistan"

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -19,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import com.singh.daman.proprogressviews.DoubleArcProgress
 
 class SignIn : AppCompatActivity() {
@@ -28,6 +30,7 @@ class SignIn : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var progressBar: DoubleArcProgress
+    private lateinit var firebaseFirestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,7 @@ class SignIn : AppCompatActivity() {
 
         // Initialize FirebaseAuth instance
         firebaseAuth = FirebaseAuth.getInstance()
+        firebaseFirestore = FirebaseFirestore.getInstance()
 
         // Initialize the progress bar
         progressBar = binding.progressBar
@@ -62,8 +66,8 @@ class SignIn : AppCompatActivity() {
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { signInTask ->
                     if (signInTask.isSuccessful) {
-                        val intent = Intent(this, Home::class.java)
-                        startActivity(intent)
+                        // Check if user information is available in Firestore
+                        checkUserInformation(firebaseAuth.currentUser?.uid ?: "")
                     } else {
                         passwordTextInputLayout.error = "Incorrect email or password."
                     }
@@ -95,6 +99,31 @@ class SignIn : AppCompatActivity() {
         binding?.ivGoogleLogin?.setOnClickListener {
             signInWithGoogle() // Initiates the Google sign-in flow
         }
+    }
+
+    // Function to check user information in Firestore
+    private fun checkUserInformation(userId: String) {
+        val userDocRef = firebaseFirestore.collection("InvestIn")
+            .document("profile")
+            .collection(userId)
+            .document(userId)
+
+        userDocRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    // User information available, move to Home activity
+                    val intent = Intent(this, Home::class.java)
+                    startActivity(intent)
+                } else {
+                    // User information not available, request additional details
+                    val intent = Intent(this, UserInformation::class.java)
+                    startActivity(intent)
+                }
+            }
+            .addOnFailureListener { e ->
+                // Handle failures
+                Log.e("SignInActivity", "Error checking user information: ${e.message}", e)
+            }
     }
 
     // Function to initiate Google sign-in flow
@@ -140,9 +169,8 @@ class SignIn : AppCompatActivity() {
                     val intent = Intent(this, UserInformation::class.java)
                     startActivity(intent)
                 } else {
-                    // Existing user, move to Home screen
-                    val intent = Intent(this, Home::class.java)
-                    startActivity(intent)
+                    // Existing user, check if user information is available in Firestore
+                    checkUserInformation(user?.uid ?: "")
                 }
             } else {
                 // Show authentication failed toast
@@ -151,9 +179,15 @@ class SignIn : AppCompatActivity() {
         }
     }
 
+
     // Function to show the progress bar
     private fun showProgressBar() {
         progressBar.visibility = View.VISIBLE
+    }
+
+    // Function to hide the progress bar
+    private fun hideProgressBar() {
+        progressBar.visibility = View.GONE
     }
 
     // Function to handle back button press

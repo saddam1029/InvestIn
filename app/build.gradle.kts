@@ -69,6 +69,9 @@ dependencies {
 
     implementation("de.hdodenhof:circleimageview:2.1.0")
 
+    implementation ("androidx.core:core-ktx:1.12.0")
+
+
 
 
 
