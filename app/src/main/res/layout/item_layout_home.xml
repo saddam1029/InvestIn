@@ -10,54 +10,50 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="3dp"
-        app:cardCornerRadius="5dp"
+        app:cardElevation="@dimen/_3sdp"
+        app:cardCornerRadius="@dimen/_4sdp"
         app:cardUseCompatPadding="true"
         tools:ignore="MissingConstraints" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="190dp">
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="Start IceCream Business"
-                android:textColor="#1B1B1B"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTime" />
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:layout_marginHorizontal="@dimen/_7ssp">
 
             <TextView
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="4dp"
                 android:fontFamily="@font/open_sans"
                 android:text="2 hour ago"
-                android:textColor="#707070"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_9ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="Start IceCream Business"
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTime" />
+
 
             <TextView
                 android:id="@+id/itemDescription3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/_11sdp"
                 android:text="Location"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_10ssp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.008"
                 app:layout_constraintStart_toStartOf="parent"
@@ -68,12 +64,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/_11sdp"
                 android:fontFamily="@font/open_sans"
-
                 android:text="Pakistan"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_10ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/imageView3"
@@ -81,18 +76,16 @@
 
             <TextView
                 android:id="@+id/tvDescription"
-                android:layout_width="350dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:ellipsize="end"
                 android:fontFamily="@font/open_sans"
                 android:maxLines="2"
                 android:text="Food is any substance consumed to provide nutritional support and energy to an organism. It can be raw, processed, or formulated and is consumed orally by animals for growth, health, or pleasure. Food is mainly composed of water, lipids, proteins, and carbohydrates."
-                android:textColor="#1B1B1B"
-                android:textSize="12sp"
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_9ssp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
@@ -100,54 +93,47 @@
                 android:id="@+id/tvMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/_1sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="more"
-                android:paddingBottom="9dp"
-                android:textColor="#007aff"
-                android:textSize="13sp"
+                android:textColor="@color/app_color"
+                android:textSize="@dimen/_10ssp"
                 android:textStyle="bold"
                 android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
             <ImageView
                 android:id="@+id/ivDislike"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.049"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_15ssp"
                 app:layout_constraintStart_toEndOf="@+id/ivLike"
                 app:layout_constraintTop_toBottomOf="@+id/itemDescription3"
                 app:srcCompat="@drawable/dislike" />
 
             <ImageView
                 android:id="@+id/ivLike"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/itemDescription3"
                 app:srcCompat="@drawable/like" />
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginTop="17dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.098"
+                android:layout_width="@dimen/_13sdp"
+                android:layout_height="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:layout_marginStart="@dimen/_20sdp"
                 app:layout_constraintStart_toEndOf="@+id/itemDescription3"
                 app:layout_constraintTop_toBottomOf="@+id/tvMore"
                 app:srcCompat="@drawable/location" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,10 +2,10 @@ package com.example.investin
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.investin.chat.Chat
+import com.example.investin.home.Home
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Search : AppCompatActivity() {
@@ -22,14 +22,6 @@ class Search : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-
-        // Initialize the back ImageView
-        val ivBack: ImageView = findViewById(R.id.ivBack)
-
-        // Set click listener to navigate back to Home activity
-        ivBack.setOnClickListener {
-            navigateToHome()
-        }
 
         // Initialize views
         searchView = findViewById(R.id.searchView)

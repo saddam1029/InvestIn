@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".PostDetail">
+    tools:context=".home.PostDetail">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar4"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextAppearance="@style/ToolbarTitleStyle">
@@ -18,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="16dp"
@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/ivBack"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
                 android:src="@drawable/back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,29 +38,25 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="95dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="Post Detail"
-                android:textColor="#1B1B1B"
-                android:textSize="18sp"
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivBack"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.391" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-            <Button
-                android:id="@+id/btInvest"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="35dp"
-                android:backgroundTint="@color/app_color"
-                android:text="Invest"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
+            <ImageView
+                android:id="@+id/ivInvest"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:src="@drawable/invest_icon"
+                android:layout_marginEnd="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/titleTextView"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -88,12 +84,12 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="Start IceCream Business"
                     android:textColor="#1B1B1B"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_14ssp" />
 
 
                 <TextView
@@ -101,20 +97,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvTitle"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
                     android:fontFamily="@font/open_sans"
                     android:text="Posted 2 hour ago"
                     android:textColor="#707070"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/_10ssp"
                     tools:ignore="NotSibling" />
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
                     android:layout_below="@+id/tvTime"
-                    android:layout_marginStart="13dp"
+                    android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/location" />
 
@@ -129,7 +125,7 @@
                     android:fontFamily="@font/open_sans"
                     android:text="Pakistan"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/_10ssp" />
 
             </RelativeLayout>
 
@@ -161,13 +157,13 @@
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:ellipsize="end"
                     android:fontFamily="@font/open_sans"
                     android:text="Food is any substance consumed to provide nutritional support and energy to an organism. It can be raw, processed, or formulated and is consumed orally by animals for growth, health, or pleasure. Food is mainly composed of water, lipids, proteins, and carbohydrates."
                     android:textColor="#1B1B1B"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10ssp" />
 
             </RelativeLayout>
 
@@ -200,80 +196,92 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="Skill and Experience"
                     android:textColor="#1B1B1B"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/_14ssp" />
 
-                <Button
-                    android:id="@+id/bt1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/tvSkill"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="13dp"
-                    android:backgroundTint="#D6E4F6"
-                    android:paddingTop="3dp"
-                    android:text="Business"
-                    android:textColor="#1B1B1B"
-                    android:textSize="11sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_below="@+id/tvSkill">
 
-                <Button
-                    android:id="@+id/bt2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/tvSkill"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_toEndOf="@+id/bt1"
-                    android:backgroundTint="#D6E4F6"
-                    android:paddingTop="3dp"
-                    android:text="Communication"
-                    android:textColor="#1B1B1B"
-                    android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/tvSkill1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="@dimen/_4sdp"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:background="@drawable/radio_button_background"
+                        android:text="Business"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9ssp"/>
 
-                <Button
-                    android:id="@+id/bt3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/tvSkill"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_toEndOf="@+id/bt2"
-                    android:backgroundTint="#D6E4F6"
-                    android:paddingTop="3dp"
-                    android:text="Creativity"
-                    android:textColor="#1B1B1B"
-                    android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/tvSkill2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/tvSkill1"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/radio_button_background"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:paddingVertical="@dimen/_4sdp"
+                        android:text="Communication"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9ssp" />
 
-                <Button
-                    android:id="@+id/bt4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/bt1"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
-                    android:backgroundTint="#D6E4F6"
-                    android:paddingTop="3dp"
-                    android:text="Marketing"
-                    android:textColor="#1B1B1B"
-                    android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/tvSkill3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/tvSkill2"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/radio_button_background"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:paddingVertical="@dimen/_4sdp"
+                        android:text="Money management"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9ssp" />
 
-                <Button
-                    android:id="@+id/bt5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/bt1"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_toEndOf="@+id/bt4"
-                    android:backgroundTint="#D6E4F6"
-                    android:paddingTop="3dp"
-                    android:text="Money management"
-                    android:textColor="#1B1B1B"
-                    android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/tvSkill4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvSkill1"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/radio_button_background"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:paddingVertical="@dimen/_4sdp"
+                        android:text="Leadership"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9ssp" />
+
+                    <TextView
+                        android:id="@+id/tvSkill5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tvSkill4"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_below="@id/tvSkill1"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/radio_button_background"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:paddingVertical="@dimen/_4sdp"
+                        android:text="Positive mindset"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9ssp" />
+
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
@@ -306,124 +314,123 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="About Entrepreneur"
                     android:textColor="#1B1B1B"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <RelativeLayout
-                    android:id="@+id/rl4.1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvAboutEntrepreneur"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_below="@+id/tvAboutEntrepreneur">
 
-                    <TextView
-                        android:id="@+id/tvVer"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/rl4.1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvVer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="Profile Verification"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_10ssp" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl4.2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
-                        android:text="Profile Verification"
-                        android:textColor="@android:color/black"
-                        android:textSize="13sp" />
+                        android:layout_below="@id/rl4.1"
+                        android:layout_marginTop="@dimen/_5sdp">
+
+                        <TextView
+                            android:id="@+id/tvTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="Total Job Post"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_10ssp" />
+
+                        <TextView
+                            android:id="@+id/tvTotalJobPost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/open_sans"
+                            android:text="15 job posted"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_10ssp" />
 
 
-                </RelativeLayout>
+                    </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rl4.2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/rl4.1"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="8dp">
-
-                    <TextView
-                        android:id="@+id/tvTotal"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/rl4.3"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
-                        android:text="Total Job Post"
-                        android:textColor="@android:color/black"
-                        android:textSize="13sp" />
+                        android:layout_below="@id/rl4.2"
+                        android:layout_marginTop="@dimen/_5sdp">
 
-                    <TextView
-                        android:id="@+id/tvTotalJobPost"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/tvInvi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="Total Invitation "
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_10ssp" />
+
+                        <TextView
+                            android:id="@+id/tvTotalInvitation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/open_sans"
+                            android:text="5 invitations"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_10ssp" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl4.4"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
-                        android:layout_toEndOf="@id/tvTotal"
-                        android:fontFamily="@font/open_sans"
-                        android:text="15 job posted"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp" />
+                        android:layout_below="@id/rl4.3"
+                        android:layout_marginTop="@dimen/_5sdp">
+
+                        <TextView
+                            android:id="@+id/tvInviRes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="Invitation Response"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_10ssp" />
+
+                        <TextView
+                            android:id="@+id/tvInvitationResponse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/open_sans"
+                            android:text="2 Invitation Response"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_10ssp" />
 
 
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl4.3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/rl4.2"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="8dp">
-
-                    <TextView
-                        android:id="@+id/tvInvi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
-                        android:text="Total Invitation"
-                        android:textColor="@android:color/black"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvInvitation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
-                        android:layout_toEndOf="@id/tvInvi"
-                        android:fontFamily="@font/open_sans"
-                        android:text="5 invitations"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp" />
-
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl4.4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/rl4.3"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="8dp">
-
-                    <TextView
-                        android:id="@+id/tvInviRes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
-                        android:text="Invitation Responce"
-                        android:textColor="@android:color/black"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvInvitationResponse"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="100dp"
-                        android:layout_toEndOf="@id/tvInviRes"
-                        android:fontFamily="@font/open_sans"
-                        android:text="2 Invitation Response"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp" />
-
-
+                    </RelativeLayout>
                 </RelativeLayout>
 
 

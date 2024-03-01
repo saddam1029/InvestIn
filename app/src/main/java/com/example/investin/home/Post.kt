@@ -1,15 +1,14 @@
-package com.example.investin
+package com.example.investin.home
 
 import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.RadioButton
 import android.widget.Toast
+import com.example.investin.R
 import com.example.investin.databinding.ActivityPostBinding
-import com.example.investin.databinding.ActivitySignInBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,39 +18,38 @@ import com.google.firebase.ktx.Firebase
 class Post : AppCompatActivity() {
 
     private lateinit var binding: ActivityPostBinding
-    private lateinit var selectedSkill: String
     private var shouldShowConfirmationDialog = true
-    private val selectedSkills = mutableListOf<String>()
+    private val selectedSkills = mutableSetOf<String>()
 
     var firebaseFirestore = Firebase.firestore
     private lateinit var usersReference: CollectionReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Inflate layout and set content view
         binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val ivBack: ImageView = findViewById(R.id.ivBack)
 
-        // Initialize Firebase Firestore
         firebaseFirestore = FirebaseFirestore.getInstance()
         usersReference = firebaseFirestore.collection("InvestIn")
 
-        // Set up a listener for the RadioGroup to update the selectedSkills list
-        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
-            val radioButton: RadioButton = group.findViewById(checkedId)
-            val skill = radioButton.text.toString()
 
-            if (selectedSkills.contains(skill)) {
-                selectedSkills.remove(skill)
-            } else if (selectedSkills.size < 5) {
-                selectedSkills.add(skill)
-            }
-
-            // Log the selected skills (optional)
-            Log.d("SelectedSkills", selectedSkills.toString())
-        }
+        // Call the setup function for each CheckBox
+        setupCheckBox(binding.cbBusiness)
+        setupCheckBox(binding.cbCommunication)
+        setupCheckBox(binding.cbCreativity)
+        setupCheckBox(binding.cbMarketing)
+        setupCheckBox(binding.cbMoneyManagement)
+        setupCheckBox(binding.cbSales)
+        setupCheckBox(binding.cbLeadership)
+        setupCheckBox(binding.cbPositiveMindset)
+        setupCheckBox(binding.cbTechnicalSkills)
+        setupCheckBox(binding.cbListening)
+        setupCheckBox(binding.cbTimeManagement)
+        setupCheckBox(binding.cbStrategy)
+        setupCheckBox(binding.cbCustomerService)
+        setupCheckBox(binding.rbNetworking)
 
         ivBack.setOnClickListener {
             showConfirmationDialog()
@@ -59,6 +57,17 @@ class Post : AppCompatActivity() {
 
         binding.btPost.setOnClickListener {
             saveUserPost()
+        }
+    }
+
+    private fun setupCheckBox(checkBox: CheckBox) {
+        checkBox.setOnCheckedChangeListener { _, isChecked ->
+            val skill = checkBox.text.toString()
+            if (isChecked) {
+                selectedSkills.add(skill)
+            } else {
+                selectedSkills.remove(skill)
+            }
         }
     }
 
@@ -77,7 +86,7 @@ class Post : AppCompatActivity() {
             "descriptor" to postDescriptor,
             "budget" to postBudget,
             "location" to postLocation,
-            "skills" to selectedSkills
+            "skills" to selectedSkills.toList() // Convert Set to List
         )
 
         val userDocRef = firebaseFirestore.collection("InvestIn")
@@ -89,6 +98,8 @@ class Post : AppCompatActivity() {
             userDocRef.set(postData)
             .addOnSuccessListener { documentReference ->
                 Toast.makeText(this, "User information saved!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, Home::class.java)
+                startActivity(intent)
             }
             .addOnFailureListener { e ->
                 // Failed to save data

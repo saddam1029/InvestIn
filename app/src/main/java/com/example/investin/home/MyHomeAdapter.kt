@@ -1,3 +1,5 @@
+package com.example.investin.home
+
 import android.content.Intent
 import android.text.Layout
 import android.text.StaticLayout
@@ -8,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.investin.PostDetail
 import com.example.investin.R
 
 class MyHomeAdapter(private val itemList: List<String>) :

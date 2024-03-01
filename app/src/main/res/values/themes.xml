@@ -25,6 +25,7 @@
     <style name="CustomTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/app_color</item> <!-- Set border color to red -->
         <item name="boxBackgroundColor">#F2F4FA</item> <!-- Set background color to silver -->
+
     </style>
 
     <style name="ToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">

@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar4"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextAppearance="@style/ToolbarTitleStyle">
@@ -18,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="16dp"
@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/ivBack"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
                 android:src="@drawable/back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,15 +38,14 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="90dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="About Us"
-                android:textColor="#1B1B1B"
-                android:textSize="18sp"
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivBack"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.391" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,7 +54,7 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar4">
@@ -65,104 +64,115 @@
             android:layout_height="wrap_content"
             tools:ignore="ExtraText">
 
-            <ImageView
-                android:id="@+id/ivAboutUsBack"
+
+            <RelativeLayout
+                android:id="@+id/rl2"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_marginTop="-20dp"
-                android:src="@drawable/about_us_image"
-                tools:ignore="DuplicateIds" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvAboutUs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="25dp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="About Us"
-                android:textColor="#1B1B1B"
-                android:textSize="18sp" />
+                <ImageView
+                    android:id="@+id/ivAboutUsBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_165sdp"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/about_us_image" />
 
-            <TextView
-                android:id="@+id/tvAboutUsDescription"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvAboutUs"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="15dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/open_sans"
-                android:text="InvetsIn is Pakistan First Online Business Investment App. In which Entrepreneurs Take investment from Investors and Start There Own Business"
-                android:textColor="#707070"
-                android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/tvAboutUs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/_11sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="About Us"
+                    android:textColor="@color/activity_name"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/tvAboutUsDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvAboutUs"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/open_sans"
+                    android:layout_marginStart="@dimen/_11sdp"
+                    android:maxWidth="@dimen/_100sdp"
+                    android:text="InvestIn is Pakistan First Online Business Investment App. In which Entrepreneurs Take investment from Investors and Start Their Own Business"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAboutUs" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tvStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvAboutUsDescription"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="60dp"
+                android:layout_below="@+id/rl2"
+                android:layout_marginStart="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="How did it All Start?"
-                android:textColor="#1B1B1B"
-                android:textSize="18sp" />
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_14ssp" />
 
             <TextView
                 android:id="@+id/tvStartDescription1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_7sdp"
                 android:layout_below="@id/tvStart"
                 android:ellipsize="end"
                 android:fontFamily="@font/open_sans"
                 android:text="'InvestIn' originated as a collaborative vision between three dynamic individuals: Syed Saddam, Rabia Awan, and Ahmed. The inception of this innovative project traces back to a pivotal moment when Syed Saddam, one of the founders, identified a crucial gap in the entrepreneurial landscape of Pakistan. Inspired by the challenges faced by a friend who sought investment for their business, Syed recognized the absence of a dedicated platform connecting entrepreneurs with potential investors in the country."
-                android:textColor="#1B1B1B"
-                android:textSize="12sp" />
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_9ssp" />
 
             <TextView
                 android:id="@+id/tvStartDescription2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_below="@id/tvStartDescription1"
                 android:ellipsize="end"
                 android:fontFamily="@font/open_sans"
                 android:text="Driven by the ambition to fill this void and facilitate a seamless connection between ambitious business owners and investors, the trio embarked on the journey to create 'InvestIn'. Syed Saddam's experience and insights as an entrepreneur, combined with Rabia Awan's expertise in a tech-driven ecosystem, and Ahmed's strategic vision, laid the foundation for the app."
-                android:textColor="#1B1B1B"
-                android:textSize="12sp" />
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_9ssp" />
 
             <TextView
                 android:id="@+id/tvStartDescription3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_below="@id/tvStartDescription2"
                 android:ellipsize="end"
                 android:fontFamily="@font/open_sans"
                 android:text="With a shared mission to address the pressing need for a reliable platform that could empower entrepreneurs to find financial support for their ventures, the team collaborated to transform this vision into a reality. 'InvestIn' emerged as a result of their collective efforts and determination to make a positive impact on the economic landscape of Pakistan."
-                android:textColor="#1B1B1B"
-                android:textSize="12sp" />
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_9ssp" />
 
             <TextView
                 android:id="@+id/tvStartDescription4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_below="@id/tvStartDescription3"
                 android:ellipsize="end"
                 android:fontFamily="@font/open_sans"
                 android:text="From its conceptualization, the app evolved under the leadership of the three partners, each contributing their unique skills and perspectives. 'InvestIn' has since grown from a conceptual idea to a dynamic platform, embodying
                  the spirit of collaboration and innovation. The journey mirrors the entrepreneurial spirit of its founders, who, like the entrepreneurs they aim to support, have faced challenges head-on to shape 'InvestIn' into a promising solution for the entrepreneurial ecosystem in Pakistan.\n\n\n\n\n"
-                android:textColor="#1B1B1B"
-                android:textSize="12sp" />
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_9ssp" />
 
         </RelativeLayout>
 

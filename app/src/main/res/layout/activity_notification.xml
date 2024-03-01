@@ -10,46 +10,20 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar4"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextAppearance="@style/ToolbarTitleStyle">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="8dp">
-
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/titleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="90dp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="Notification"
-                android:textColor="#1B1B1B"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivBack"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.391" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textStyle="bold"
+            android:text="Notification"
+            android:layout_gravity="center"
+            android:textColor="@color/activity_name"
+            android:textSize="@dimen/_16ssp"/>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -57,10 +31,9 @@
         android:id="@+id/rlTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar4">
 
@@ -71,18 +44,17 @@
             android:text="4 Notification"
             android:fontFamily="@font/open_sans_semibold"
             android:textColor="@color/app_color"
-            android:textSize="15sp" />
+            android:textSize="@dimen/_13ssp" />
 
         <TextView
             android:id="@+id/tvTotalJobPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
-            android:layout_toEndOf="@id/tvTotal"
+            android:layout_alignParentEnd="true"
             android:fontFamily="@font/open_sans_semibold"
             android:text="Mark All as Read"
             android:textColor="@color/app_color"
-            android:textSize="15sp" />
+            android:textSize="@dimen/_13ssp" />
 
 
     </RelativeLayout>

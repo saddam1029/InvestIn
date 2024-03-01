@@ -1,13 +1,11 @@
-package com.example.investin
+package com.example.investin.home
 
-import MyHomeAdapter
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.WindowInsetsController
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -15,6 +13,11 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.investin.AboutUs
+import com.example.investin.Advice
+import com.example.investin.Notification
+import com.example.investin.R
+import com.example.investin.Search
 import com.example.investin.chat.Chat
 import com.example.investin.databinding.ActivityHomeBinding
 import com.example.investin.login.SignIn
@@ -25,15 +28,12 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.singh.daman.proprogressviews.DoubleArcProgress
 
 class Home : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var progressBar: DoubleArcProgress
-    private lateinit var recyclerView: RecyclerView
     private lateinit var myHomeAdapter: MyHomeAdapter
 
     private lateinit var firebaseFirestore: FirebaseFirestore
@@ -41,6 +41,12 @@ class Home : AppCompatActivity() {
 
     private lateinit var textViewName: TextView
     private lateinit var textViewEmail: TextView
+    private lateinit var textViewGender: TextView
+    private lateinit var textViewDateOfBirth: TextView
+    private lateinit var textViewNumber: TextView
+    private lateinit var textViewAddress: TextView
+    private lateinit var textViewRole: TextView
+    private lateinit var nevProfile: ImageView
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,9 +73,15 @@ class Home : AppCompatActivity() {
             return
         }
 
-        // Initialize the TextViews
+
         textViewName = binding.navigationView.getHeaderView(0).findViewById(R.id.textViewName)
         textViewEmail = binding.navigationView.getHeaderView(0).findViewById(R.id.textViewEmail)
+        nevProfile = binding.navigationView.getHeaderView(0).findViewById(R.id.ivNavProfile)
+        textViewAddress = TextView(this)
+        textViewGender = TextView(this)
+        textViewDateOfBirth= TextView(this)
+        textViewNumber= TextView(this)
+        textViewRole= TextView(this)
 
         // Retrieve user information from Firestore
         retrieveUserInformation()
@@ -79,6 +91,20 @@ class Home : AppCompatActivity() {
             val intent = Intent(this, Post::class.java)
             startActivity(intent)
         }
+
+        nevProfile.setOnClickListener {
+            val intent = Intent(this, Profile::class.java)
+            // Pass user name and email as extras
+            intent.putExtra("userName", textViewName.text.toString())
+            intent.putExtra("userEmail", textViewEmail.text.toString())
+            intent.putExtra("gender", textViewGender.text.toString())
+            intent.putExtra("number", textViewNumber.text.toString())
+            intent.putExtra("dateOfBirth", textViewDateOfBirth.text.toString())
+            intent.putExtra("permanentAddress", textViewAddress.text.toString())
+            intent.putExtra("userRole", textViewRole.text.toString())
+            startActivity(intent)
+        }
+
 
         // Set status bar color only in the Home screen
         setStatusBarColor(R.color.app_color)
@@ -94,8 +120,8 @@ class Home : AppCompatActivity() {
 
         // RecyclerView calling function
         postRecyclerView()
-    }
 
+    }
 
     private fun retrieveUserInformation() {
         // Check if the current user is not null
@@ -130,12 +156,21 @@ class Home : AppCompatActivity() {
                 if (documentSnapshot.exists()) {
                     // Retrieve full name (assuming "name" field contains the full name)
                     val fullName = documentSnapshot.getString("name")
+                    val gender = documentSnapshot.getString("gender")
+                    val number = documentSnapshot.getString("number")
+                    val dateOfBirth = documentSnapshot.getString("dateOfBirth")
+                    val address = documentSnapshot.getString("permanentAddress")
+                    val role = documentSnapshot.getString("userRole")
 
-                    // Log retrieved values
-                    Log.d("HomeActivity", "Full Name: $fullName")
 
                     // Set full name to TextView
-                    textViewName.text = fullName?.trim()
+                    textViewName.text = fullName?.trim() ?: ""
+                    textViewGender.text = gender?.trim() ?: ""
+                    textViewNumber.text = number?.trim() ?: ""
+                    textViewDateOfBirth.text = dateOfBirth?.trim() ?: ""
+                    textViewAddress.text = address?.trim() ?: ""
+                    textViewRole.text = role?.trim() ?: ""
+
                 } else {
                     // Handle the case when the document does not exist
                     Log.d("HomeActivity", "User document does not exist.")
@@ -146,8 +181,6 @@ class Home : AppCompatActivity() {
                 Log.e("HomeActivity", "Error retrieving user information: ${e.message}", e)
             }
     }
-
-
 
     private fun getCurrentUserEmail(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -184,27 +217,23 @@ class Home : AppCompatActivity() {
     }
 
     private fun postRecyclerView() {
-        recyclerView = findViewById(R.id.rvHome)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.rvHome.layoutManager = LinearLayoutManager(this)
 
 
         // Example data for the RecyclerView
         val dataList = listOf("Pakistan", "UAE", "Iran", "Palestine", "England", "India")
 
         myHomeAdapter = MyHomeAdapter(dataList)
-        recyclerView.adapter = myHomeAdapter
+        binding.rvHome.adapter = myHomeAdapter
 
     }
 
     private fun bottomNavigation() {
-        // Initialize and assign variable
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation_bar)
-
         // Set Home selected
-        bottomNavigationView.selectedItemId = R.id.home
+        binding.bottomNavigationBar.selectedItemId = R.id.home
 
         // Perform item selected listener
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        binding.bottomNavigationBar.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.message -> {
                     startActivity(Intent(applicationContext, Chat::class.java))
@@ -237,19 +266,14 @@ class Home : AppCompatActivity() {
     }
 
     private fun setupProfileImageClick() {
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val ivProfile = findViewById<ImageView>(R.id.ivProfile)
-
-        ivProfile.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
+        binding.ivProfile.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
         }
     }
 
     private fun setupNavigationItemSelection() {
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val navigationView = findViewById<NavigationView>(R.id.navigation_view)
 
-        navigationView.setNavigationItemSelectedListener { menuItem ->
+        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.account -> {
                     // Handle Account item click
@@ -282,7 +306,7 @@ class Home : AppCompatActivity() {
 
                 R.id.logOut -> {
                     logout() // Call the logout function here
-                    drawerLayout.closeDrawer(GravityCompat.START)
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
             }
@@ -299,8 +323,6 @@ class Home : AppCompatActivity() {
         // Set the status bar color to a dark color, such as app_color
         window.statusBarColor = getColor(colorResId)
     }
-
-
 
     // Function to show the progress bar
     private fun showProgressBar() {

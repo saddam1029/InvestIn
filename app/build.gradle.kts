@@ -67,6 +67,9 @@ dependencies {
     implementation("com.tbuonomo:dotsindicator:5.0")
     implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
 
+    implementation ("com.intuit.ssp:ssp-android:1.0.6")
+    implementation ("com.intuit.sdp:sdp-android:1.0.6")
+
     implementation("de.hdodenhof:circleimageview:2.1.0")
 
     implementation ("androidx.core:core-ktx:1.12.0")

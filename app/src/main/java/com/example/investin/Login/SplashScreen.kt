@@ -7,10 +7,9 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.investin.Home
+import com.example.investin.home.Home
 import com.example.investin.MainActivity
 import com.example.investin.R
-import com.example.investin.UserInformation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

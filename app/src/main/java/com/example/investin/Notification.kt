@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.investin.chat.Chat
+import com.example.investin.home.Home
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Notification : AppCompatActivity() {
@@ -36,13 +37,6 @@ class Notification : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Initialize the back ImageView
-        val ivBack: ImageView = findViewById(R.id.ivBack)
-
-        // Set click listener to navigate back to Home activity
-        ivBack.setOnClickListener {
-            navigateToHome()
-        }
 
         bottomNavigation()
     }
@@ -50,7 +44,7 @@ class Notification : AppCompatActivity() {
     private fun navigateToHome() {
         val intent = Intent(this, Home::class.java)
         startActivity(intent)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out) // fade activity when exit
         finish() // Finish the current activity to prevent going back to it
     }
 

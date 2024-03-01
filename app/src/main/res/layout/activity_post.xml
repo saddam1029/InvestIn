@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Post">
+    tools:context=".home.Post">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar4"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextAppearance="@style/ToolbarTitleStyle">
@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/ivBack"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
                 android:src="@drawable/back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,15 +38,14 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="110dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="Post"
-                android:textColor="#1B1B1B"
-                android:textSize="18sp"
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivBack"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.391" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -77,20 +76,20 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="Business Title"
                     android:textColor="#1B1B1B"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/title_text_input_layout"
                     style="@style/CustomTextInputLayoutStyle"
-                    android:layout_width="330dp"
-                    android:layout_marginStart="15dp"
-                    app:hintEnabled="false"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
+                    app:hintEnabled="false"
                     android:layout_below="@id/tvTitle"
                     android:theme="@style/CustomTextInputLayoutTheme"
                     tools:ignore="MissingConstraints"
@@ -99,13 +98,13 @@
                     <EditText
                         android:id="@+id/etTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="match_parent"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:ems="10"
                         android:hint="Enter Your Business Title"
-                        android:padding="10dp"
-                        android:textSize="13sp" />
+                        android:padding="@dimen/_12sdp"
+                        android:textSize="@dimen/_9ssp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,34 +115,33 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title_text_input_layout"
                     android:layout_marginTop="40dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="Business Description"
                     android:textColor="#1B1B1B"
                     android:gravity="top"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/description_text_input_layout"
                     style="@style/CustomTextInputLayoutStyle"
-                    android:layout_width="330dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
                     app:hintEnabled="false"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvDescription"
                     android:theme="@style/CustomTextInputLayoutTheme"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="0dp">
+                    tools:ignore="MissingConstraints">
 
                     <EditText
                         android:id="@+id/etDescription"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="@dimen/_130sdp"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:ems="10"
-                        android:padding="10dp"
-                        android:textSize="13sp"
+                        android:padding="@dimen/_12sdp"
+                        android:textSize="@dimen/_9ssp"
                         android:gravity="top|start" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -179,18 +177,18 @@
                     android:id="@+id/tvBudget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="What is the Maximum Budget for Required Your Business"
                     android:textColor="#1B1B1B"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/budget_text_input_layout"
                     style="@style/CustomTextInputLayoutStyle"
-                    android:layout_width="330dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
                     app:hintEnabled="false"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvBudget"
@@ -201,13 +199,13 @@
                     <EditText
                         android:id="@+id/etBudget"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:ems="10"
                         android:hint="Rs: 000,000,000"
-                        android:padding="10dp"
-                        android:textSize="13sp" />
+                        android:padding="@dimen/_12sdp"
+                        android:textSize="@dimen/_9ssp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -240,39 +238,36 @@
                     android:id="@+id/tvLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
                     android:layout_marginTop="25dp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="Enter Your Current Complete Location"
                     android:textColor="#1B1B1B"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/LOCATION_text_input_layout"
                     style="@style/CustomTextInputLayoutStyle"
-                    android:layout_width="330dp"
-                    android:layout_marginStart="15dp"
-                    app:hintEnabled="false"
                     android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
+                    app:hintEnabled="false"
                     android:layout_below="@id/tvLocation"
                     android:theme="@style/CustomTextInputLayoutTheme"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="0dp">
+                    tools:ignore="MissingConstraints">
 
                     <EditText
                         android:id="@+id/etLocation"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:ems="10"
                         android:hint="Your Location"
-                        android:padding="10dp"
-                        android:textSize="13sp" />
+                        android:padding="@dimen/_12sdp"
+                        android:textSize="@dimen/_9ssp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
             </RelativeLayout>
@@ -302,235 +297,226 @@
 
                 <TextView
                     android:id="@+id/tvSkills"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
                     android:layout_marginTop="25dp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="Add Upto 5 Skills"
                     android:textColor="#1B1B1B"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/_14ssp"/>
 
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
                     android:layout_below="@id/tvSkills"
-                    tools:ignore="MissingConstraints">
+                    android:orientation="horizontal">
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/cbBusiness"
+                        android:layout_width="80dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:text="Business"
+                        android:button="@null"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
 
-                        <RadioButton
-                            android:id="@+id/rbBusiness"
-                            android:layout_width="80dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="13dp"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Business"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
+                    <CheckBox
+                        android:id="@+id/cbCommunication"
+                        android:layout_width="110dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toEndOf="@id/cbBusiness"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:text="Communication"
+                        android:button="@null"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
 
-                        <RadioButton
-                            android:id="@+id/rbCommunication"
-                            android:layout_width="110dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="13dp"
-                            android:layout_toEndOf="@id/rbBusiness"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Communication"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
+                    <CheckBox
+                        android:id="@+id/cbCreativity"
+                        android:layout_width="90dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toEndOf="@id/cbCommunication"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Creativity"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp"
+                        />
 
-                        <RadioButton
-                            android:id="@+id/rbCreativity"
-                            android:layout_width="90dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="13dp"
-                            android:layout_toEndOf="@id/rbCommunication"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Creativity"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
+                    <CheckBox
+                        android:id="@+id/cbMarketing"
+                        android:layout_width="90dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_below="@id/cbBusiness"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Marketing"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <CheckBox
+                        android:id="@+id/cbMoneyManagement"
+                        android:layout_width="150dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_below="@id/cbBusiness"
+                        android:layout_toEndOf="@id/cbMarketing"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Money management"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <CheckBox
+                        android:id="@+id/cbSales"
+                        android:layout_width="70dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_below="@id/cbBusiness"
+                        android:layout_toEndOf="@id/cbMoneyManagement"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Sales"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <CheckBox
+                        android:id="@+id/cbLeadership"
+                        android:layout_width="90dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_below="@id/cbMarketing"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Leadership"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <CheckBox
+                        android:id="@+id/cbPositiveMindset"
+                        android:layout_width="120dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_below="@id/cbMarketing"
+                        android:layout_toEndOf="@id/cbLeadership"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Positive mindset"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <CheckBox
+                        android:id="@+id/cbTechnicalSkills"
+                        android:layout_width="110dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_below="@id/cbMarketing"
+                        android:layout_toEndOf="@id/cbPositiveMindset"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Technical skills"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <CheckBox
+                        android:id="@+id/cbListening"
+                        android:layout_width="70dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_below="@id/cbLeadership"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Listening"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <CheckBox
+                        android:id="@+id/cbTimeManagement"
+                        android:layout_width="130dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toEndOf="@id/cbListening"
+                        android:layout_below="@id/cbLeadership"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Time management"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <CheckBox
+                        android:id="@+id/cbStrategy"
+                        android:layout_width="80dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toEndOf="@id/cbTimeManagement"
+                        android:layout_below="@id/cbLeadership"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Strategy"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <CheckBox
+                        android:id="@+id/cbCustomerService"
+                        android:layout_width="120dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_below="@id/cbListening"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Customer Service"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <CheckBox
+                        android:id="@+id/rbNetworking"
+                        android:layout_width="90dp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_below="@id/cbListening"
+                        android:layout_toEndOf="@id/cbCustomerService"
+                        android:background="@drawable/radio_button_background"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:text="Networking"
+                        android:textColor="#1B1B1B"
+                        android:textSize="@dimen/_8ssp" />
 
 
-                        <RadioButton
-                            android:id="@+id/rbMarketing"
-                            android:layout_width="90dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/rbBusiness"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Marketing"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
 
-                        <RadioButton
-                            android:id="@+id/rbMoneyManagement"
-                            android:layout_width="150dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/rbBusiness"
-                            android:layout_toEndOf="@id/rbMarketing"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Money management"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
 
-                        <RadioButton
-                            android:id="@+id/rbSales"
-                            android:layout_width="70dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/rbBusiness"
-                            android:layout_toEndOf="@id/rbMoneyManagement"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Sales"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
-
-                        <RadioButton
-                            android:id="@+id/rbLeadership"
-                            android:layout_width="90dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/rbMarketing"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Leadership"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
-
-                        <RadioButton
-                            android:id="@+id/rPositiveMindset"
-                            android:layout_width="120dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/rbMarketing"
-                            android:layout_toEndOf="@id/rbLeadership"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Positive mindset"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
-
-                        <RadioButton
-                            android:id="@+id/rTechnicalSkills"
-                            android:layout_width="110dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/rbMarketing"
-                            android:layout_toEndOf="@id/rPositiveMindset"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Technical skills"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
-
-                        <RadioButton
-                            android:id="@+id/rbListening"
-                            android:layout_width="70dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/rbLeadership"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Listening"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
-
-                        <RadioButton
-                            android:id="@+id/rbTimeManagement"
-                            android:layout_width="130dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_toEndOf="@id/rbListening"
-                            android:layout_below="@id/rbLeadership"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Time management"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
-
-                        <RadioButton
-                            android:id="@+id/rbStrategy"
-                            android:layout_width="80dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_toEndOf="@id/rbTimeManagement"
-                            android:layout_below="@id/rbLeadership"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Strategy"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
-
-                        <RadioButton
-                            android:id="@+id/rbCustomerService"
-                            android:layout_width="120dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/rbListening"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Customer Service"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
-
-                        <RadioButton
-                            android:id="@+id/rbNetworking"
-                            android:layout_width="90dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/rbListening"
-                            android:layout_toEndOf="@id/rbCustomerService"
-                            android:background="@drawable/radio_button_background"
-                            android:gravity="center"
-                            android:button="@null"
-                            android:text="Networking"
-                            android:textColor="#1B1B1B"
-                            android:textSize="11sp" />
-
-                    </RelativeLayout>
-
-                </RadioGroup>
+                </RelativeLayout>
 
 
             </RelativeLayout>
@@ -544,9 +530,9 @@
                 <Button
                     android:id="@+id/btPost"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_23sdp"
+                    android:layout_marginTop="@dimen/_40sdp"
                     android:backgroundTint="@color/app_color"
                     android:text="Posted"/>
 

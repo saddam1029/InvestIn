@@ -1,9 +1,10 @@
-package com.example.investin
+package com.example.investin.home
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.example.investin.R
 
 class PostDetail : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

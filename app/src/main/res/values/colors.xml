@@ -5,6 +5,9 @@
 
     <color name="silver">#969184</color> <!-- Add this line for silver -->
     <color name="app_color">#0248A5</color> <!-- Add this line for purple -->
+    <color name="grey">#707070</color>
+    <color name="activity_name">#1B1B1B</color>
+    <color name="dark_blue">#012B61</color>
 
     <color name="line_color">#CFCFCF</color> <!-- Add this line for purple -->
 </resources>

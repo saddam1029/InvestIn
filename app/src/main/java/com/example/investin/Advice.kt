@@ -5,20 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import com.example.investin.chat.Chat
+import com.example.investin.home.Home
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Advice : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_advice)
-
-        // Initialize the back ImageView
-        val ivBack: ImageView = findViewById(R.id.ivBack)
-
-        // Set click listener to navigate back to Home activity
-        ivBack.setOnClickListener {
-            navigateToHome()
-        }
 
         bottomNavigation()
     }

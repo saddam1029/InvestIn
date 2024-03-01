@@ -6,10 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.investin.Home
+import com.example.investin.home.Home
 import com.example.investin.R
 import com.example.investin.UserInformation
 import com.example.investin.databinding.ActivitySignInBinding

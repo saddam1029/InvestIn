@@ -9,12 +9,22 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:background="@color/app_color"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="User Information"
-        app:titleTextAppearance="@style/ToolbarTitleStyle"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextAppearance="@style/ToolbarTitleStyle">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="User Information"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16ssp" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -22,10 +32,8 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,15 +41,65 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="32dp"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Full Name"
-                android:textColor="#012B61"
-                android:textSize="13sp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Select Your Role:"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_10ssp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/rgChoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_23sdp">
+
+                <RadioButton
+                    android:id="@+id/rbInvestor"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:scaleY="1.2"
+                    android:checked="true"
+                    android:text="Investor"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/rbEntrepreneur"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:scaleY="1.2"
+                    android:text="Entrepreneur"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Full Name:"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_10ssp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -49,45 +107,41 @@
                 style="@style/CustomTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 android:theme="@style/CustomTextInputLayoutTheme"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp">
 
                 <EditText
                     android:id="@+id/etName"
                     android:layout_width="match_parent"
-                    android:layout_height="43dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:ems="10"
                     android:hint="Username"
-                    android:paddingVertical="8dp"
-                    android:textSize="13dp" />
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:textSize="@dimen/_9ssp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="32dp"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Date of Birth"
-                android:textColor="#012B61"
-                android:textSize="13sp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Date of Birth:"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_10ssp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/dateOfBirth_text_input_layout"
                 style="@style/CustomTextInputLayoutStyle"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 android:theme="@style/CustomTextInputLayoutTheme"
                 app:endIconContentDescription="Calendar Icon"
                 app:endIconDrawable="@drawable/calendar_month_24"
@@ -95,14 +149,13 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="showDatePicker"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp">
 
                 <EditText
                     android:id="@+id/etDateOfBirth"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:clickable="true"
@@ -110,22 +163,21 @@
                     android:focusable="false"
                     android:hint="Date of Birth"
                     android:inputType="none"
-                    android:paddingVertical="8dp"
-                    android:textSize="13sp"
+                    android:padding="@dimen/_12sdp"
+                    android:textSize="@dimen/_9ssp"
                     tools:ignore="TextFields" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="32dp"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Gender"
-                android:textColor="#012B61"
-                android:textSize="13sp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:text="Gender:"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_10ssp"
                 android:textStyle="bold" />
 
             <RadioGroup
@@ -149,15 +201,14 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="32dp"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="CNIC"
-                android:textColor="#012B61"
-                android:textSize="13sp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:text="CNIC:"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_10ssp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -165,8 +216,7 @@
                 style="@style/CustomTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 app:hintEnabled="false"
                 android:theme="@style/CustomTextInputLayoutTheme"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2"
@@ -176,26 +226,25 @@
                 <EditText
                     android:id="@+id/etCNIC"
                     android:layout_width="match_parent"
-                    android:layout_height="43dp"
+                    android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:ems="10"
                     android:hint="00000-0000000-0"
-                    android:paddingVertical="8dp"
-                    android:textSize="13dp" />
+                    android:padding="@dimen/_12sdp"
+                    android:textSize="@dimen/_9ssp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="32dp"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Phone Number"
-                android:textColor="#012B61"
-                android:textSize="13sp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:text="Phone Number:"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_10ssp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -203,8 +252,7 @@
                 style="@style/CustomTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginHorizontal="@dimen/_23sdp"
                 app:hintEnabled="false"
                 android:theme="@style/CustomTextInputLayoutTheme"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2"
@@ -214,28 +262,27 @@
                 <EditText
                     android:id="@+id/etPhoneNumber"
                     android:layout_width="match_parent"
-                    android:layout_height="43dp"
+                    android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:ems="10"
                     android:hint="+92"
-                    android:paddingVertical="8dp"
-                    android:textSize="13dp" />
+                    android:padding="@dimen/_12sdp"
+                    android:textSize="@dimen/_9ssp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
 
             <TextView
-                android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="32dp"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Your City"
-                android:textColor="#012B61"
-                android:textSize="13sp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:text="Your City:"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_10ssp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -243,8 +290,7 @@
                 style="@style/CustomTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginHorizontal="@dimen/_23sdp"
                 android:theme="@style/CustomTextInputLayoutTheme"
                 app:endIconContentDescription="City Icon"
                 app:endIconDrawable="@drawable/location_city_24"
@@ -266,22 +312,21 @@
                     android:ems="10"
                     android:focusable="false"
                     android:hint="Select Your City"
-                    android:paddingVertical="8dp"
-                    android:textSize="13dp" />
+                    android:padding="@dimen/_12sdp"
+                    android:textSize="@dimen/_9ssp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <TextView
-                android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="32dp"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Permanent Address"
-                android:textColor="#012B61"
-                android:textSize="13sp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:text="Permanent Address:"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_10ssp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -289,8 +334,7 @@
                 style="@style/CustomTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 android:theme="@style/CustomTextInputLayoutTheme"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2"
                 tools:ignore="MissingConstraints"
@@ -299,26 +343,25 @@
                 <EditText
                     android:id="@+id/etAddress"
                     android:layout_width="match_parent"
-                    android:layout_height="43dp"
+                    android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:ems="10"
                     android:hint="Permanent Address"
-                    android:paddingVertical="8dp"
-                    android:textSize="13dp" />
+                    android:padding="@dimen/_12sdp"
+                    android:textSize="@dimen/_9ssp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="32dp"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Education"
-                android:textColor="#012B61"
-                android:textSize="13sp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:text="Education:"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/_10ssp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -326,8 +369,7 @@
                 style="@style/CustomTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 android:theme="@style/CustomTextInputLayoutTheme"
                 app:endIconContentDescription="Calendar Icon"
                 app:endIconDrawable="@drawable/education_book_24"
@@ -339,15 +381,15 @@
                 <EditText
                     android:id="@+id/etEducation"
                     android:layout_width="match_parent"
-                    android:layout_height="43dp"
+                    android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:clickable="true"
                     android:ems="10"
                     android:focusable="false"
                     android:hint="Select Your Education Level"
-                    android:paddingVertical="8dp"
-                    android:textSize="13dp" />
+                    android:padding="@dimen/_12sdp"
+                    android:textSize="@dimen/_9ssp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -355,9 +397,9 @@
             <Button
                 android:id="@+id/btFinish"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_23sdp"
+                android:layout_marginTop="@dimen/_40sdp"
                 android:backgroundTint="@color/app_color"
                 android:text="Finish" />
 

@@ -1,6 +1,5 @@
 package com.example.investin.chat
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +8,7 @@ import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.investin.Advice
-import com.example.investin.Home
+import com.example.investin.home.Home
 import com.example.investin.Notification
 import com.example.investin.R
 import com.example.investin.Search
@@ -40,14 +39,6 @@ class Chat : AppCompatActivity() {
     private fun chatRecyclerView() {
         recyclerView = findViewById(R.id.rvChat)
         recyclerView.layoutManager = LinearLayoutManager(this)
-
-        // Initialize the back ImageView
-        val ivBack: ImageView = findViewById(R.id.ivBack)
-
-        // Set click listener to navigate back to Home activity
-        ivBack.setOnClickListener {
-            navigateToHome()
-        }
 
         val dataList = listOf(
             ChatItem("Imran Khan", "Hii what's up?", R.drawable.imran_khan),

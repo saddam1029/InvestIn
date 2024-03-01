@@ -12,17 +12,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.example.investin.databinding.ActivityUserInformationBinding
-import com.example.investin.login.SignIn
+import com.example.investin.home.Home
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.CollectionReference
 import java.util.Locale
-import java.util.Objects
 
 class UserInformation : AppCompatActivity() {
 
+    private lateinit var binding: ActivityUserInformationBinding
     private lateinit var dateOfBirthTextInputLayout: TextInputLayout
     private lateinit var cityTextInputLayout: TextInputLayout
     private lateinit var educationTextInputLayout: TextInputLayout
@@ -49,21 +48,23 @@ class UserInformation : AppCompatActivity() {
 //    tIRCduYOqCK3hwqJNdcd  id
 
     private lateinit var firebaseFirestore: FirebaseFirestore
-    private lateinit var usersReference: CollectionReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityUserInformationBinding.inflate(layoutInflater)
+        binding = ActivityUserInformationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val city = findViewById<EditText>(R.id.etCity)
         val education = findViewById<EditText>(R.id.etEducation)
+
+        firebaseFirestore = FirebaseFirestore.getInstance()
 
         // Initialize views
         dateOfBirthTextInputLayout = findViewById(R.id.dateOfBirth_text_input_layout)
         cityTextInputLayout = findViewById(R.id.city_text_input_layout)
         educationTextInputLayout = findViewById(R.id.education_text_input_layout)
         etDateOfBirth = findViewById(R.id.etDateOfBirth)
+
 
 
         // Attach OnClickListener to the DOB icon
@@ -97,6 +98,7 @@ class UserInformation : AppCompatActivity() {
             saveUserInformation()
         }
 
+
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -117,6 +119,7 @@ class UserInformation : AppCompatActivity() {
             val educationTextInputLayout =
                 findViewById<TextInputLayout>(R.id.education_text_input_layout)
             val genderRadioGroup = findViewById<RadioGroup>(R.id.genderRadioGroup)
+            val userRoleRadioGroup = findViewById<RadioGroup>(R.id.rgChoice)
 
             val dateOfBirth = findViewById<EditText>(R.id.etDateOfBirth).text.toString().trim()
             val name = findViewById<EditText>(R.id.etName).text.toString().trim()
@@ -138,10 +141,18 @@ class UserInformation : AppCompatActivity() {
                     else -> "" // Handle default case or no selection
                 }
 
+                val selectedUserRoleId = userRoleRadioGroup.checkedRadioButtonId
+                val userRole = when (selectedUserRoleId) {
+                    R.id.rbInvestor -> "Investor "
+                    R.id.rbEntrepreneur -> "Entrepreneur"
+                    else -> "" // Handle default case or no selection
+                }
+
                 val userInformation = hashMapOf(
                     "dateOfBirth" to dateOfBirth,
                     "name" to name,
                     "gender" to gender,
+                    "userRole" to userRole,
                     "cnic" to cnic,
                     "number" to number,
                     "city" to city,
@@ -157,7 +168,7 @@ class UserInformation : AppCompatActivity() {
                     .collection(userId)
                     .document(userId)
 
-                    userDocRef.set(userInformation)
+                userDocRef.set(userInformation)
                     .addOnSuccessListener {
                         // Data saved successfully
                         val intent = Intent(this, Home::class.java)
