@@ -40,6 +40,7 @@
                     android:fontFamily="@font/concert_one"
                     android:text="Ii"
                     android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginStart="-20dp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_55sdp"

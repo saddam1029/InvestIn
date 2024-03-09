@@ -60,18 +60,7 @@ class Post : AppCompatActivity() {
         }
     }
 
-    private fun setupCheckBox(checkBox: CheckBox) {
-        checkBox.setOnCheckedChangeListener { _, isChecked ->
-            val skill = checkBox.text.toString()
-            if (isChecked) {
-                selectedSkills.add(skill)
-            } else {
-                selectedSkills.remove(skill)
-            }
-        }
-    }
-
-    private fun saveUserPost(){
+    private fun saveUserPost() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userId = currentUser?.uid ?: ""
 
@@ -82,29 +71,41 @@ class Post : AppCompatActivity() {
 
         // Include the selected skills in your data
         val postData = hashMapOf(
+            "userId" to userId,
             "title" to postTitle,
             "descriptor" to postDescriptor,
             "budget" to postBudget,
             "location" to postLocation,
-            "skills" to selectedSkills.toList() // Convert Set to List
+            "skills" to selectedSkills.toList(), // Convert Set to List
+            "timestamp" to System.currentTimeMillis() // Add timestamp
         )
 
-        val userDocRef = firebaseFirestore.collection("InvestIn")
-            .document("post")
-            .collection(userId)
-            .document()
+        val postsCollectionRef = firebaseFirestore.collection("InvestIn")
+            .document("posts")
+            .collection("all_posts")
 
         // Add a new document with a generated ID
-            userDocRef.set(postData)
+        postsCollectionRef.add(postData)
             .addOnSuccessListener { documentReference ->
-                Toast.makeText(this, "User information saved!", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, Home::class.java)
-                startActivity(intent)
+                Toast.makeText(this, "User post saved!", Toast.LENGTH_SHORT).show()
+                // Optionally, you can navigate to the post detail screen here
             }
             .addOnFailureListener { e ->
-                // Failed to save data
+                // Failed to save post
                 Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+
+
+    private fun setupCheckBox(checkBox: CheckBox) {
+        checkBox.setOnCheckedChangeListener { _, isChecked ->
+            val skill = checkBox.text.toString()
+            if (isChecked) {
+                selectedSkills.add(skill)
+            } else {
+                selectedSkills.remove(skill)
+            }
+        }
     }
 
     private fun showConfirmationDialog() {

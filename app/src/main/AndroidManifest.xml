@@ -13,6 +13,9 @@
         android:theme="@style/Theme.InvestIn"
         tools:targetApi="31">
         <activity
+            android:name=".chat.Message"
+            android:exported="false" />
+        <activity
             android:name=".home.Profile"
             android:exported="false" />
         <activity
@@ -37,7 +40,7 @@
             android:name=".Search"
             android:exported="false" />
         <activity
-            android:name=".home.Home"
+            android:name=".login.SplashScreen"
             android:exported="false" />
         <activity
             android:name=".UserInformation"
@@ -49,7 +52,7 @@
             android:name=".login.SignIn"
             android:exported="false" />
         <activity
-            android:name=".login.SplashScreen"
+            android:name=".home.Home"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

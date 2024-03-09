@@ -219,14 +219,28 @@ class Home : AppCompatActivity() {
     private fun postRecyclerView() {
         binding.rvHome.layoutManager = LinearLayoutManager(this)
 
+        val allPostsCollectionRef = firebaseFirestore.collection("InvestIn").document("posts")
+            .collection("all_posts")
 
-        // Example data for the RecyclerView
-        val dataList = listOf("Pakistan", "UAE", "Iran", "Palestine", "England", "India")
+        allPostsCollectionRef.addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                // Handle error
+                Log.e("HomeActivity", "Error fetching posts: ${exception.message}", exception)
+                return@addSnapshotListener
+            }
 
-        myHomeAdapter = MyHomeAdapter(dataList)
-        binding.rvHome.adapter = myHomeAdapter
+            if (snapshot != null && !snapshot.isEmpty) {
+                val postList = snapshot.documents.map { document ->
+                    document.toObject(PostModel::class.java)
+                }.filterNotNull()
 
+                myHomeAdapter = MyHomeAdapter(postList)
+                binding.rvHome.adapter = myHomeAdapter
+            }
+        }
     }
+
+
 
     private fun bottomNavigation() {
         // Set Home selected

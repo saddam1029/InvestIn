@@ -9,17 +9,36 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:cardElevation="@dimen/_3sdp"
         app:cardCornerRadius="@dimen/_4sdp"
         app:cardUseCompatPadding="true"
         tools:ignore="MissingConstraints" >
+
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginVertical="@dimen/_5sdp"
             android:layout_marginHorizontal="@dimen/_7ssp">
+
+            <View
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@color/app_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <View
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:background="@color/app_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
 
             <TextView
                 android:id="@+id/tvTime"
@@ -40,7 +59,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="Start IceCream Business"
                 android:textColor="@color/activity_name"
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/_15ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTime" />
 
@@ -52,7 +71,7 @@
                 android:layout_marginTop="@dimen/_11sdp"
                 android:text="Location"
                 android:textColor="@color/activity_name"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_11ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.008"
@@ -68,7 +87,7 @@
                 android:fontFamily="@font/open_sans"
                 android:text="Pakistan"
                 android:textColor="@color/activity_name"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_11ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/imageView3"
@@ -80,11 +99,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:ellipsize="end"
+                android:paddingEnd="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans"
                 android:maxLines="2"
                 android:text="Food is any substance consumed to provide nutritional support and energy to an organism. It can be raw, processed, or formulated and is consumed orally by animals for growth, health, or pleasure. Food is mainly composed of water, lipids, proteins, and carbohydrates."
                 android:textColor="@color/activity_name"
-                android:textSize="@dimen/_9ssp"
+                android:textSize="@dimen/_10ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
@@ -94,10 +114,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_1sdp"
-                android:fontFamily="@font/open_sans_semibold"
                 android:text="more"
                 android:textColor="@color/app_color"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
