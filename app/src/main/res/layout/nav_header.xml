@@ -8,7 +8,7 @@
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/_16sdp">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivNavProfile"
         android:layout_width="@dimen/_65sdp"
         android:layout_height="@dimen/_65sdp"

@@ -14,6 +14,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.UUID
 
 class Post : AppCompatActivity() {
 
@@ -69,15 +70,17 @@ class Post : AppCompatActivity() {
         val postBudget = binding.etBudget.text.toString()
         val postLocation = binding.etLocation.text.toString()
 
+        val postId = UUID.randomUUID().toString()
         // Include the selected skills in your data
         val postData = hashMapOf(
+            "postId" to postId, // Add postId to the postData map
             "userId" to userId,
             "title" to postTitle,
             "descriptor" to postDescriptor,
             "budget" to postBudget,
             "location" to postLocation,
-            "skills" to selectedSkills.toList(), // Convert Set to List
-            "timestamp" to System.currentTimeMillis() // Add timestamp
+            "skills" to selectedSkills.toList(),
+            "timestamp" to System.currentTimeMillis()
         )
 
         val postsCollectionRef = firebaseFirestore.collection("InvestIn")

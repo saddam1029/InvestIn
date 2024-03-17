@@ -26,11 +26,13 @@ class PostDetail : AppCompatActivity() {
         val descriptor = intent.getStringExtra("descriptor")
         val location = intent.getStringExtra("location")
         val skills = intent.getStringArrayListExtra("skills")
+        val time = intent.getStringArrayListExtra("time")
 
         // Set data to TextViews
         binding.tvTitle.text = title
         binding.tvDescription.text = descriptor
         binding.tvLocation.text = location
+        binding.tvTime.text = time.toString()
 
         // Dynamically add TextViews for skills
         skills?.let { displaySkills(it) }

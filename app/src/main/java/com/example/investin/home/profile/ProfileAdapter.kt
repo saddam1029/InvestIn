@@ -1,23 +1,42 @@
-package com.example.investin.home
+package com.example.investin.home.profile
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
+import androidx.constraintlayout.helper.widget.MotionEffect.TAG
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.investin.R
+import com.example.investin.home.PostDetail
+import com.example.investin.home.PostModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MyHomeAdapter(private val postList: List<PostModel>) :
-    RecyclerView.Adapter<MyHomeAdapter.ViewHolder>() {
+class ProfileAdapter(private val context: Context) :
+    RecyclerView.Adapter<ProfileAdapter.ViewHolder>() {
+
+    private val postList = mutableListOf<PostModel>()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newPostList: List<PostModel>) {
+        postList.clear()
+        postList.addAll(newPostList)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -25,11 +44,12 @@ class MyHomeAdapter(private val postList: List<PostModel>) :
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: ProfileAdapter.ViewHolder, position: Int) {
         val currentItem = postList[position]
         holder.tvTitle.text = currentItem.title
         holder.tvLocation.text = currentItem.location
-        holder.tvTime.text = formatTimestamp(currentItem.timestamp)// You should replace this with the actual timestamp field
+        holder.tvTime.text = formatTimestamp(currentItem.timestamp)
 
         // Set up "More" functionality within onBindViewHolder
         val maxLinesCollapsed = 2
@@ -37,13 +57,13 @@ class MyHomeAdapter(private val postList: List<PostModel>) :
 
         holder.tvDescription.maxLines = maxLinesCollapsed
         holder.tvDescription.ellipsize = TextUtils.TruncateAt.END
-        holder.tvDescription.text = currentItem.descriptor // Set item descriptor
+        holder.tvDescription.text = currentItem.descriptor
 
         holder.tvMore.setOnClickListener {
             if (!isExpanded) {
                 holder.tvDescription.maxLines = Integer.MAX_VALUE
                 holder.tvDescription.ellipsize = null
-                holder.tvDescription.text = currentItem.descriptor // Ensure the full text is visible
+                holder.tvDescription.text = currentItem.descriptor
                 holder.tvMore.text = "less"
             } else {
                 holder.tvDescription.maxLines = maxLinesCollapsed
@@ -58,38 +78,72 @@ class MyHomeAdapter(private val postList: List<PostModel>) :
             isExpanded = !isExpanded
         }
 
-
         // Check if the description is in the middle, and adjust layout accordingly
         if (position == postList.size / 2) {
             // Set the description at the start
             holder.tvDescription.layoutParams =
                 (holder.tvDescription.layoutParams as ConstraintLayout.LayoutParams).apply {
-                    startToStart = com.android.car.ui.R.id.parent
-                    endToEnd = com.android.car.ui.R.id.parent
+                    startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                    endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
                 }
         } else {
             // Reset the description layout if not in the middle
             holder.tvDescription.layoutParams =
                 (holder.tvDescription.layoutParams as ConstraintLayout.LayoutParams).apply {
-                    startToStart = com.android.car.ui.R.id.parent
-                    endToEnd = com.android.car.ui.R.id.parent // Adjust the end constraint as per your layout
+                    startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                    endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
                 }
         }
 
         holder.itemView.setOnClickListener {
-            val context = holder.itemView.context
             val intent = Intent(context, PostDetail::class.java)
-            // Pass the post details to the PostDetail activity using intent extras
-//            intent.putExtra("postId", currentItem.userId)
             intent.putExtra("title", currentItem.title)
             intent.putExtra("descriptor", currentItem.descriptor)
             intent.putExtra("location", currentItem.location)
             intent.putExtra("time", formatTimestamp(currentItem.timestamp))
             intent.putStringArrayListExtra("skills", ArrayList(currentItem.skills))
-            // Add other fields as needed
             context.startActivity(intent)
         }
+
+        // Inside onBindViewHolder method of ProfileAdapter
+        holder.ivMenu.setOnClickListener { view ->
+            val popupMenu = PopupMenu(context, view)
+            popupMenu.inflate(R.menu.menu_profile_item)
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_delete -> {
+                        // Delete the post from Firestore
+                        deletePost(currentItem.postId)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
+        }
+
     }
+
+    private fun deletePost(postId: String) {
+        val firestoreDB = FirebaseFirestore.getInstance()
+        val postsCollectionRef = firestoreDB.collection("InvestIn").document("posts").collection("all_posts")
+        val postRef = postsCollectionRef.document(postId)
+        postRef.delete()
+            .addOnSuccessListener {
+                // Post successfully deleted
+                // You can also update the UI here if needed
+            }
+            .addOnFailureListener { e ->
+                // Handle any errors
+                Log.e(TAG, "Error deleting post", e)
+                // You can also display a message to the user that deletion failed
+            }
+    }
+
+
+
 
 
 
@@ -116,8 +170,6 @@ class MyHomeAdapter(private val postList: List<PostModel>) :
         return sdf.format(date)
     }
 
-
-
     override fun getItemCount(): Int {
         return postList.size
     }
@@ -128,7 +180,9 @@ class MyHomeAdapter(private val postList: List<PostModel>) :
         val tvDescription: TextView = itemView.findViewById(R.id.tvDescription)
         val tvMore: TextView = itemView.findViewById(R.id.tvMore)
         val tvLocation: TextView = itemView.findViewById(R.id.tvLocation)
+        val ivMenu: ImageView = itemView.findViewById(R.id.ivMenu) // Change to ImageView
         val ivDislike: ImageView = itemView.findViewById(R.id.ivDislike)
         val ivLike: ImageView = itemView.findViewById(R.id.ivLike)
     }
+
 }

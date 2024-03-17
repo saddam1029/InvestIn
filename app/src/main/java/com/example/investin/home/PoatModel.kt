@@ -1,6 +1,7 @@
 package com.example.investin.home
 
 data class PostModel(
+    var postId: String = "", // Add postId property
     val userId: String = "",
     val title: String = "",
     val descriptor: String = "",
@@ -9,3 +10,5 @@ data class PostModel(
     val skills: List<String> = emptyList(),
     val timestamp: Long = 0 // Add this field to store the timestamp
 )
+
+

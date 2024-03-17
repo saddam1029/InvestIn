@@ -56,6 +56,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.0") // Updated to 22.3.0
     implementation("com.google.firebase:firebase-database:20.3.0")
     implementation("com.google.firebase:firebase-firestore:24.10.0")
+    implementation ("com.google.firebase:firebase-storage:20.3.0")
+
     implementation("com.android.car.ui:car-ui-lib:2.5.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

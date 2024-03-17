@@ -20,6 +20,7 @@ import com.example.investin.R
 import com.example.investin.Search
 import com.example.investin.chat.Chat
 import com.example.investin.databinding.ActivityHomeBinding
+import com.example.investin.home.profile.Profile
 import com.example.investin.login.SignIn
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -94,17 +95,10 @@ class Home : AppCompatActivity() {
 
         nevProfile.setOnClickListener {
             val intent = Intent(this, Profile::class.java)
-            // Pass user name and email as extras
             intent.putExtra("userName", textViewName.text.toString())
-            intent.putExtra("userEmail", textViewEmail.text.toString())
-            intent.putExtra("gender", textViewGender.text.toString())
-            intent.putExtra("number", textViewNumber.text.toString())
-            intent.putExtra("dateOfBirth", textViewDateOfBirth.text.toString())
-            intent.putExtra("permanentAddress", textViewAddress.text.toString())
             intent.putExtra("userRole", textViewRole.text.toString())
             startActivity(intent)
         }
-
 
         // Set status bar color only in the Home screen
         setStatusBarColor(R.color.app_color)
@@ -240,8 +234,6 @@ class Home : AppCompatActivity() {
         }
     }
 
-
-
     private fun bottomNavigation() {
         // Set Home selected
         binding.bottomNavigationBar.selectedItemId = R.id.home
@@ -290,7 +282,18 @@ class Home : AppCompatActivity() {
         binding.navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.account -> {
-                    // Handle Account item click
+
+                    val intent = Intent(this, Account::class.java)
+                    // Pass user name and email as extras
+                    intent.putExtra("userName", textViewName.text.toString())
+                    intent.putExtra("userRole", textViewRole.text.toString())
+                    intent.putExtra("userEmail", textViewEmail.text.toString())
+                    intent.putExtra("gender", textViewGender.text.toString())
+                    intent.putExtra("number", textViewNumber.text.toString())
+                    intent.putExtra("dateOfBirth", textViewDateOfBirth.text.toString())
+                    intent.putExtra("permanentAddress", textViewAddress.text.toString())
+                    startActivity(intent)
+
                 }
 
                 R.id.favorite -> {

@@ -4,15 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.investin.R
-import com.example.investin.databinding.ActivityHomeBinding
+import com.example.investin.databinding.ActivityAccountBinding
 import com.example.investin.databinding.ActivityProfileBinding
 
-class Profile : AppCompatActivity() {
-
-    private lateinit var binding: ActivityProfileBinding
+class Account : AppCompatActivity() {
+    private lateinit var binding: ActivityAccountBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileBinding.inflate(layoutInflater)
+        binding = ActivityAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Call the function to retrieve and set user information
@@ -21,7 +20,6 @@ class Profile : AppCompatActivity() {
         binding.ivBackProfile.setOnClickListener {
             navigateToHome()
         }
-
     }
 
     private fun retrieveAndSetUserInfo() {
@@ -34,13 +32,13 @@ class Profile : AppCompatActivity() {
         val userAddress = intent.getStringExtra("permanentAddress")
         val userRole = intent.getStringExtra("userRole")
 
-        binding.tvProfileName.text = userName
-        binding.tvProfileEmail.text = userEmail
-        binding.tvProfileGender.text = userGender
-        binding.tvProfileNumber.text = userNumber
-        binding.tvProfileDOB.text = userDateOfBirth
-        binding.tvProfileAddress.text = userAddress
-        binding.tvProfileRole.text = userRole
+        binding.tvAccountName.text = userName
+        binding.tvAccountEmail.text = userEmail
+        binding.tvAccountGender.text = userGender
+        binding.tvAccountNumber.text = userNumber
+        binding.tvAccountDOB.text = userDateOfBirth
+        binding.tvAccountAddress.text = userAddress
+        binding.tvAccountRole.text = userRole
     }
 
     private fun navigateToHome() {
