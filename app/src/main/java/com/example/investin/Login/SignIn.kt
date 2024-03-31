@@ -63,9 +63,12 @@ class SignIn : AppCompatActivity() {
             val passwordTextInputLayout = binding.passwordTextInputLayout
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
+
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { signInTask ->
+                    hideProgressBar()
                     if (signInTask.isSuccessful) {
                         // Check if user information is available in Firestore
+                        showProgressBar() // Show progress bar when sign-in process starts
                         checkUserInformation(firebaseAuth.currentUser?.uid ?: "")
                     } else {
                         passwordTextInputLayout.error = "Incorrect email or password."

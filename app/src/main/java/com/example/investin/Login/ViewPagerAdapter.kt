@@ -13,10 +13,10 @@ class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PageViewHolder>()
                 "entrepreneurs to thrive.", R.drawable.welcome),
 
         PageData("Bridge the Gap with 'InvestIn'", "Seeking investment or offering support, \n 'InvestIn' " +
-                "connects those \n in need with those with means.", R.drawable.welcome),
+                "connects those \n in need with those with means.", R.drawable.bridge_the_gap),
 
         PageData("Unlock Your Future", "Join 'InvestIn' today, and be a" +
-                " part of a \n community where dreams turn into reality.", R.drawable.welcome)
+                " part of a \n community where dreams turn into reality.", R.drawable.unlock_your_future)
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {
@@ -24,7 +24,7 @@ class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.PageViewHolder>()
         return PageViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PageViewHolder, position: Int){
         holder.bind(pageData[position])
     }
 

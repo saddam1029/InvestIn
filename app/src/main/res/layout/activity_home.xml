@@ -33,7 +33,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/profile"
+                    android:src="@drawable/profile_2"
                     tools:ignore="MissingConstraints" />
 
                 <TextView
@@ -131,6 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
         android:background="@drawable/app_background"
         app:itemTextAppearanceActive="@style/BottomNavigationTextStyle"

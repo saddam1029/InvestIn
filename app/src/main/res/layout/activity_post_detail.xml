@@ -89,8 +89,33 @@
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="Start IceCream Business"
                     android:textColor="#1B1B1B"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_15ssp" />
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_toStartOf="@+id/tvBudget"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="Budget:"
+                    android:textColor="#1B1B1B"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/tvBudget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="000,000"
+                    android:textColor="@color/silver"
+                    android:textSize="@dimen/_12ssp" />
 
                 <TextView
                     android:id="@+id/tvTime"
@@ -101,8 +126,8 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:fontFamily="@font/open_sans"
                     android:text="Posted 2 hour ago"
-                    android:textColor="#707070"
-                    android:textSize="@dimen/_10ssp"
+                    android:textColor="@color/silver"
+                    android:textSize="@dimen/_9ssp"
                     tools:ignore="NotSibling" />
 
                 <ImageView
@@ -110,7 +135,7 @@
                     android:layout_width="@dimen/_14sdp"
                     android:layout_height="@dimen/_14sdp"
                     android:layout_below="@+id/tvTime"
-                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginTop="11dp"
                     android:src="@drawable/location" />
 
@@ -119,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvTime"
-                    android:layout_marginStart="0dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_toEndOf="@+id/imageView3"
                     android:fontFamily="@font/open_sans"

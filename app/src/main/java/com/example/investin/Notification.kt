@@ -4,9 +4,9 @@ import MyNotificationAdapter
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.investin.Advice.Advice
 import com.example.investin.chat.Chat
 import com.example.investin.home.Home
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -39,7 +39,10 @@ class Notification : AppCompatActivity() {
 
 
         bottomNavigation()
+//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_bar)
+//        BottomNavigationManager.setupBottomNavigation(this, bottomNavigationView)
     }
+
 
     private fun navigateToHome() {
         val intent = Intent(this, Home::class.java)

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.investin.Advice.Advice
 import com.example.investin.chat.Chat
 import com.example.investin.home.Home
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -53,6 +54,8 @@ class Search : AppCompatActivity() {
         })
 
         bottomNavigation()
+//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_bar)
+//        BottomNavigationManager.setupBottomNavigation(this, bottomNavigationView)
     }
 
     private fun navigateToHome() {

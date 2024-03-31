@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    
 
     <application
         android:allowBackup="true"
@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InvestIn"
         tools:targetApi="31">
+        <activity
+            android:name=".Advice.AdvicePost"
+            android:exported="false" />
+        <activity
+            android:name=".Advice.AdviceDetail"
+            android:exported="false" />
         <activity
             android:name=".home.Account"
             android:exported="false" />
@@ -40,13 +46,10 @@
             android:name=".Notification"
             android:exported="false" />
         <activity
-            android:name=".Advice"
+            android:name=".Advice.Advice"
             android:exported="false" />
         <activity
             android:name=".Search"
-            android:exported="false" />
-        <activity
-            android:name=".login.SplashScreen"
             android:exported="false" />
         <activity
             android:name=".UserInformation"
@@ -56,6 +59,9 @@
             android:exported="false" />
         <activity
             android:name=".login.SignIn"
+            android:exported="false" />
+        <activity
+            android:name=".login.SplashScreen"
             android:exported="false" />
         <activity
             android:name=".home.Home"

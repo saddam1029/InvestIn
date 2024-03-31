@@ -9,12 +9,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.investin.AboutUs
-import com.example.investin.Advice
+import com.example.investin.Advice.Advice
 import com.example.investin.Notification
 import com.example.investin.R
 import com.example.investin.Search
@@ -24,8 +25,6 @@ import com.example.investin.home.profile.Profile
 import com.example.investin.login.SignIn
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -75,14 +74,22 @@ class Home : AppCompatActivity() {
         }
 
 
-        textViewName = binding.navigationView.getHeaderView(0).findViewById(R.id.textViewName)
-        textViewEmail = binding.navigationView.getHeaderView(0).findViewById(R.id.textViewEmail)
-        nevProfile = binding.navigationView.getHeaderView(0).findViewById(R.id.ivNavProfile)
-        textViewAddress = TextView(this)
-        textViewGender = TextView(this)
-        textViewDateOfBirth= TextView(this)
-        textViewNumber= TextView(this)
-        textViewRole= TextView(this)
+        // **Handle potential null reference for navigation drawer elements**
+        val navHeaderView = binding.navigationView.getHeaderView(0)
+        if (navHeaderView != null) {
+            textViewName = binding.navigationView.getHeaderView(0).findViewById(R.id.textViewName)
+            textViewEmail = binding.navigationView.getHeaderView(0).findViewById(R.id.textViewEmail)
+            nevProfile = binding.navigationView.getHeaderView(0).findViewById(R.id.ivNavProfile)
+            textViewAddress = TextView(this)
+            textViewGender = TextView(this)
+            textViewDateOfBirth= TextView(this)
+            textViewNumber= TextView(this)
+            textViewRole= TextView(this)
+        } else {
+            Log.w("Home", "Navigation drawer header not inflated yet")
+        }
+
+
 
         // Retrieve user information from Firestore
         retrieveUserInformation()
@@ -97,8 +104,11 @@ class Home : AppCompatActivity() {
             val intent = Intent(this, Profile::class.java)
             intent.putExtra("userName", textViewName.text.toString())
             intent.putExtra("userRole", textViewRole.text.toString())
+            intent.putExtra("userId", currentUser?.uid ?: "")
             startActivity(intent)
         }
+
+        loadProfilePicture()
 
         // Set status bar color only in the Home screen
         setStatusBarColor(R.color.app_color)
@@ -116,6 +126,45 @@ class Home : AppCompatActivity() {
         postRecyclerView()
 
     }
+
+    private fun loadProfilePicture() {
+        val userDocRef = firebaseFirestore.collection("InvestIn")
+            .document("profile")
+            .collection(currentUser?.uid ?: "")
+            .document(currentUser?.uid ?: "")
+
+        userDocRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val imageUrl = documentSnapshot.getString("profilePicUrl")
+                    imageUrl?.let { url ->
+                        // Load the image using Glide with placeholder and error handling
+                        Glide.with(this@Home)
+                            .load(url)
+                            .placeholder(R.drawable.profile_2)  // Display placeholder while loading
+                            .error(R.drawable.profile_2)              // Display error image on failure
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)    // Cache the image locally
+                            .into(binding.ivProfile)
+
+                        // Load the same image into nevProfile
+                        Glide.with(this@Home)
+                            .load(url)
+                            .placeholder(R.drawable.profile_2)  // Display placeholder while loading
+                            .error(R.drawable.profile_2)              // Display error image on failure
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)    // Cache the image locally
+                            .into(nevProfile)
+                    }
+                } else {
+                    // Handle case where document doesn't exist or profilePicUrl is missing
+                    binding.ivProfile.setImageResource(R.drawable.profile_2) // Set a default image
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("ProfileActivity", "Failed to load profile picture: $e")
+                binding.ivProfile.setImageResource(R.drawable.madara)  // Set error image
+            }
+    }
+
 
     private fun retrieveUserInformation() {
         // Check if the current user is not null
@@ -182,6 +231,22 @@ class Home : AppCompatActivity() {
     }
 
     private fun logout() {
+        // Show confirmation dialog
+        AlertDialog.Builder(this)
+            .setTitle("Logout")
+            .setMessage("Are you sure you want to logout?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                dialog.dismiss()
+                // Proceed with logout process
+                performLogout()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun performLogout() {
         // Show the progress bar
         showProgressBar()
 
@@ -209,6 +274,8 @@ class Home : AppCompatActivity() {
             finish()
         }
     }
+
+
 
     private fun postRecyclerView() {
         binding.rvHome.layoutManager = LinearLayoutManager(this)
@@ -270,6 +337,7 @@ class Home : AppCompatActivity() {
             }
         }
     }
+
 
     private fun setupProfileImageClick() {
         binding.ivProfile.setOnClickListener {

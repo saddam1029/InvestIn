@@ -6,4 +6,10 @@
         android:title="Delete"
         android:icon="@drawable/ic_delete"
         app:showAsAction="never" />
+
+<!--    <item-->
+<!--        android:id="@+id/menu_edit"-->
+<!--        android:title="Edit"-->
+<!--        android:icon="@drawable/ic_delete"-->
+<!--        app:showAsAction="never" />-->
 </menu>

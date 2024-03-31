@@ -10,11 +10,10 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-100dp"
+            android:layout_width="@dimen/_300sdp"
+            android:layout_height="@dimen/_300sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@drawable/welcome" />
@@ -29,7 +28,6 @@
             android:layout_marginBottom="@dimen/_60ssp"
             android:textColor="@color/activity_name"
             android:fontFamily="@font/open_sans_regular"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
@@ -39,7 +37,6 @@
             android:id="@+id/tvQuote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/open_sans_regular"
             android:text="In a time when jobs are scarce and economic\n conditions are tough InvestIn opens doors \n for ambitious entrepreneurs to thrive"
             android:textAlignment="center"

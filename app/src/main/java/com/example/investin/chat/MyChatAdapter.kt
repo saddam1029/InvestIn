@@ -1,6 +1,7 @@
 package com.example.investin.chat
 
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.investin.R
 import java.util.Locale
@@ -30,6 +32,13 @@ class MyChatAdapter(private val itemList: List<ChatItem>) :
         holder.profile?.setImageResource(currentItem.imageResourceId)
         holder.userName?.text = currentItem.userName
         holder.userLastMessage?.text = currentItem.lastMessage
+
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, Message::class.java)
+            intent.putExtra("userName", currentItem.userName)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

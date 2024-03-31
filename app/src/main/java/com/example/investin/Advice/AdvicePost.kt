@@ -1,14 +1,15 @@
-package com.example.investin.home
+package com.example.investin.Advice
 
 import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.CheckBox
-import android.widget.ImageView
 import android.widget.Toast
 import com.example.investin.R
+import com.example.investin.databinding.ActivityAdviceBinding
+import com.example.investin.databinding.ActivityAdvicePostBinding
 import com.example.investin.databinding.ActivityPostBinding
+import com.example.investin.home.Home
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,59 +17,36 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.UUID
 
-class Post : AppCompatActivity() {
+class AdvicePost : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPostBinding
+    private lateinit var binding: ActivityAdvicePostBinding
     private var shouldShowConfirmationDialog = true
-    private val selectedSkills = mutableSetOf<String>()
 
     var firebaseFirestore = Firebase.firestore
     private lateinit var usersReference: CollectionReference
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPostBinding.inflate(layoutInflater)
+        binding = ActivityAdvicePostBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val ivBack: ImageView = findViewById(R.id.ivBack)
 
         firebaseFirestore = FirebaseFirestore.getInstance()
         usersReference = firebaseFirestore.collection("InvestIn")
 
-
-        // Call the setup function for each CheckBox
-        setupCheckBox(binding.cbBusiness)
-        setupCheckBox(binding.cbCommunication)
-        setupCheckBox(binding.cbCreativity)
-        setupCheckBox(binding.cbMarketing)
-        setupCheckBox(binding.cbMoneyManagement)
-        setupCheckBox(binding.cbSales)
-        setupCheckBox(binding.cbLeadership)
-        setupCheckBox(binding.cbPositiveMindset)
-        setupCheckBox(binding.cbTechnicalSkills)
-        setupCheckBox(binding.cbListening)
-        setupCheckBox(binding.cbTimeManagement)
-        setupCheckBox(binding.cbStrategy)
-        setupCheckBox(binding.cbCustomerService)
-        setupCheckBox(binding.rbNetworking)
-
-        ivBack.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             showConfirmationDialog()
         }
 
         binding.btPost.setOnClickListener {
-            saveUserPost()
+            saveUserAdvice()
         }
     }
 
-    private fun saveUserPost() {
+    private fun saveUserAdvice() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userId = currentUser?.uid ?: ""
 
         val postTitle = binding.etTitle.text.toString()
-        val postDescriptor = binding.etDescription.text.toString()
-        val postBudget = binding.etBudget.text.toString()
-        val postLocation = binding.etLocation.text.toString()
+        val postDescription = binding.etDescription.text.toString()
 
         val postId = UUID.randomUUID().toString()
         // Include the selected skills in your data
@@ -76,16 +54,13 @@ class Post : AppCompatActivity() {
             "postId" to postId, // Add postId to the postData map
             "userId" to userId,
             "title" to postTitle,
-            "descriptor" to postDescriptor,
-            "budget" to postBudget,
-            "location" to postLocation,
-            "skills" to selectedSkills.toList(),
+            "description" to postDescription,
             "timestamp" to System.currentTimeMillis()
         )
 
         val postsCollectionRef = firebaseFirestore.collection("InvestIn")
-            .document("posts")
-            .collection("all_posts")
+            .document("Advice")
+            .collection("all_advice_posts")
 
         // Add a new document with a generated ID
         postsCollectionRef.add(postData)
@@ -97,18 +72,6 @@ class Post : AppCompatActivity() {
                 // Failed to save post
                 Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
-    }
-
-
-    private fun setupCheckBox(checkBox: CheckBox) {
-        checkBox.setOnCheckedChangeListener { _, isChecked ->
-            val skill = checkBox.text.toString()
-            if (isChecked) {
-                selectedSkills.add(skill)
-            } else {
-                selectedSkills.remove(skill)
-            }
-        }
     }
 
     private fun showConfirmationDialog() {

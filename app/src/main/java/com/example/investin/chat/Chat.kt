@@ -3,11 +3,10 @@ package com.example.investin.chat
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.investin.Advice
+import com.example.investin.Advice.Advice
 import com.example.investin.home.Home
 import com.example.investin.Notification
 import com.example.investin.R
@@ -30,6 +29,9 @@ class Chat : AppCompatActivity() {
         chatRecyclerView()
 
         bottomNavigation()
+
+//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_bar)
+//        BottomNavigationManager.setupBottomNavigation(this, bottomNavigationView)
 
         setupSearchView()
 

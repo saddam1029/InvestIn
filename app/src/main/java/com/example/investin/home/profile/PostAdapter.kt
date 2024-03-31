@@ -26,8 +26,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ProfileAdapter(private val context: Context) :
-    RecyclerView.Adapter<ProfileAdapter.ViewHolder>() {
+class PostAdapter(private val context: Context) :
+    RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     private val postList = mutableListOf<PostModel>()
 
@@ -45,7 +45,7 @@ class ProfileAdapter(private val context: Context) :
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: ProfileAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PostAdapter.ViewHolder, position: Int) {
         val currentItem = postList[position]
         holder.tvTitle.text = currentItem.title
         holder.tvLocation.text = currentItem.location
@@ -83,15 +83,15 @@ class ProfileAdapter(private val context: Context) :
             // Set the description at the start
             holder.tvDescription.layoutParams =
                 (holder.tvDescription.layoutParams as ConstraintLayout.LayoutParams).apply {
-                    startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-                    endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+                    startToStart = com.android.car.ui.R.id.parent
+                    endToEnd = com.android.car.ui.R.id.parent
                 }
         } else {
             // Reset the description layout if not in the middle
             holder.tvDescription.layoutParams =
                 (holder.tvDescription.layoutParams as ConstraintLayout.LayoutParams).apply {
-                    startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-                    endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+                    startToStart = com.android.car.ui.R.id.parent
+                    endToEnd = com.android.car.ui.R.id.parent
                 }
         }
 
@@ -117,6 +117,11 @@ class ProfileAdapter(private val context: Context) :
                         deletePost(currentItem.postId)
                         true
                     }
+//                    R.id.menu_edit -> {
+//                        // Delete the post from Firestore
+//
+//                        true
+//                    }
                     else -> false
                 }
             }
@@ -141,10 +146,6 @@ class ProfileAdapter(private val context: Context) :
                 // You can also display a message to the user that deletion failed
             }
     }
-
-
-
-
 
 
     private fun getTrimmedText(text: String, maxLines: Int, textView: TextView): String {

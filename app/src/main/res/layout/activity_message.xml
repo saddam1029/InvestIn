@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".chat.Message">
 
     <androidx.appcompat.widget.Toolbar
@@ -34,7 +35,7 @@
                 tools:ignore="MissingConstraints" />
 
             <TextView
-                android:id="@+id/titleTextView"
+                android:id="@+id/tvChatName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
@@ -94,15 +95,17 @@
 
             <ImageView
                 android:id="@+id/ivShareFile"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/three_dots_black" />
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:src="@drawable/attach_icon" />
 
             <ImageView
                 android:id="@+id/ivSendMessage"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/three_dots_black" />
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:src="@drawable/send_icon" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
