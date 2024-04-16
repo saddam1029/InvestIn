@@ -79,6 +79,7 @@ class MyAdviceAdapter(private val adviceList: List<AdviceItem>) :
             intent.putExtra("title", currentItem.title)
             intent.putExtra("description", currentItem.description)
             intent.putExtra("time", formatTimestamp(currentItem.timestamp))
+            intent.putExtra("postId", currentItem.postId)
             // Add other fields as needed
             context.startActivity(intent)
         }
@@ -102,7 +103,7 @@ class MyAdviceAdapter(private val adviceList: List<AdviceItem>) :
     }
 
     private fun formatTimestamp(timestamp: Long): String {
-        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val date = Date(timestamp)
         return sdf.format(date)
     }

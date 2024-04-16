@@ -80,7 +80,8 @@ class MyHomeAdapter(private val postList: List<PostModel>) :
             val context = holder.itemView.context
             val intent = Intent(context, PostDetail::class.java)
             // Pass the post details to the PostDetail activity using intent extras
-//            intent.putExtra("postId", currentItem.userId)
+
+            intent.putExtra("postId", currentItem.postId)
             intent.putExtra("title", currentItem.title)
             intent.putExtra("descriptor", currentItem.descriptor)
             intent.putExtra("location", currentItem.location)
@@ -91,7 +92,6 @@ class MyHomeAdapter(private val postList: List<PostModel>) :
             context.startActivity(intent)
         }
     }
-
 
 
     private fun getTrimmedText(text: String, maxLines: Int, textView: TextView): String {

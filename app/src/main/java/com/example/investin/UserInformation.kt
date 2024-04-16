@@ -5,6 +5,8 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.RadioGroup
@@ -97,6 +99,10 @@ class UserInformation : AppCompatActivity() {
         binding.btFinish.setOnClickListener {
             saveUserInformation()
         }
+
+        setupPhoneNumberField()
+
+        setupCNICField()
 
 
     }
@@ -234,6 +240,80 @@ class UserInformation : AppCompatActivity() {
 
         return cnicPattern.matches(cnic)
     }
+
+    private fun setupCNICField() {
+        val etCNIC = findViewById<EditText>(R.id.etCNIC)
+
+        // Add TextWatcher to format CNIC automatically
+        etCNIC.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not required for this implementation
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val cnicString = s.toString()
+                if (cnicString.length == 5 && before == 0 && count == 1) {
+                    etCNIC.setText(cnicString + "-")
+                    etCNIC.setSelection(start + 2) // Set cursor after hyphen
+                } else if (cnicString.length == 13 && before == 0 && count == 1) {
+                    etCNIC.setText(cnicString + "-")
+                    etCNIC.setSelection(start + 2) // Set cursor after hyphen
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Not required for this implementation
+            }
+        })
+    }
+
+
+    private fun setupPhoneNumberField() {
+        val etPhoneNumber = findViewById<EditText>(R.id.etPhoneNumber)
+
+        etPhoneNumber.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // No implementation needed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val currentText = s.toString()
+                val cursorPosition = start + count
+
+                // Handle backspace at the beginning
+                if (count == 0 && currentText.isNotEmpty()) {
+                    if (cursorPosition <= 2) {
+                        // Prevent removing "+"
+                        etPhoneNumber.setSelection(cursorPosition)
+                        return  // Exit the function to avoid modifying text
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val phoneNumber = s.toString()
+                if (phoneNumber.isEmpty()) {
+                    // No need to modify if empty
+                    return
+                }
+
+                if (!phoneNumber.startsWith("+92")) {
+                    // User might have removed leading digits including "+92"
+                    if (phoneNumber.length == 10 && phoneNumber.startsWith("92")) {
+                        // Replace "92" with "+92"
+                        etPhoneNumber.setText("+$phoneNumber")
+                        etPhoneNumber.setSelection(etPhoneNumber.text.length)
+                    } else {
+                        // Ensure "+" is always present at the beginning
+                        etPhoneNumber.setText("+92$phoneNumber")
+                        etPhoneNumber.setSelection(etPhoneNumber.text.length)
+                    }
+                }
+            }
+        })
+    }
+
+
 
     private fun isValidPhoneNumber(number: String): Boolean {
         // Check if the number starts with "+92" and has a total length of 12

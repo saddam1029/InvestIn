@@ -56,10 +56,10 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cvAdvice"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar4">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -74,8 +74,8 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="Advice for Start Up"
                     android:textColor="#1B1B1B"
@@ -87,8 +87,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvTitle"
-                    android:layout_marginTop="@dimen/_7sdp"
                     android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/open_sans"
                     android:text="Posted 2 hour ago"
                     android:textColor="#707070"
@@ -153,10 +153,67 @@
 
             </LinearLayout>
 
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_below="@+id/llTwo"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/line_color" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAdviceDetail"
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
+                android:layout_below="@+id/view1"/>
 
 
         </RelativeLayout>
 
     </ScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvAdvice"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="@dimen/_5ssp"
+        app:cardElevation="@dimen/_5ssp"
+        android:layout_marginHorizontal="@dimen/_10ssp"
+        android:layout_marginVertical="@dimen/_10ssp"
+        android:backgroundTint="#DFDFDF"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/etAdvice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:hint="Type a message"
+                android:textStyle="bold"
+                android:textSize="@dimen/_12ssp"
+                android:padding="@dimen/_5ssp"
+                android:background="@android:color/transparent" />
+
+
+            <ImageView
+                android:id="@+id/ivPostCommit"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/send_icon" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

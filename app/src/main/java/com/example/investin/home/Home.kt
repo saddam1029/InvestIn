@@ -82,13 +82,12 @@ class Home : AppCompatActivity() {
             nevProfile = binding.navigationView.getHeaderView(0).findViewById(R.id.ivNavProfile)
             textViewAddress = TextView(this)
             textViewGender = TextView(this)
-            textViewDateOfBirth= TextView(this)
-            textViewNumber= TextView(this)
-            textViewRole= TextView(this)
+            textViewDateOfBirth = TextView(this)
+            textViewNumber = TextView(this)
+            textViewRole = TextView(this)
         } else {
             Log.w("Home", "Navigation drawer header not inflated yet")
         }
-
 
 
         // Retrieve user information from Firestore
@@ -274,7 +273,6 @@ class Home : AppCompatActivity() {
             finish()
         }
     }
-
 
 
     private fun postRecyclerView() {

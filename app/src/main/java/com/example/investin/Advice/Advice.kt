@@ -53,6 +53,7 @@ class Advice : AppCompatActivity() {
                 return@addSnapshotListener
             }
 
+
             if (snapshot != null && !snapshot.isEmpty) {
                 val adviceList = snapshot.documents.map { document ->
                     document.toObject(AdviceItem::class.java)
@@ -80,22 +81,26 @@ class Advice : AppCompatActivity() {
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     true
                 }
-                R.id.home ->{
+
+                R.id.home -> {
                     startActivity(Intent(applicationContext, Home::class.java))
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     true
                 }
+
                 R.id.advice -> true
                 R.id.notification -> {
                     startActivity(Intent(applicationContext, Notification::class.java))
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     true
                 }
+
                 R.id.search -> {
                     startActivity(Intent(applicationContext, Search::class.java))
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     true
                 }
+
                 else -> false
             }
         }

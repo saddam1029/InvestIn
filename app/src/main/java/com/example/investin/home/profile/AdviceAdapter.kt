@@ -90,10 +90,20 @@ class AdviceAdapter(private val context: Context) :
         }
 
         holder.itemView.setOnClickListener {
+//            val intent = Intent(context, AdviceDetail::class.java)
+//            intent.putExtra("title", currentItem.title)
+//            intent.putExtra("description", currentItem.description)
+//            intent.putExtra("time", formatTimestamp(currentItem.timestamp))
+//            context.startActivity(intent)
+
+
+
             val intent = Intent(context, AdviceDetail::class.java)
             intent.putExtra("title", currentItem.title)
             intent.putExtra("description", currentItem.description)
             intent.putExtra("time", formatTimestamp(currentItem.timestamp))
+            intent.putExtra("postId", currentItem.postId)
+            // Add other fields as needed
             context.startActivity(intent)
         }
 

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.investin.Advice.MyAdviceAdapter
 import com.example.investin.chat.AdviceItem
 import com.example.investin.databinding.ActivityProfileBinding
 import com.example.investin.home.Home
@@ -81,12 +82,31 @@ class Profile : AppCompatActivity() {
         binding.ivProfilePicSelect.setOnClickListener {
             // Check if user is signed in before attempting upload
             if (FirebaseAuth.getInstance().currentUser == null) {
-                Toast.makeText(this, "Please sign in to upload a profile picture", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Please sign in to upload a profile picture",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
             // Open the image picker
             openImagePicker()
+        }
+
+        binding.ivBackgroundPicSelect.setOnClickListener {
+            // Check if user is signed in before attempting upload
+            if (FirebaseAuth.getInstance().currentUser == null) {
+                Toast.makeText(
+                    this,
+                    "Please sign in to upload a background picture",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            // Open the image picker
+            openImagePickerForBackground()
         }
 
     }
@@ -105,8 +125,22 @@ class Profile : AppCompatActivity() {
                         // Load the image using Glide and cache it
                         Glide.with(this@Profile)
                             .load(url)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image locally
+                            .placeholder(com.example.investin.R.drawable.profile_2)  // Display placeholder while loading
+                            .error(com.example.investin.R.drawable.profile_2)              // Display error image on failure
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(binding.ivProfilePic)
+                    }
+
+
+                    val backgroundUrl = documentSnapshot.getString("backgroundPicUrl")
+                    backgroundUrl?.let { url ->
+                        // Load the background image using Glide and disable caching
+                        Glide.with(this@Profile)
+                            .load(url)
+                            .placeholder(com.example.investin.R.drawable.background_image)  // Display placeholder while loading
+                            .error(com.example.investin.R.drawable.background_image)              // Display error image on failure
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(binding.ivBackground)
                     }
                 }
             }
@@ -135,7 +169,8 @@ class Profile : AppCompatActivity() {
         val data = baos.toByteArray()
         val uploadTask = storageRef.putBytes(data)
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            Toast.makeText(this, "Please sign in to upload a profile picture", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please sign in to upload a profile picture", Toast.LENGTH_SHORT)
+                .show();
             return; // Exit the function if user is not signed in
         }
         uploadTask.addOnSuccessListener { taskSnapshot ->
@@ -143,6 +178,31 @@ class Profile : AppCompatActivity() {
             storageRef.downloadUrl.addOnSuccessListener { uri ->
                 // Save the download URL in Firestore
                 saveImageUriToFirestore(uri.toString())
+            }
+        }.addOnFailureListener { exception ->
+            // Handle any errors
+            Log.e("ProfileActivity", "Failed to upload image to Firebase Storage: $exception")
+        }
+    }
+
+    private fun uploadImageToFirebaseStorageForBackground(selectedImageUri: Uri) {
+        val storageRef: StorageReference = storageReference.child("background_pics/${userId}.jpg")
+
+        // Convert URI to Bitmap
+        val bitmap: Bitmap =
+            BitmapFactory.decodeStream(contentResolver.openInputStream(selectedImageUri))
+
+        // Compress the bitmap
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+        val uploadTask = storageRef.putBytes(data)
+
+        uploadTask.addOnSuccessListener { taskSnapshot ->
+            // Image uploaded successfully, get the download URL
+            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                // Save the download URL in Firestore
+                saveImageUriToFirestoreForBackground(uri.toString())
             }
         }.addOnFailureListener { exception ->
             // Handle any errors
@@ -171,30 +231,75 @@ class Profile : AppCompatActivity() {
             }
     }
 
+    private fun saveImageUriToFirestoreForBackground(imageUrl: String) {
+        val userDocRef = firestoreDB.collection("InvestIn")
+            .document("profile")
+            .collection(userId)
+            .document(userId)
+
+        // Update the 'backgroundPicUrl' field with the image URL
+        userDocRef.update("backgroundPicUrl", imageUrl)
+            .addOnSuccessListener {
+                // Image URL saved successfully
+                Toast.makeText(this, "Background picture updated successfully", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            .addOnFailureListener { e ->
+                // Handle any errors
+                Log.e("ProfileActivity", "Failed to update background picture URL: $e")
+                Toast.makeText(this, "Failed to update background picture", Toast.LENGTH_SHORT)
+                    .show()
+            }
+    }
+
+    @SuppressLint("IntentReset")
     private fun openImagePicker() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_IMAGE_PICK)
     }
 
+    @SuppressLint("IntentReset")
+    private fun openImagePickerForBackground() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_IMAGE_PICK_BACKGROUND)
+    }
+
     // Inside your onActivityResult method
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_IMAGE_PICK && resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             val selectedImageUri = data?.data
             selectedImageUri?.let {
-                // Load the selected image into the ImageView
-                binding.ivProfilePic.setImageURI(selectedImageUri)
+                when (requestCode) {
+                    REQUEST_IMAGE_PICK -> {
+                        // Load the selected image into the profile ImageView
+                        binding.ivProfilePic.setImageURI(selectedImageUri)
 
-                // Upload the selected image to Firebase Storage and store its URL in Firestore
-                uploadImageToFirebaseStorage(selectedImageUri)
+                        // Upload the selected image to Firebase Storage and store its URL in Firestore
+                        uploadImageToFirebaseStorage(selectedImageUri)
+                    }
+
+                    REQUEST_IMAGE_PICK_BACKGROUND -> {
+                        // Load the selected image into the background ImageView
+                        binding.ivBackground.setImageURI(selectedImageUri)
+
+                        // Upload the selected image to Firebase Storage and store its URL in Firestore
+                        uploadImageToFirebaseStorageForBackground(selectedImageUri)
+                    }
+                }
             }
         }
     }
+
     companion object {
         private const val REQUEST_IMAGE_PICK = 1
+        private const val REQUEST_IMAGE_PICK_BACKGROUND = 2
     }
+
     private fun retrieveAndSetUserInfo() {
         // Retrieve user name and email from Intent extras
         val userName = intent.getStringExtra("userName")
@@ -255,33 +360,28 @@ class Profile : AppCompatActivity() {
             .document("Advice")
             .collection("all_advice_posts")
 
-        val query = allAdviceCollectionRef.whereEqualTo("userId", userId)
+        allAdviceCollectionRef.whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { documents ->
+                val userPostCount = documents.size()
 
-        query.addSnapshotListener { snapshot, exception ->
-            if (exception != null) {
-                Log.e("AdviceActivity", "Error fetching advice: ${exception.message}", exception)
-                return@addSnapshotListener
-            }
+                // Update the TextView with the count
+                binding.tvTotalAdvicePosts.text = "Total posts: $userPostCount"
 
-            // Clear the existing list of posts
-            val userAdvice = mutableListOf<AdviceItem>() // Fix: Change userPosts to userAdvice
+                if (!documents.isEmpty) {
+                    val adviceList = documents.mapNotNull { document ->
+                        document.toObject(AdviceItem::class.java)
+                    }
 
-            // Parse the snapshot and add posts to the list
-            for (document in snapshot!!) {
-                val postId = document.id
-                val post = document.toObject(AdviceItem::class.java).apply {
-                    this.postId = postId // Assign postId from document ID
+                    val adviceAdapter = MyAdviceAdapter(adviceList)
+                    binding.rvProfileAdvice.adapter = adviceAdapter
                 }
-                userAdvice.add(post) // Fix: Change userPosts to userAdvice
             }
-
-                // Update the data in the advice adapter
-                adviceAdapter.updateData(userAdvice)
-
-               // Update the TextView with the total number of user posts
-                binding.tvTotalAdvicePosts.text = userAdvice.size.toString()
+            .addOnFailureListener { exception ->
+                Log.e("AdviceActivity", "Error fetching advice: ${exception.message}", exception)
             }
-        }
+    }
+
 
     private fun navigateToHome() {
         val intent = Intent(this, Home::class.java)

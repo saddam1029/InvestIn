@@ -3,24 +3,82 @@ package com.example.investin.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.investin.R
 import com.example.investin.databinding.ActivityAccountBinding
 import com.example.investin.databinding.ActivityProfileBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Account : AppCompatActivity() {
     private lateinit var binding: ActivityAccountBinding
+    private lateinit var firebaseFirestore: FirebaseFirestore
+    private lateinit var currentUser: FirebaseUser
+    private var isImageLoaded = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize Firebase Firestore
+        firebaseFirestore = FirebaseFirestore.getInstance()
+
+        // Get current user
+        currentUser = FirebaseAuth.getInstance().currentUser!!
 
         // Call the function to retrieve and set user information
         retrieveAndSetUserInfo()
 
         binding.ivBackProfile.setOnClickListener {
             navigateToHome()
+
+        }
+
+        loadProfilePicture()
+    }
+
+
+
+    override fun onStart() {
+        super.onStart()
+        if (!isImageLoaded) {
+            loadProfilePicture()
         }
     }
+
+    private fun loadProfilePicture() {
+        val userDocRef = firebaseFirestore.collection("InvestIn")
+            .document("profile")
+            .collection(currentUser?.uid ?: "")
+            .document(currentUser?.uid ?: "")
+
+        userDocRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val imageUrl = documentSnapshot.getString("profilePicUrl")
+                    imageUrl?.let { url ->
+                        Glide.with(this@Account)
+                            .load(url)
+                            .placeholder(R.drawable.profile_2)
+                            .error(R.drawable.profile_2)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(binding.ivAccountPic)
+                        isImageLoaded = true
+                    }
+                } else {
+                    binding.ivAccountPic.setImageResource(R.drawable.profile_2)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("ProfileActivity", "Failed to load profile picture: $e")
+                binding.ivAccountPic.setImageResource(R.drawable.madara)
+            }
+    }
+
+
 
     private fun retrieveAndSetUserInfo() {
         // Retrieve user name and email from Intent extras

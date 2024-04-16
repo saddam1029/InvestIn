@@ -49,7 +49,7 @@ class PostAdapter(private val context: Context) :
         val currentItem = postList[position]
         holder.tvTitle.text = currentItem.title
         holder.tvLocation.text = currentItem.location
-        holder.tvTime.text = formatTimestamp(currentItem.timestamp)
+        holder.tvTime.text = formatTimestamp(currentItem.timestamp)// You should replace this with the actual timestamp field
 
         // Set up "More" functionality within onBindViewHolder
         val maxLinesCollapsed = 2

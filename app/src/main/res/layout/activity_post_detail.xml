@@ -419,7 +419,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:fontFamily="@font/open_sans"
-                            android:text="15 job posted"
+                            android:text="Total Posts: 10"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/_10ssp" />
 
