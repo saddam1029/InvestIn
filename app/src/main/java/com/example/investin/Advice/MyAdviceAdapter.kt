@@ -1,17 +1,22 @@
 package com.example.investin.Advice
 
 import android.content.Intent
+import android.media.Image
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.investin.R
 import com.example.investin.chat.AdviceItem
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -83,6 +88,37 @@ class MyAdviceAdapter(private val adviceList: List<AdviceItem>) :
             // Add other fields as needed
             context.startActivity(intent)
         }
+
+        // Inside onBindViewHolder method of AdviceAdapter
+        holder.ivMenu.setOnClickListener { view ->
+            // Use the context associated with the item view
+            val context = holder.itemView.context
+
+            // Inflate the bottom sheet menu layout
+            val bottomSheetView = LayoutInflater.from(context).inflate(R.layout.bottom_dialog_home_layout, null)
+
+            // Create a BottomSheetDialog and set the view
+            val bottomSheetDialog = BottomSheetDialog(context)
+            bottomSheetDialog.setContentView(bottomSheetView)
+
+            // Set animations
+            bottomSheetDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+
+            // Handle click events for menu items
+            bottomSheetView.findViewById<View>(R.id.layoutAddToFav).setOnClickListener {
+                // Handle add to favorites action
+                bottomSheetDialog.dismiss()
+            }
+
+            bottomSheetView.findViewById<View>(R.id.layoutReport).setOnClickListener {
+                // Handle report action
+                bottomSheetDialog.dismiss()
+            }
+
+            // Show the bottom sheet dialog
+            bottomSheetDialog.show()
+        }
+
     }
 
     private fun getTrimmedText(text: String, maxLines: Int, textView: TextView): String {
@@ -117,5 +153,6 @@ class MyAdviceAdapter(private val adviceList: List<AdviceItem>) :
         val tvDescription: TextView = itemView.findViewById(R.id.tvDescriptionAdvice)
         val tvTime: TextView = itemView.findViewById(R.id.tvTimeAdvice)
         val tvMore: TextView = itemView.findViewById(R.id.tvMoreAdvice)
+        val ivMenu: ImageView = itemView.findViewById(R.id.ivMenuAdvice)
     }
 }

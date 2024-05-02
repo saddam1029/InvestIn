@@ -20,6 +20,7 @@ class Post : AppCompatActivity() {
 
     private lateinit var binding: ActivityPostBinding
     private var shouldShowConfirmationDialog = true
+
     private val selectedSkills = mutableSetOf<String>()
 
     var firebaseFirestore = Firebase.firestore
@@ -35,31 +36,51 @@ class Post : AppCompatActivity() {
         firebaseFirestore = FirebaseFirestore.getInstance()
         usersReference = firebaseFirestore.collection("InvestIn")
 
+        // Call the function to set up all CheckBoxes
+        setupAllCheckBoxes()
 
-        // Call the setup function for each CheckBox
-        setupCheckBox(binding.cbBusiness)
-        setupCheckBox(binding.cbCommunication)
-        setupCheckBox(binding.cbCreativity)
-        setupCheckBox(binding.cbMarketing)
-        setupCheckBox(binding.cbMoneyManagement)
-        setupCheckBox(binding.cbSales)
-        setupCheckBox(binding.cbLeadership)
-        setupCheckBox(binding.cbPositiveMindset)
-        setupCheckBox(binding.cbTechnicalSkills)
-        setupCheckBox(binding.cbListening)
-        setupCheckBox(binding.cbTimeManagement)
-        setupCheckBox(binding.cbStrategy)
-        setupCheckBox(binding.cbCustomerService)
-        setupCheckBox(binding.rbNetworking)
+        val mode = intent.getStringExtra("mode")
+        if (mode == MODE_UPDATE) {
+            // For updating existing post
+            val postId = intent.getStringExtra("postId")
+            val title = intent.getStringExtra("title")
+            val descriptor = intent.getStringExtra("descriptor")
+            val location = intent.getStringExtra("location")
+            val budget = intent.getStringExtra("budget")
+            val skills = intent.getStringArrayListExtra("skills")
+
+            // Pre-fill the form fields with the existing post data
+            binding.etTitle.setText(title)
+            binding.etDescription.setText(descriptor)
+            binding.etLocation.setText(location)
+            binding.etBudget.setText(budget)
+
+            // Set up selected skills if available
+            skills?.forEach { skill ->
+                // Find the corresponding CheckBox and check it
+                val checkBox = findCheckBoxBySkill(skill)
+                checkBox?.isChecked = true
+            }
+
+            // Call the function to set up all CheckBoxes
+            setupAllCheckBoxes()
+        }
 
         ivBack.setOnClickListener {
             showConfirmationDialog()
         }
 
         binding.btPost.setOnClickListener {
-            saveUserPost()
+            if (mode == MODE_UPDATE) {
+                // Update existing post
+                updatePost()
+            } else {
+                // Create new post
+                saveUserPost()
+            }
         }
     }
+
 
     private fun saveUserPost() {
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -99,6 +120,64 @@ class Post : AppCompatActivity() {
             }
     }
 
+    private fun updatePost() {
+        // Retrieve post ID from intent
+        val postId = intent.getStringExtra("postId") ?: return
+
+        // Retrieve other data from form fields
+        val postTitle = binding.etTitle.text.toString()
+        val postDescriptor = binding.etDescription.text.toString()
+        val postBudget = binding.etBudget.text.toString()
+        val postLocation = binding.etLocation.text.toString()
+
+        // Update the post data in Firestore
+        val postRef = firebaseFirestore.collection("InvestIn")
+            .document("posts")
+            .collection("all_posts")
+            .document(postId)
+
+        // Create a map with updated data
+        val updatedData = hashMapOf(
+            "title" to postTitle,
+            "descriptor" to postDescriptor,
+            "budget" to postBudget,
+            "location" to postLocation,
+            "skills" to selectedSkills.toList(),
+            "timestamp" to System.currentTimeMillis()
+        )
+
+        // Update the document
+        postRef.update(updatedData)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Post updated!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
+    private fun findCheckBoxBySkill(skill: String): CheckBox? {
+        return when (skill) {
+            "Business" -> binding.cbBusiness
+            "Communication" -> binding.cbCommunication
+            "Creativity" -> binding.cbCreativity
+            "Marketing" -> binding.cbMarketing
+            "Money management" -> binding.cbMoneyManagement // Corrected to match the skill name
+            "Sales" -> binding.cbSales
+            "Leadership" -> binding.cbLeadership
+            "Positive mindset" -> binding.cbPositiveMindset // Corrected to match the skill name
+            "Technical skills" -> binding.cbTechnicalSkills // Corrected to match the skill name
+            "Listening" -> binding.cbListening
+            "Time management" -> binding.cbTimeManagement // Corrected to match the skill name
+            "Strategy" -> binding.cbStrategy
+            "Customer Service" -> binding.cbCustomerService
+            "Networking" -> binding.cbNetworking
+            else -> null
+        }
+    }
+
 
     private fun setupCheckBox(checkBox: CheckBox) {
         checkBox.setOnCheckedChangeListener { _, isChecked ->
@@ -111,6 +190,30 @@ class Post : AppCompatActivity() {
         }
     }
 
+    private fun setupAllCheckBoxes() {
+        val checkBoxes = listOf(
+            binding.cbBusiness,
+            binding.cbCommunication,
+            binding.cbCreativity,
+            binding.cbMarketing,
+            binding.cbMoneyManagement,
+            binding.cbSales,
+            binding.cbLeadership,
+            binding.cbPositiveMindset,
+            binding.cbTechnicalSkills,
+            binding.cbListening,
+            binding.cbTimeManagement,
+            binding.cbStrategy,
+            binding.cbCustomerService,
+            binding.cbNetworking
+        )
+
+        checkBoxes.forEach { checkBox ->
+            setupCheckBox(checkBox)
+        }
+    }
+
+
     private fun showConfirmationDialog() {
         val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
         alertDialogBuilder.setTitle("Confirmation")
@@ -118,7 +221,7 @@ class Post : AppCompatActivity() {
         alertDialogBuilder.setPositiveButton("Yes") { dialog, which ->
             // User clicked Yes, navigate back
             shouldShowConfirmationDialog = false
-            navigateBack()
+            onBackPressed()
         }
         alertDialogBuilder.setNegativeButton("Cancel") { dialog, which ->
             // User clicked Cancel, do nothing
@@ -128,11 +231,9 @@ class Post : AppCompatActivity() {
         alertDialog.show()
     }
 
-    private fun navigateBack() {
-        // Perform your navigation back to the home activity here
-        // For example, using Intent
-        val intent = Intent(this, Home::class.java)
-        startActivity(intent)
+
+    companion object {
+        const val MODE_UPDATE = "update"
     }
 
     override fun onBackPressed() {

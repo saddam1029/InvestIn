@@ -1,21 +1,25 @@
-package com.example.investin
+package com.example.investin.home.drawer
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.example.investin.R
+import com.example.investin.databinding.ActivityAboutUsBinding
+import com.example.investin.databinding.ActivityFavoriteBinding
 import com.example.investin.home.Home
 
 class AboutUs : AppCompatActivity() {
+    private lateinit var binding: ActivityAboutUsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about_us)
+        binding = ActivityAboutUsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Initialize the back ImageView
-        val ivBack: ImageView = findViewById(R.id.ivBack)
 
         // Set click listener to navigate back to Home activity
-        ivBack.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             navigateToHome()
         }
 

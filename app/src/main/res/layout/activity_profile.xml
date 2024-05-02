@@ -99,13 +99,12 @@
                     android:id="@+id/ivBackgroundPicSelect"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/edit_image"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -220,8 +219,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvProfile"
                     android:layout_width="match_parent"
+                    android:layout_height="@dimen/_300sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_height="@dimen/_250sdp"
                     android:layout_below="@+id/yourPosts"/>
 
             </RelativeLayout>
@@ -279,7 +278,7 @@
                     android:id="@+id/rvProfileAdvice"
                     android:layout_width="match_parent"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_height="@dimen/_250sdp"
+                    android:layout_height="@dimen/_300sdp"
                     android:layout_below="@+id/yourAdvicePosts"/>
 
             </RelativeLayout>

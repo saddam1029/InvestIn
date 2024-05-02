@@ -13,9 +13,8 @@
         app:cardElevation="@dimen/_3sdp"
         app:cardCornerRadius="@dimen/_4sdp"
         app:cardUseCompatPadding="true"
+        android:clickable="false"
         tools:ignore="MissingConstraints" >
-
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -42,7 +41,9 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:src="@drawable/three_dots_black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <TextView
                 android:id="@+id/tvTitleAdvice"

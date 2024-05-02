@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.investin.Advice.MyAdviceAdapter
 import com.example.investin.chat.AdviceItem
 import com.example.investin.databinding.ActivityProfileBinding
 import com.example.investin.home.Home
@@ -352,36 +351,43 @@ class Profile : AppCompatActivity() {
     }
 
     private fun loadUserAdvice() {
+        binding.rvProfileAdvice.layoutManager = LinearLayoutManager(this)
+
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userId = currentUser?.uid ?: ""
 
-        val allAdviceCollectionRef = FirebaseFirestore.getInstance()
-            .collection("InvestIn")
-            .document("Advice")
+        val allAdviceCollectionRef = FirebaseFirestore.getInstance().collection("InvestIn").document("Advice")
             .collection("all_advice_posts")
 
-        allAdviceCollectionRef.whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { documents ->
+        // Query to retrieve advice for the current user
+        val query = allAdviceCollectionRef.whereEqualTo("userId", userId)
+
+        // Add a snapshot listener to listen for real-time updates
+        query.addSnapshotListener { documents, exception ->
+            if (exception != null) {
+                // Handle error
+                Log.e("AdviceActivity", "Error fetching advice: ${exception.message}", exception)
+                return@addSnapshotListener
+            }
+
+            if (documents != null) {
                 val userPostCount = documents.size()
 
                 // Update the TextView with the count
-                binding.tvTotalAdvicePosts.text = "Total posts: $userPostCount"
+                binding.tvTotalAdvicePosts.text = userPostCount.toString()
 
                 if (!documents.isEmpty) {
                     val adviceList = documents.mapNotNull { document ->
                         document.toObject(AdviceItem::class.java)
                     }
 
-                    val adviceAdapter = MyAdviceAdapter(adviceList)
+                    val adviceAdapter = AdviceAdapter(binding.root.context)
+                    adviceAdapter.updateData(adviceList) // Update the adapter with data
                     binding.rvProfileAdvice.adapter = adviceAdapter
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.e("AdviceActivity", "Error fetching advice: ${exception.message}", exception)
-            }
+        }
     }
-
 
     private fun navigateToHome() {
         val intent = Intent(this, Home::class.java)

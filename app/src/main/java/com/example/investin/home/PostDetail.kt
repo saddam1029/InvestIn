@@ -29,14 +29,13 @@ class PostDetail : AppCompatActivity() {
         setContentView(binding.root)
 
         // Retrieve data from intent
-        val postId = intent.getStringExtra("postId") ?: ""
         val title = intent.getStringExtra("title")
         val descriptor = intent.getStringExtra("descriptor")
         val location = intent.getStringExtra("location")
         val skills = intent.getStringArrayListExtra("skills")
         val time = intent.getStringExtra("time")
         val budget = intent.getStringExtra("budget")
-//        val userId = intent.getStringExtra("userId") ?: ""
+        val userId = intent.getStringExtra("userId") ?: ""
 
 
         // Set data to TextViews
@@ -54,73 +53,45 @@ class PostDetail : AppCompatActivity() {
             navigateToHome()
         }
 
-        // Query Firestore to count the number of posts by the same user
-        val currentUserID = FirebaseAuth.getInstance().currentUser?.uid
-        if (currentUserID != null) {
-            val allPostsQuery = firestoreDB.collection("InvestIn/posts/all_posts")
+        // Initially set the total post count text to a loading message
+        binding.tvTotalJobPost.text = "Loading..."
 
-            allPostsQuery.get()
-                .addOnSuccessListener { documents ->
-                    // Filter documents to count only those with matching user ID
-                    val userPostsCount = documents.filter { doc ->
-                        doc.getString("userId") == currentUserID
-                    }.size
 
-                    // Update the TextView with the count
-                    val postCountText = "Total posts by this user: $userPostsCount"
-                    binding.tvTotalJobPost.text = postCountText
-                }
-                .addOnFailureListener { e ->
-                    // Handle any errors
-                    Log.e("PostDetail", "Error getting user posts: ", e)
-                }
+//       Count the number of user posts
+        getUserPostCount(userId)
+
+        val fromProfile = intent.getBooleanExtra("fromProfile", false) // Retrieve the flag
+
+        if (fromProfile) {
+            // Hide the ImageView when opened from profile
+            binding.ivInvest.visibility = View.GONE
+        } else {
+            // Show the ImageView for other cases
+            binding.ivInvest.visibility = View.VISIBLE
         }
-
-
-
-        // Count the number of user posts
-//        getUserPostCount(userId)
     }
 
-//    @SuppressLint("SetTextI18n")
-//    private fun getUserPostCount(userId: String) {
-//        Log.d("PostDetail", "Getting post count for user: $userId")
-//        val postsCollectionRef = firestoreDB
-//            .collection("InvestIn")
-//            .document("posts")
-//            .collection("all_posts")
-//
-//        // Query to retrieve posts for the current user
-//        val query = postsCollectionRef.whereEqualTo("userId", userId)
-//
-//        // Add a snapshot listener to listen for real-time updates
-//        query.addSnapshotListener { snapshot, exception ->
-//            if (exception != null) {
-//                // Handle error
-//                Log.e("PostDetail", "Error loading posts: ${exception.message}", exception)
-//                return@addSnapshotListener
-//            }
-//
-//            if (snapshot != null) {
-//                val userPosts = mutableListOf<PostModel>()
-//
-//                // Parse the snapshot and add posts to the list
-//                for (document in snapshot) {
-//                    val postId = document.id
-//                    val post = document.toObject(PostModel::class.java).apply {
-//                        this.postId = postId // Assign postId from document ID
-//                    }
-//                    userPosts.add(post)
-//                }
-//
-//                // Update the TextView with the total number of user posts
-//                binding.tvTotalJobPost.text = "Total Posts: ${userPosts.size}"
-//                Log.d("PostDetail", "Total posts: ${userPosts.size}")
-//            } else {
-//                Log.d("PostDetail", "Snapshot is null")
-//            }
-//        }
-//    }
+    @SuppressLint("SetTextI18n")
+    private fun getUserPostCount(userId: String) {
+        // Perform query to count the user's posts
+        firestoreDB.collection("InvestIn")
+            .document("posts")
+            .collection("all_posts")
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                // Get the count of user's posts
+                val userPostsCount = querySnapshot.size()
+
+                // Set the text to display the count of user's posts
+                binding.tvTotalJobPost.text = "Total posts by this user: $userPostsCount"
+            }
+            .addOnFailureListener { e ->
+                // Handle failure
+                // Set an error message or retry option if needed
+                binding.tvTotalJobPost.text = "Failed to load posts count"
+            }
+    }
 
 
 

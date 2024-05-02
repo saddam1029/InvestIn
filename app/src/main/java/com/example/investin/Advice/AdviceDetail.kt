@@ -51,7 +51,7 @@ class AdviceDetail : AppCompatActivity() {
    // Define currentUser
         val currentUser = FirebaseAuth.getInstance().currentUser
 
-  // Set up click listener for post comment image view
+       // Set up click listener for post comment image view
         binding.ivPostCommit.setOnClickListener {
             val comment = binding.etAdvice.text.toString().trim()
 

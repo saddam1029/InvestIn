@@ -11,13 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.PopupMenu
+import android.widget.Toast
 import androidx.constraintlayout.helper.widget.MotionEffect
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.investin.Advice.AdviceDetail
+import com.example.investin.Advice.AdvicePost
 import com.example.investin.R
 import com.example.investin.chat.AdviceItem
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -90,13 +92,6 @@ class AdviceAdapter(private val context: Context) :
         }
 
         holder.itemView.setOnClickListener {
-//            val intent = Intent(context, AdviceDetail::class.java)
-//            intent.putExtra("title", currentItem.title)
-//            intent.putExtra("description", currentItem.description)
-//            intent.putExtra("time", formatTimestamp(currentItem.timestamp))
-//            context.startActivity(intent)
-
-
 
             val intent = Intent(context, AdviceDetail::class.java)
             intent.putExtra("title", currentItem.title)
@@ -109,41 +104,68 @@ class AdviceAdapter(private val context: Context) :
 
         // Inside onBindViewHolder method of AdviceAdapter
         holder.ivMenu.setOnClickListener { view ->
-            val popupMenu = PopupMenu(context, view)
-            popupMenu.inflate(R.menu.menu_profile_item) // You might want to create a different menu for advice items
+            // Inflate the bottom sheet menu layout
+            val bottomSheetView = LayoutInflater.from(context).inflate(R.layout.bottom_dialog_profile_layout, null)
 
-            popupMenu.setOnMenuItemClickListener { menuItem ->
-                // Handle menu item clicks here
-                when (menuItem.itemId) {
-                    R.id.menu_delete -> {
-                        // Delete the post from Firestore
-                        deletePost(currentItem.postId)
-                        true
-                    }
-                    else -> false
-                }
+            // Create a BottomSheetDialog and set the view
+            val bottomSheetDialog = BottomSheetDialog(context)
+            bottomSheetDialog.setContentView(bottomSheetView)
+
+            // Set animations
+            bottomSheetDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+
+            // Handle click events for menu items
+            bottomSheetView.findViewById<View>(R.id.layoutEdit).setOnClickListener {
+                // Handle edit action
+                // Pass the post data to the Post activity for editing
+                val intent = Intent(context, AdvicePost::class.java)
+                intent.putExtra("postId", currentItem.postId)
+                intent.putExtra("title", currentItem.title)
+                intent.putExtra("description", currentItem.description)
+                intent.putExtra("userId", currentItem.userId)
+                intent.putExtra("mode", "update")
+                // Add more fields if needed
+                context.startActivity(intent)
+
+                bottomSheetDialog.dismiss()
             }
 
-            popupMenu.show()
+            bottomSheetView.findViewById<View>(R.id.layoutDelete).setOnClickListener {
+                // Handle delete action
+                deletePost(currentItem.postId)
+                bottomSheetDialog.dismiss()
+            }
+
+            // Show the bottom sheet dialog
+            bottomSheetDialog.show()
         }
+
+
     }
 
     private fun deletePost(postId: String) {
         val firestoreDB = FirebaseFirestore.getInstance()
         val postsCollectionRef = firestoreDB.collection("InvestIn")
-            .document("Advice").collection("all_advice_posts")
+            .document("Advice")
+            .collection("all_advice_posts")
+
         val postRef = postsCollectionRef.document(postId)
         postRef.delete()
             .addOnSuccessListener {
                 // Post successfully deleted
+                Toast.makeText(context, "Post deleted", Toast.LENGTH_SHORT).show()
                 // You can also update the UI here if needed
             }
             .addOnFailureListener { e ->
                 // Handle any errors
                 Log.e(MotionEffect.TAG, "Error deleting post", e)
+                Toast.makeText(context, "Failed to delete post: ${e.message}", Toast.LENGTH_SHORT).show()
                 // You can also display a message to the user that deletion failed
             }
     }
+
+
+
 
     private fun getTrimmedText(text: String, maxLines: Int, textView: TextView): String {
         val layout = StaticLayout.Builder.obtain(
@@ -180,3 +202,4 @@ class AdviceAdapter(private val context: Context) :
         val ivMenu: ImageView = itemView.findViewById(R.id.ivMenuAdvice) // Change to ImageView
     }
 }
+

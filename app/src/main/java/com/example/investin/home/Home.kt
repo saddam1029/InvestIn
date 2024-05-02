@@ -14,13 +14,14 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.investin.AboutUs
+import com.example.investin.home.drawer.AboutUs
 import com.example.investin.Advice.Advice
 import com.example.investin.Notification
 import com.example.investin.R
 import com.example.investin.Search
 import com.example.investin.chat.Chat
 import com.example.investin.databinding.ActivityHomeBinding
+import com.example.investin.home.drawer.Favorite
 import com.example.investin.home.profile.Profile
 import com.example.investin.login.SignIn
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -47,6 +48,8 @@ class Home : AppCompatActivity() {
     private lateinit var textViewAddress: TextView
     private lateinit var textViewRole: TextView
     private lateinit var nevProfile: ImageView
+    private lateinit var postList: List<PostModel>
+
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -289,11 +292,10 @@ class Home : AppCompatActivity() {
             }
 
             if (snapshot != null && !snapshot.isEmpty) {
-                val postList = snapshot.documents.map { document ->
+                postList = snapshot.documents.mapNotNull { document ->
                     document.toObject(PostModel::class.java)
-                }.filterNotNull()
-
-                myHomeAdapter = MyHomeAdapter(postList)
+                }
+                myHomeAdapter = MyHomeAdapter(postList, this) // Pass context to the adapter
                 binding.rvHome.adapter = myHomeAdapter
             }
         }
@@ -363,7 +365,8 @@ class Home : AppCompatActivity() {
                 }
 
                 R.id.favorite -> {
-                    // Handle Favorite item click
+                    val intent = Intent(this, Favorite::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.setting -> {
