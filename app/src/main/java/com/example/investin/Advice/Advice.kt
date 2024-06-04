@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.investin.Notification
+import com.example.investin.notification.Notification
 import com.example.investin.R
-import com.example.investin.Search
+import com.example.investin.search.Search
 import com.example.investin.chat.AdviceItem
 import com.example.investin.chat.Chat
 import com.example.investin.databinding.ActivityAdviceBinding
@@ -95,11 +95,11 @@ class Advice : AppCompatActivity() {
                     true
                 }
 
-                R.id.search -> {
-                    startActivity(Intent(applicationContext, Search::class.java))
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    true
-                }
+//                R.id.search -> {
+//                    startActivity(Intent(applicationContext, Search::class.java))
+//                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//                    true
+//                }
 
                 else -> false
             }

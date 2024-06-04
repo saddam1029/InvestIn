@@ -101,6 +101,11 @@ class SignIn : AppCompatActivity() {
         binding?.ivGoogleLogin?.setOnClickListener {
             signInWithGoogle() // Initiates the Google sign-in flow
         }
+
+        binding.tvForgotPassword.setOnClickListener {
+            val intent = Intent(this, ChangePassword::class.java)
+            startActivity(intent)
+        }
     }
 
     // Function to check user information in Firestore

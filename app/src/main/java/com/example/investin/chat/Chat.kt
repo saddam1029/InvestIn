@@ -1,129 +1,147 @@
 package com.example.investin.chat
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.SearchView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.investin.Advice.Advice
-import com.example.investin.home.Home
-import com.example.investin.Notification
 import com.example.investin.R
-import com.example.investin.Search
+import com.example.investin.search.Search
+import com.example.investin.home.Home
+import com.example.investin.notification.Notification
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Chat : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var myChatAdapter : MyChatAdapter
+    private lateinit var myChatAdapter: MyChatAdapter
     private lateinit var searchView: SearchView
-
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
         searchView = findViewById(R.id.svChat)
+        firestore = FirebaseFirestore.getInstance()
 
-        chatRecyclerView()
-
-        bottomNavigation()
-
-//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_bar)
-//        BottomNavigationManager.setupBottomNavigation(this, bottomNavigationView)
-
+        setupRecyclerView()
         setupSearchView()
-
-
+        setupBottomNavigation()
+        loadUsersFromFirestore() // Load user data
     }
 
-    private fun chatRecyclerView() {
+    private fun setupRecyclerView() {
         recyclerView = findViewById(R.id.rvChat)
         recyclerView.layoutManager = LinearLayoutManager(this)
+    }
 
-        val dataList = listOf(
-            ChatItem("Imran Khan", "Hii what's up?", R.drawable.imran_khan),
-            ChatItem("Salahudin Ayyubi", "Hello there!", R.drawable.salahudein),
-            ChatItem("Adolf Hitler", "Hello there!", R.drawable.hitler),
-            ChatItem("Babar Azam", "Hello there!", R.drawable.babar),
-            ChatItem("Muhammad Ali", "Hello there!", R.drawable.muhamad_ali),
-            ChatItem("Bruce Lee", "Hello there!", R.drawable.brus_lee),
-            ChatItem("Michal Jordan", "Hello there!", R.drawable.jordon),
-            ChatItem("Andrew Tate", "Hello there!", R.drawable.tate),
-            ChatItem("Cristiano Ronaldo", "Hello there!", R.drawable.ronaldo),
-            ChatItem("Tony Stark", "Hello there!", R.drawable.stark),
-            ChatItem("Madara Uchiha", "Hello there!", R.drawable.madara),
-            ChatItem("Undertaker", "Hello there!", R.drawable.undertacker),
+    private fun loadUsersFromFirestore() {
+        val currentUserId = "currentUserId" // Replace with actual current user ID
+        val usersWithChat = mutableListOf<String>()
 
-        )
-
-        myChatAdapter = MyChatAdapter(dataList)
-        recyclerView.adapter = myChatAdapter
+        // Retrieve user IDs who have chatted with the current user
+        firestore.collection("ChatHistory")
+            .whereEqualTo("participantIds.$currentUserId", true)
+            .get()
+            .addOnSuccessListener { chatDocuments ->
+                for (chatDocument in chatDocuments) {
+                    // Get the IDs of users other than the current user
+                    val participantIds = chatDocument["participantIds"] as Map<String, Boolean>
+                    val otherUserId = participantIds.keys.find { it != currentUserId }
+                    if (otherUserId != null && otherUserId !in usersWithChat) {
+                        usersWithChat.add(otherUserId)
+                    }
+                }
+                Log.d("Firestore", "Users with chat: $usersWithChat") // Log to check the contents
+                if (usersWithChat.isNotEmpty()) {
+                    // If usersWithChat is not empty, query the Users collection to get user details
+                    val usersQuery = firestore.collection("Users").whereIn(FieldPath.documentId(), usersWithChat)
+                    usersQuery.get()
+                        .addOnSuccessListener { userDocuments ->
+                            val dataList = userDocuments.map { userDocument ->
+                                ChatItem(
+                                    userId = userDocument.id,
+                                    userName = userDocument.getString("name") ?: "Unknown",
+                                    lastMessage = "Hello there!", // Placeholder last message
+                                    lastMessageTime = System.currentTimeMillis(), // Placeholder last message time
+                                    userProfilePictureUrl = userDocument.getString("profilePictureUrl") ?: ""
+                                )
+                            }
+                            myChatAdapter = MyChatAdapter(dataList)
+                            recyclerView.adapter = myChatAdapter
+                        }
+                        .addOnFailureListener { exception ->
+                            Toast.makeText(this, "Error loading users: ${exception.message}", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    // Handle case where there are no users with chat
+                    Log.d("Firestore", "No users with chat found.")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error loading chat history: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun setupSearchView() {
-        searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                // Handle query submission
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Handle query text change
-                myChatAdapter.filter.filter(newText)
+                myChatAdapter.filter(newText)
                 return true
             }
         })
     }
 
-    private fun navigateToHome() {
-        val intent = Intent(this, Home::class.java)
-        startActivity(intent)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        finish() // Finish the current activity to prevent going back to it
-    }
-
-    private fun bottomNavigation() {
-        // Initialize and assign variable
+    private fun setupBottomNavigation() {
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation_bar)
-
-        // Set Home selected
         bottomNavigationView.selectedItemId = R.id.message
 
-        // Perform item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.message -> true
                 R.id.home -> {
-                    startActivity(Intent(applicationContext, Home::class.java))
+                    navigateTo(Home::class.java)
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     true
                 }
                 R.id.advice -> {
-                    startActivity(Intent(applicationContext, Advice::class.java))
+                    navigateTo(Advice::class.java)
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     true
                 }
                 R.id.notification -> {
-                    startActivity(Intent(applicationContext, Notification::class.java))
+                    navigateTo(Notification::class.java)
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     true
                 }
-                R.id.search -> {
-                    startActivity(Intent(applicationContext, Search::class.java))
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    true
-                }
+//                R.id.search -> {
+//                    navigateTo(Search::class.java)
+//                    true
+//                }
                 else -> false
             }
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        // Override the back button to navigate to Home activity
-        navigateToHome()
+    private fun navigateTo(destination: Class<*>) {
+        startActivity(Intent(this, destination))
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        navigateTo(Home::class.java)
+    }
 }

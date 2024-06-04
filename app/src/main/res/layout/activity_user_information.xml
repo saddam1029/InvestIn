@@ -400,6 +400,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_23sdp"
                 android:layout_marginTop="@dimen/_40sdp"
+                android:textSize="@dimen/_11sdp"
                 android:backgroundTint="@color/app_color"
                 android:text="Finish" />
 

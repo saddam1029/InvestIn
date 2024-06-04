@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Search">
+    tools:context=".search.Search">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar4"
@@ -28,24 +28,24 @@
     </androidx.appcompat.widget.Toolbar>
 
     <android.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
+        android:id="@+id/svChat"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:queryHint="Search"
         android:iconifiedByDefault="false"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:queryHint="Search"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar4"
-        android:queryBackground="@drawable/search_view_background"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar4" />
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearch"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_bar"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@id/svChat"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_layout_search"/>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

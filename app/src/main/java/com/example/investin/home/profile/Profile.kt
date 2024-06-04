@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.helper.widget.MotionEffect.TAG
@@ -40,6 +41,9 @@ class Profile : AppCompatActivity() {
     // Get a reference to the root directory of Firebase Storage
     private val storageReference = firebaseStorage.reference
 
+    private var fromCommentSection: Boolean = false
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +53,16 @@ class Profile : AppCompatActivity() {
         // Initialize userId (assuming it's obtained from intent extras)
         userId = intent.getStringExtra("userId")
             ?: throw IllegalArgumentException("userId not found in intent extras")
+
+        // Check if the activity was started from the comment section
+        fromCommentSection = intent.getBooleanExtra("fromCommentSection", false)
+
+
+        // Conditionally hide the buttons based on the flag
+        if (fromCommentSection) {
+            binding.ivBackgroundPicSelect.visibility = View.GONE
+            binding.ivProfilePicSelect.visibility = View.GONE
+        }
 
         // Initialize RecyclerViews and their adapters
         postAdapter = PostAdapter(this)
@@ -69,7 +83,7 @@ class Profile : AppCompatActivity() {
         loadUserAdvice()
 
         binding.ivProfileBack.setOnClickListener {
-            navigateToHome()
+            onBackPressed()
         }
 
         // Call the function to retrieve and set user Name and Role
@@ -107,6 +121,10 @@ class Profile : AppCompatActivity() {
             // Open the image picker
             openImagePickerForBackground()
         }
+
+
+        // Retrieve and display user data
+        retrieveAndDisplayUserData()
 
     }
 
@@ -311,29 +329,27 @@ class Profile : AppCompatActivity() {
     // Modify loadUserPosts to update the post adapter
     @SuppressLint("SetTextI18n")
     private fun loadUserPosts() {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val userId = currentUser?.uid ?: ""
-
+        // Query Firestore to retrieve user's posts based on userId
         val postsCollectionRef = FirebaseFirestore.getInstance()
             .collection("InvestIn")
             .document("posts")
             .collection("all_posts")
 
-        // Query to retrieve posts for the current user
+        // Query to retrieve posts for the specified user
         val query = postsCollectionRef.whereEqualTo("userId", userId)
 
         // Add a snapshot listener to listen for real-time updates
         query.addSnapshotListener { snapshot, exception ->
             if (exception != null) {
                 // Handle error
-                Log.e(TAG, "Error loading posts: ${exception.message}", exception)
+                Log.e(TAG, "Error loading user posts: ${exception.message}", exception)
                 return@addSnapshotListener
             }
 
             // Clear the existing list of posts
             val userPosts = mutableListOf<PostModel>()
 
-            // Parse the snapshot and add posts to the list
+            // Parse the snapshot and add user's posts to the list
             for (document in snapshot!!) {
                 val postId = document.id
                 val post = document.toObject(PostModel::class.java).apply {
@@ -342,64 +358,109 @@ class Profile : AppCompatActivity() {
                 userPosts.add(post)
             }
 
-            // Update the adapter with the new list of posts
+            // Update the adapter with the new list of user's posts
             postAdapter.updateData(userPosts)
 
-            // Update the TextView with the total number of user posts
+            // Update the TextView with the total number of user's posts
             binding.tvTotalPosts.text = userPosts.size.toString()
         }
     }
 
     private fun loadUserAdvice() {
-        binding.rvProfileAdvice.layoutManager = LinearLayoutManager(this)
-
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val userId = currentUser?.uid ?: ""
-
-        val allAdviceCollectionRef = FirebaseFirestore.getInstance().collection("InvestIn").document("Advice")
+        // Query Firestore to retrieve user's advice based on userId
+        val allAdviceCollectionRef = FirebaseFirestore.getInstance()
+            .collection("InvestIn")
+            .document("Advice")
             .collection("all_advice_posts")
 
-        // Query to retrieve advice for the current user
+        // Query to retrieve advice for the specified user
         val query = allAdviceCollectionRef.whereEqualTo("userId", userId)
 
         // Add a snapshot listener to listen for real-time updates
         query.addSnapshotListener { documents, exception ->
             if (exception != null) {
                 // Handle error
-                Log.e("AdviceActivity", "Error fetching advice: ${exception.message}", exception)
+                Log.e(TAG, "Error fetching user's advice: ${exception.message}", exception)
                 return@addSnapshotListener
             }
 
-            if (documents != null) {
-                val userPostCount = documents.size()
+            // Clear the existing list of user's advice
+            val userAdviceList = mutableListOf<AdviceItem>()
 
-                // Update the TextView with the count
-                binding.tvTotalAdvicePosts.text = userPostCount.toString()
-
-                if (!documents.isEmpty) {
-                    val adviceList = documents.mapNotNull { document ->
-                        document.toObject(AdviceItem::class.java)
-                    }
-
-                    val adviceAdapter = AdviceAdapter(binding.root.context)
-                    adviceAdapter.updateData(adviceList) // Update the adapter with data
-                    binding.rvProfileAdvice.adapter = adviceAdapter
-                }
+            // Parse the snapshot and add user's advice to the list
+            for (document in documents!!) {
+                val advice = document.toObject(AdviceItem::class.java)
+                userAdviceList.add(advice)
             }
+
+            // Update the adapter with the new list of user's advice
+            adviceAdapter.updateData(userAdviceList)
+
+            // Update the TextView with the total number of user's advice
+            binding.tvTotalAdvicePosts.text = userAdviceList.size.toString()
         }
     }
+    private fun retrieveAndDisplayUserData() {
+        // Query Firestore to retrieve user data based on userId
+        val userDocRef = FirebaseFirestore.getInstance()
+            .collection("InvestIn")
+            .document("profile")
+            .collection(userId)
+            .document(userId) // Use the user's UID as the document ID
 
-    private fun navigateToHome() {
-        val intent = Intent(this, Home::class.java)
-        startActivity(intent)
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out) // fade activity when exit
-        finish() // Finish the current activity to prevent going back to it
+        userDocRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    // Retrieve user data
+                    val userName = documentSnapshot.getString("name")
+                    val userRole = documentSnapshot.getString("userRole")
+                    val profilePicUrl = documentSnapshot.getString("profilePicUrl")
+
+                    // Display user data
+                    binding.tvProfileName.text = userName
+                    binding.tvProfileRole.text = userRole
+                    profilePicUrl?.let {
+                        Glide.with(this)
+                            .load(it)
+                            .placeholder(com.example.investin.R.drawable.profile_2)
+                            .error(com.example.investin.R.drawable.profile_2)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(binding.ivProfilePic)
+                    }
+
+                    // Load user posts and advice
+                    loadUserPosts()
+                    loadUserAdvice()
+                } else {
+                    Log.e(TAG, "User document does not exist")
+                    Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show()
+                    // Handle case where user data is not found
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Error retrieving user data: ${e.message}", e)
+                Toast.makeText(this, "Failed to retrieve user data", Toast.LENGTH_SHORT).show()
+                // Handle failure to retrieve user data
+            }
+    }
+
+    private fun navigateToPreviousScreen() {
+        if (fromCommentSection) {
+            // Simply finish the activity to return to the comments section
+            finish()
+        } else {
+            // Navigate to the home screen
+            val intent = Intent(this, Home::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out) // fade activity when exiting
+            finish() // Finish the current activity to prevent going back to it
+        }
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
         // Override the back button to navigate to Home activity
-        navigateToHome()
+        navigateToPreviousScreen()
     }
 }

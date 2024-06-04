@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.helper.widget.MotionEffect
 import com.example.investin.R
@@ -62,14 +63,64 @@ class PostDetail : AppCompatActivity() {
 
         val fromProfile = intent.getBooleanExtra("fromProfile", false) // Retrieve the flag
 
-        if (fromProfile) {
-            // Hide the ImageView when opened from profile
+        // Hide the ImageView when opened from profile and it's the user's own post
+        if (fromProfile || currentUser?.uid == userId) {
             binding.ivInvest.visibility = View.GONE
         } else {
-            // Show the ImageView for other cases
             binding.ivInvest.visibility = View.VISIBLE
         }
+
+        // Set click listener for the ivInvest image
+        binding.ivInvest.setOnClickListener {
+            sendInvitation(userId)
+        }
+
     }
+
+    // Function to send an invitation
+    private fun sendInvitation(postOwnerId: String) {
+        currentUser?.uid?.let { senderId ->
+            val userDocRef = firestoreDB.collection("InvestIn")
+                .document("profile")
+                .collection(senderId)
+                .document(senderId)
+
+            userDocRef.get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val senderName = documentSnapshot.getString("name") ?: "Unknown"
+                    val senderProfileImage = documentSnapshot.getString("profilePicUrl") ?: ""
+
+                    val invitation = hashMapOf(
+                        "fromUserId" to senderId,
+                        "toUserId" to postOwnerId,
+                        "title" to binding.tvTitle.text.toString(),
+                        "timestamp" to System.currentTimeMillis(),
+                        "senderName" to senderName,
+                        "senderProfileImage" to senderProfileImage
+                    )
+
+                    firestoreDB.collection("InvestIn")
+                        .document("invitations")
+                        .collection("all_invitations")
+                        .add(invitation)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d("PostDetail", "Invitation sent successfully")
+                            Toast.makeText(this, "Invitation sent successfully", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("PostDetail", "Error sending invitation", e)
+                            Toast.makeText(this, "Error sending invitation", Toast.LENGTH_SHORT).show()
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("PostDetail", "Error fetching sender details", e)
+                    Toast.makeText(this, "Error fetching sender details", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+
+
 
     @SuppressLint("SetTextI18n")
     private fun getUserPostCount(userId: String) {
@@ -92,8 +143,6 @@ class PostDetail : AppCompatActivity() {
                 binding.tvTotalJobPost.text = "Failed to load posts count"
             }
     }
-
-
 
     // Function to navigate back to Home activity
     private fun navigateToHome() {

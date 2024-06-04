@@ -99,7 +99,7 @@
                     android:id="@+id/ivBackgroundPicSelect"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/edit_image"
@@ -128,7 +128,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/edit_image"
                     android:layout_marginBottom="@dimen/_6sdp"
-                    android:layout_marginStart="@dimen/_75sdp"
+                    android:layout_marginStart="@dimen/_76sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:ignore="MissingConstraints" />

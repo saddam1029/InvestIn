@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.investin.R
+import com.example.investin.home.profile.Profile
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -90,6 +91,19 @@ class CommentsAdapter(var comments: List<Comment>) :
                     endToEnd = com.android.car.ui.R.id.parent // Adjust the end constraint as per your layout
                 }
         }
+
+        holder.imageViewPic.setOnClickListener {
+            // Retrieve user ID associated with the comment
+            val userId = currentItem.userId
+
+            // Start profile activity with user ID as intent extra
+            val intent = Intent(it.context, Profile::class.java).apply {
+                putExtra("userId", userId)
+                putExtra("fromCommentSection", true) // Add extra flag
+            }
+            it.context.startActivity(intent)
+        }
+
     }
 
     private fun loadProfilePicture(userId: String, imageView: ImageView) {

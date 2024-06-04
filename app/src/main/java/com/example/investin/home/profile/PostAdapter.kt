@@ -208,7 +208,6 @@ class PostAdapter(private val context: Context) :
         val tvMore: TextView = itemView.findViewById(R.id.tvMore)
         val tvLocation: TextView = itemView.findViewById(R.id.tvLocation)
         val ivMenu: ImageView = itemView.findViewById(R.id.ivMenu) // Change to ImageView
-        val ivDislike: ImageView = itemView.findViewById(R.id.ivDislike)
         val ivLike: ImageView = itemView.findViewById(R.id.ivLike)
     }
 

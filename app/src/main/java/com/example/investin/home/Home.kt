@@ -16,12 +16,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.investin.home.drawer.AboutUs
 import com.example.investin.Advice.Advice
-import com.example.investin.Notification
+import com.example.investin.notification.Notification
 import com.example.investin.R
-import com.example.investin.Search
+import com.example.investin.search.Search
 import com.example.investin.chat.Chat
 import com.example.investin.databinding.ActivityHomeBinding
 import com.example.investin.home.drawer.Favorite
+import com.example.investin.home.drawer.Setting
 import com.example.investin.home.profile.Profile
 import com.example.investin.login.SignIn
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -327,11 +328,11 @@ class Home : AppCompatActivity() {
                     true
                 }
 
-                R.id.search -> {
-                    startActivity(Intent(applicationContext, Search::class.java))
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    true
-                }
+//                R.id.search -> {
+//                    startActivity(Intent(applicationContext, Search::class.java))
+//                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//                    true
+//                }
 
                 else -> false
             }
@@ -370,12 +371,20 @@ class Home : AppCompatActivity() {
                 }
 
                 R.id.setting -> {
-                    // Handle Setting item click
+                    val intent = Intent(this, Setting::class.java)
+                    intent.putExtra("userName", textViewName.text.toString())
+                    intent.putExtra("userRole", textViewRole.text.toString())
+                    intent.putExtra("userEmail", textViewEmail.text.toString())
+                    intent.putExtra("gender", textViewGender.text.toString())
+                    intent.putExtra("number", textViewNumber.text.toString())
+                    intent.putExtra("dateOfBirth", textViewDateOfBirth.text.toString())
+                    intent.putExtra("permanentAddress", textViewAddress.text.toString())
+                    startActivity(intent)
                 }
 
-                R.id.contact -> {
-                    // Handle Setting item click
-                }
+//                R.id.contact -> {
+//                    // Handle Setting item click
+//                }
 
                 R.id.share -> {
                     // Handle Setting item click

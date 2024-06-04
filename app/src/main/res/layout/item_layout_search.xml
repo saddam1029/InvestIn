@@ -6,21 +6,19 @@
     android:layout_height="wrap_content"
     android:background="#FFFFFF">
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
         tools:ignore="MissingConstraints" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="match_parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivChatProfile"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:id="@+id/ivSearchProfile"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_centerHorizontal="true"
                 android:clickable="true"
                 android:elevation="@dimen/_5sdp"
@@ -31,54 +29,35 @@
                 app:civ_border_width="@dimen/_1sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
-
-            <TextView
-                android:id="@+id/tvBusinessName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="Food Business"
-                android:textColor="@color/activity_name"
-                android:textSize="@dimen/_11ssp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_9sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/ivChatProfile"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_7sdp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Ali Khan"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/_9ssp"
-                app:layout_constraintEnd_toStartOf="@+id/tvLastTime"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/ivChatProfile"
-                app:layout_constraintTop_toBottomOf="@+id/tvBusinessName" />
+                android:text="Syed Saddam Hussain"
+                android:textColor="@color/activity_name"
+                android:textSize="@dimen/_11ssp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                app:layout_constraintStart_toEndOf="@+id/ivSearchProfile"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
 
             <TextView
-                android:id="@+id/tvLastTime"
+                android:id="@+id/tvUserRole"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="11:12 am"
+                android:text="Investor"
                 android:textColor="@color/grey"
-                android:textSize="@dimen/_9ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="@dimen/_8ssp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                app:layout_constraintStart_toEndOf="@+id/ivSearchProfile"
+                app:layout_constraintTop_toTopOf="@+id/tvUserName"
+                app:layout_constraintVertical_bias="0.5" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,32 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <item android:title="Welcome to InvestIn...">
 
-        <item
-            android:id="@+id/account"
-            android:icon="@drawable/account"
-            android:title="Account"/>
+        <menu>
 
-        <item
-            android:id="@+id/favorite"
-            android:icon="@drawable/favorite"
-            android:title="Favorite"/>
+            <item
+                android:id="@+id/account"
+                android:icon="@drawable/account"
+                android:title="Account"/>
 
-        <item
-            android:id="@+id/setting"
-            android:icon="@drawable/settings"
-            android:title="Setting"/>
+            <item
+                android:id="@+id/favorite"
+                android:icon="@drawable/favorite"
+                android:title="Favorite"/>
 
-    </group>
+            <item
+                android:id="@+id/setting"
+                android:icon="@drawable/settings"
+                android:title="Setting"/>
+
+        </menu>
+    </item>
+
 
     <item
         android:title="______________________________________________">
         <menu>
-            <item
-                android:id="@+id/contact"
-                android:icon="@drawable/contact"
-                android:title="Contact"/>
 
             <item
                 android:id="@+id/share"

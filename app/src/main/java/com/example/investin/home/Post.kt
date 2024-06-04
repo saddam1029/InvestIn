@@ -31,8 +31,6 @@ class Post : AppCompatActivity() {
         binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val ivBack: ImageView = findViewById(R.id.ivBack)
-
         firebaseFirestore = FirebaseFirestore.getInstance()
         usersReference = firebaseFirestore.collection("InvestIn")
 
@@ -66,7 +64,7 @@ class Post : AppCompatActivity() {
             setupAllCheckBoxes()
         }
 
-        ivBack.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             showConfirmationDialog()
         }
 

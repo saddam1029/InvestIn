@@ -9,6 +9,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.investin.R
 import com.example.investin.databinding.ActivityAccountBinding
 import com.example.investin.databinding.ActivityProfileBinding
+import com.example.investin.home.drawer.Setting
+import com.example.investin.login.ChangePassword
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -33,8 +35,13 @@ class Account : AppCompatActivity() {
         retrieveAndSetUserInfo()
 
         binding.ivBackProfile.setOnClickListener {
-            navigateToHome()
+            onBackPressed()
 
+        }
+
+        binding.ivSetting.setOnClickListener {
+            val intent = Intent(this, Setting::class.java)
+            startActivity(intent)
         }
 
         loadProfilePicture()
@@ -80,35 +87,35 @@ class Account : AppCompatActivity() {
 
 
 
-    private fun retrieveAndSetUserInfo() {
-        // Retrieve user name and email from Intent extras
-        val userName = intent.getStringExtra("userName")
-        val userEmail = intent.getStringExtra("userEmail")
-        val userGender = intent.getStringExtra("gender")
-        val userNumber = intent.getStringExtra("number")
-        val userDateOfBirth = intent.getStringExtra("dateOfBirth")
-        val userAddress = intent.getStringExtra("permanentAddress")
-        val userRole = intent.getStringExtra("userRole")
+        private fun retrieveAndSetUserInfo() {
+            // Retrieve user name and email from Intent extras
+            val userName = intent.getStringExtra("userName")
+            val userEmail = intent.getStringExtra("userEmail")
+            val userGender = intent.getStringExtra("gender")
+            val userNumber = intent.getStringExtra("number")
+            val userDateOfBirth = intent.getStringExtra("dateOfBirth")
+            val userAddress = intent.getStringExtra("permanentAddress")
+            val userRole = intent.getStringExtra("userRole")
 
-        binding.tvAccountName.text = userName
-        binding.tvAccountEmail.text = userEmail
-        binding.tvAccountGender.text = userGender
-        binding.tvAccountNumber.text = userNumber
-        binding.tvAccountDOB.text = userDateOfBirth
-        binding.tvAccountAddress.text = userAddress
-        binding.tvAccountRole.text = userRole
-    }
+            binding.tvAccountName.text = userName
+            binding.tvAccountEmail.text = userEmail
+            binding.tvAccountGender.text = userGender
+            binding.tvAccountNumber.text = userNumber
+            binding.tvAccountDOB.text = userDateOfBirth
+            binding.tvAccountAddress.text = userAddress
+            binding.tvAccountRole.text = userRole
+        }
 
-    private fun navigateToHome() {
-        val intent = Intent(this, Home::class.java)
-        startActivity(intent)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out) // fade activity when exit
-        finish() // Finish the current activity to prevent going back to it
-    }
+//    private fun navigateToHome() {
+//        val intent = Intent(this, Home::class.java)
+//        startActivity(intent)
+//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out) // fade activity when exit
+//        finish() // Finish the current activity to prevent going back to it
+//    }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        // Override the back button to navigate to Home activity
-        navigateToHome()
+        finish() // Finish the current activity to navigate back
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }

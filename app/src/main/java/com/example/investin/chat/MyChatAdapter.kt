@@ -1,83 +1,58 @@
 package com.example.investin.chat
 
-
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.investin.R
-import java.util.Locale
+import java.text.DateFormat
+import java.util.Date
 
+class MyChatAdapter(private var chatItems: List<ChatItem>) :
+    RecyclerView.Adapter<MyChatAdapter.ViewHolder>() {
 
-class MyChatAdapter(private val itemList: List<ChatItem>) :
-    RecyclerView.Adapter<MyChatAdapter.ViewHolder>(), Filterable {
-
-    private var filteredList: List<ChatItem> = itemList
+    // Store the original list of chat items
+    private val originalChatItems: List<ChatItem> = chatItems.toList()
+    private var filteredChatItems: List<ChatItem> = chatItems.toList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_layout_chat, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout_chat, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = filteredList[position]
+        val chatItem = filteredChatItems[position]
+        holder.tvUserName.text = chatItem.userName
+        holder.tvUserLastMessage.text = chatItem.lastMessage
+        holder.tvLastTime.text = DateFormat.getDateTimeInstance().format(Date(chatItem.lastMessageTime))
 
-        holder.profile?.setImageResource(currentItem.imageResourceId)
-        holder.userName?.text = currentItem.userName
-        holder.userLastMessage?.text = currentItem.lastMessage
-
-        holder.itemView.setOnClickListener {
-            val context = holder.itemView.context
-            val intent = Intent(context, Message::class.java)
-            intent.putExtra("userName", currentItem.userName)
-            context.startActivity(intent)
-        }
+        Glide.with(holder.itemView.context)
+            .load(chatItem.userProfilePictureUrl)
+            .placeholder(R.drawable.profile_2) // Placeholder image
+            .into(holder.ivChatProfile)
     }
 
-    override fun getItemCount(): Int {
-        return filteredList.size
-    }
-
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(charSequence: CharSequence?): FilterResults {
-                val filterResults = FilterResults()
-                if (charSequence == null || charSequence.isEmpty()) {
-                    filterResults.values = itemList
-                } else {
-                    val query = charSequence.toString().toLowerCase(Locale.ROOT).trim()
-                    val filtered = itemList.filter {
-                        it.userName.toLowerCase(Locale.ROOT).contains(query)
-                    }
-                    filterResults.values = filtered
-                }
-                return filterResults
-            }
-
-            override fun publishResults(
-                charSequence: CharSequence?,
-                filterResults: FilterResults?
-            ) {
-                filteredList = filterResults?.values as List<ChatItem>
-                notifyDataSetChanged()
-            }
-        }
-    }
+    override fun getItemCount() = filteredChatItems.size
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val profile: ImageView? = itemView.findViewById(R.id.ivChatProfile)
-        val userName: TextView? = itemView.findViewById(R.id.tvUserName)
-        val userLastMessage: TextView? = itemView.findViewById(R.id.tvUserLastMessage)
-        val lastTime: TextView? = itemView.findViewById(R.id.tvLastTime)
+        val ivChatProfile: ImageView = itemView.findViewById(R.id.ivChatProfile)
+        val tvUserName: TextView = itemView.findViewById(R.id.tvUserName)
+        val tvUserLastMessage: TextView = itemView.findViewById(R.id.tvUserLastMessage)
+        val tvLastTime: TextView = itemView.findViewById(R.id.tvLastTime)
+    }
+
+    // Filter method for search functionality
+    fun filter(query: String?) {
+        filteredChatItems = if (query.isNullOrEmpty()) {
+            originalChatItems
+        } else {
+            originalChatItems.filter {
+                it.userName.contains(query, ignoreCase = true) || it.lastMessage.contains(query, ignoreCase = true)
+            }
+        }
+        notifyDataSetChanged()
     }
 }
-
-
-
